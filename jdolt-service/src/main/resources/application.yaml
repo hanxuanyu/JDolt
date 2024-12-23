@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: PetBuddy
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: abcabc..123
+    url: jdbc:mysql://1.117.62.231:22521/?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048

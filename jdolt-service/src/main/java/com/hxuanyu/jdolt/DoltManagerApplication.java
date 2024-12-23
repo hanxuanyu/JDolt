@@ -1,4 +1,4 @@
-package com.hxuanyu.doltmanager;
+package com.hxuanyu.jdolt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
