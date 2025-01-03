@@ -29,6 +29,6 @@ public class DoltClientTest {
 
     @Test
     public void testDoltAdd() {
-        boolean a = doltClient.versionControl().doltAdd("-A");
+        boolean a = doltClient.versionControl().doltAdd(".");
     }
 }
