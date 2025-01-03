@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 /**
- * TODO
+ * dolt客户端测试
  *
  * @author hanxuanyu
  * @version 1.0
@@ -25,5 +25,10 @@ public class DoltClientTest {
     public void testDoltClient() {
         List<String> databases = doltClient.versionControl().showDatabases();
         log.info("databases: {}", databases);
+    }
+
+    @Test
+    public void testDoltAdd() {
+        boolean a = doltClient.versionControl().doltAdd("-A");
     }
 }

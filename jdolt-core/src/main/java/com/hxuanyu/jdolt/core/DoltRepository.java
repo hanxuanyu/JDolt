@@ -16,7 +16,6 @@ import java.util.Map;
 public class DoltRepository {
     private final DoltConnectionManager connectionManager;
 
-
     // 构造函数
     protected DoltRepository(DoltConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -24,65 +23,92 @@ public class DoltRepository {
 
     /**
      * 执行一个通用的 DML/DDL 命令（如 INSERT, UPDATE, DELETE, CREATE, DROP 等）。
-     * @param sql 要执行的 SQL 语句
+     * 使用 SQL 模板和参数列表的方式，防止 SQL 注入。
+     *
+     * @param sql    要执行的 SQL 模板
+     * @param params 参数列表
      * @return 受影响的行数
      * @throws SQLException 如果执行失败
      */
-    protected int executeUpdate(String sql) throws SQLException {
+    protected int executeUpdate(String sql, Object... params) throws SQLException {
         try (
                 Connection connection = connectionManager.getConnection();
-                Statement statement = connection.createStatement()
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            return statement.executeUpdate(sql);
+            setParameters(preparedStatement, params);
+            return preparedStatement.executeUpdate();
         }
     }
 
     /**
      * 执行查询语句，并返回结果集。
-     * @param sql 要执行的查询 SQL 语句
+     * 使用 SQL 模板和参数列表的方式，防止 SQL 注入。
+     *
+     * @param sql    要执行的查询 SQL 模板
+     * @param params 参数列表
      * @return 查询结果集（ResultSet）
      * @throws SQLException 如果执行失败
      */
-    protected ResultSet executeQuery(String sql) throws SQLException {
+    protected ResultSet executeQuery(String sql, Object... params) throws SQLException {
         Connection connection = connectionManager.getConnection();
-        Statement statement = connection.createStatement();
-        return statement.executeQuery(sql); // 调用者需关闭 ResultSet 和 Statement
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        setParameters(preparedStatement, params);
+        return preparedStatement.executeQuery(); // 调用者需关闭 ResultSet 和 PreparedStatement
     }
 
     /**
      * 执行查询语句并返回封装的结果。
-     * @param sql 要执行的查询 SQL 语句
+     * 使用 SQL 模板和参数列表的方式，防止 SQL 注入。
+     *
+     * @param sql    要执行的查询 SQL 模板
+     * @param params 参数列表
      * @return 查询结果封装为 List<Map<String, Object>>
      * @throws SQLException 如果执行失败
      */
-    protected List<Map<String, Object>> executeQueryAsList(String sql) throws SQLException {
+    protected List<Map<String, Object>> executeQueryAsList(String sql, Object... params) throws SQLException {
         try (
                 Connection connection = connectionManager.getConnection();
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql)
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            List<Map<String, Object>> results = new ArrayList<>();
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
+            setParameters(preparedStatement, params);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<Map<String, Object>> results = new ArrayList<>();
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
 
-            while (resultSet.next()) {
-                Map<String, Object> row = new HashMap<>();
-                for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnName(i), resultSet.getObject(i));
+                while (resultSet.next()) {
+                    Map<String, Object> row = new HashMap<>();
+                    for (int i = 1; i <= columnCount; i++) {
+                        row.put(metaData.getColumnName(i), resultSet.getObject(i));
+                    }
+                    results.add(row);
                 }
-                results.add(row);
-            }
 
-            return results;
+                return results;
+            }
         }
     }
 
     /**
      * 执行任意 SQL 语句。
+     * 仅保留最通用的方式，适用于不需要参数的简单 SQL。
+     *
      * @param sql 要执行的 SQL 语句
+     * @return 查询结果封装为 List<Map<String, Object>>
      * @return 是否成功执行
      * @throws SQLException 如果执行失败
      */
+    protected boolean execute(String sql, Object... params) throws SQLException {
+        try (
+                Connection connection = connectionManager.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            setParameters(preparedStatement, params);
+            return preparedStatement.execute();
+        }
+    }
+
+
     protected boolean execute(String sql) throws SQLException {
         try (
                 Connection connection = connectionManager.getConnection();
@@ -92,8 +118,10 @@ public class DoltRepository {
         }
     }
 
+
     /**
      * 开始事务。
+     *
      * @throws SQLException 如果设置失败
      */
     protected void beginTransaction() throws SQLException {
@@ -103,6 +131,7 @@ public class DoltRepository {
 
     /**
      * 提交事务。
+     *
      * @throws SQLException 如果提交失败
      */
     protected void commitTransaction() throws SQLException {
@@ -113,11 +142,27 @@ public class DoltRepository {
 
     /**
      * 回滚事务。
+     *
      * @throws SQLException 如果回滚失败
      */
     protected void rollbackTransaction() throws SQLException {
         Connection connection = connectionManager.getConnection();
         connection.rollback();
         connection.setAutoCommit(true);
+    }
+
+    /**
+     * 设置 PreparedStatement 的参数。
+     *
+     * @param preparedStatement PreparedStatement 对象
+     * @param params            参数列表
+     * @throws SQLException 如果设置参数失败
+     */
+    private void setParameters(PreparedStatement preparedStatement, Object... params) throws SQLException {
+        if (params != null) {
+            for (int i = 0; i < params.length; i++) {
+                preparedStatement.setObject(i + 1, params[i]);
+            }
+        }
     }
 }
