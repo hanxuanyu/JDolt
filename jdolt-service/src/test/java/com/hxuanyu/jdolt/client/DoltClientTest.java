@@ -1,6 +1,8 @@
 package com.hxuanyu.jdolt.client;
 
 import com.hxuanyu.jdolt.api.DoltClient;
+import com.hxuanyu.jdolt.core.VersionControl;
+import com.hxuanyu.jdolt.model.ProcedureResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,20 @@ public class DoltClientTest {
     @Autowired
     DoltClient doltClient;
 
-    @Test
-    public void testDoltClient() {
-        List<String> databases = doltClient.versionControl().showDatabases();
-        log.info("databases: {}", databases);
-    }
+
 
     @Test
     public void testDoltAdd() {
-        boolean a = doltClient.versionControl().doltAdd(".");
+        VersionControl versionControl = doltClient.versionControl();
+        log.info("addAll: {}", versionControl.doltAdd().addAll(Object.class));
+        log.info("addAll: {}", versionControl.doltAdd().addAll());
+        log.info("call: {}", versionControl.doltAdd().call(Object.class,"."));
+        log.info("call: {}", versionControl.doltAdd().call("."));
+    }
+
+    @Test
+    public void testCommonSql() {
+        String sqlTemplate = "call dolt_add('.')";
+
     }
 }

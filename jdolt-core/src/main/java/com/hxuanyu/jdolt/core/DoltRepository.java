@@ -1,12 +1,12 @@
 package com.hxuanyu.jdolt.core;
 
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
+import com.hxuanyu.jdolt.util.CommonParamValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents a repository for managing Dolt commands execution against a database.
@@ -14,6 +14,8 @@ import java.util.Map;
  * abstracting the connection management and command execution process.
  */
 public class DoltRepository {
+    private final Logger logger = LoggerFactory.getLogger(DoltRepository.class);
+
     private final DoltConnectionManager connectionManager;
 
     // 构造函数
@@ -109,15 +111,6 @@ public class DoltRepository {
     }
 
 
-    protected boolean execute(String sql) throws SQLException {
-        try (
-                Connection connection = connectionManager.getConnection();
-                Statement statement = connection.createStatement()
-        ) {
-            return statement.execute(sql);
-        }
-    }
-
 
     /**
      * 开始事务。
@@ -164,5 +157,20 @@ public class DoltRepository {
                 preparedStatement.setObject(i + 1, params[i]);
             }
         }
+    }
+
+    protected boolean commonDoltExecute(String sql, String... params) {
+        try {
+            CommonParamValidator.create(params)
+                    .checkNotEmpty()
+                    .checkNoDuplicates();
+            logger.debug("start execute sql: [{}], params: [{}]", sql, Arrays.toString(params));
+            boolean execResult = execute(sql, (Object[]) params);
+            logger.debug("execute finished, result: [{}]", execResult);
+            return execResult;
+        } catch (Exception e) {
+            logger.error("doltAdd error", e);
+        }
+        return false;
     }
 }
