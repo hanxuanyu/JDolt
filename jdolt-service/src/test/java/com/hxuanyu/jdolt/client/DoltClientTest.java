@@ -28,7 +28,6 @@ public class DoltClientTest {
     @Test
     public void testDoltAdd() {
         VersionControl versionControl = doltClient.versionControl();
-        log.info("addAll: {}", versionControl.doltAdd().addAll(Object.class));
         log.info("addAll: {}", versionControl.doltAdd().addAll());
         log.info("call: {}", versionControl.doltAdd().call(Object.class,"."));
         log.info("call: {}", versionControl.doltAdd().call("."));
