@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.core;
 
+import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 
 /**
@@ -10,7 +11,20 @@ import com.hxuanyu.jdolt.model.ProcedureResult;
  */
 public interface DoltProcedure {
 
-    <T> ProcedureResult<T> call(Class<T> resultClass, String... params);
 
-    boolean call(String... params);
+    default boolean call(String... params) {
+        return commonDoltExecute(DoltSqlTemplate.buildAddSql(params), params);
+    }
+
+
+    default <T> ProcedureResult<T> call(Class<T> resultClass, String... params) {
+        if (call(params)) {
+            return ProcedureResult.success();
+        } else {
+            return ProcedureResult.failed();
+        }
+    }
+
+    boolean commonDoltExecute(String sql, String... params);
+
 }

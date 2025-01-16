@@ -14,7 +14,7 @@ import com.hxuanyu.jdolt.model.ProcedureResult;
  */
 public class DoltAdd extends DoltRepository implements DoltProcedure {
 
-    private static DoltAdd instance;
+    private static volatile DoltAdd instance;
 
 
     private DoltAdd(DoltConnectionManager connectionManager) {
@@ -22,28 +22,16 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
     }
 
 
-    public static synchronized DoltAdd instance(DoltConnectionManager connectionManager) {
+    public static DoltAdd instance(DoltConnectionManager connectionManager) {
         if (instance == null) {
-            instance = new DoltAdd(connectionManager);
+            synchronized (DoltBranch.class) {
+                if (instance == null) {
+                    instance = new DoltAdd(connectionManager);
+                }
+            }
         }
         return instance;
     }
-
-
-    @Override
-    public <T> ProcedureResult<T> call(Class<T> resultClass, String... params) {
-        if (call(params)) {
-            return ProcedureResult.success();
-        } else {
-            return ProcedureResult.failed();
-        }
-    }
-
-    @Override
-    public boolean call(String... params) {
-        return commonDoltExecute(DoltSqlTemplate.buildAddSql(params), params);
-    }
-
 
 
     /**
@@ -54,7 +42,6 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
     public boolean addAll() {
         return call("-A");
     }
-
 
 
     /**

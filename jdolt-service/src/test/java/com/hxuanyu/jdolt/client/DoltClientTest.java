@@ -24,18 +24,23 @@ public class DoltClientTest {
     DoltClient doltClient;
 
 
-
     @Test
     public void testDoltAdd() {
         VersionControl versionControl = doltClient.versionControl();
         log.info("addAll: {}", versionControl.doltAdd().addAll());
-        log.info("call: {}", versionControl.doltAdd().call(Object.class,"."));
+        log.info("call: {}", versionControl.doltAdd().call(Object.class, "."));
         log.info("call: {}", versionControl.doltAdd().call("."));
     }
 
     @Test
     public void testCommonSql() {
         String sqlTemplate = "call dolt_add('.')";
+
+    }
+
+    @Test
+    public void testDoltBackup() {
+        VersionControl versionControl = doltClient.versionControl();
 
     }
 }

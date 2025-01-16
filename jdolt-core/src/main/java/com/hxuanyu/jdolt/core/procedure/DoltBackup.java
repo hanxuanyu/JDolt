@@ -1,6 +1,7 @@
 package com.hxuanyu.jdolt.core.procedure;
 
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
+import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
 import com.hxuanyu.jdolt.core.DoltProcedure;
 import com.hxuanyu.jdolt.core.DoltRepository;
 import com.hxuanyu.jdolt.model.ProcedureResult;
@@ -13,7 +14,7 @@ import com.hxuanyu.jdolt.model.ProcedureResult;
  * @version 1.0
  */
 public class DoltBackup extends DoltRepository implements DoltProcedure {
-    private static DoltBackup instance;
+    private static volatile DoltBackup instance;
 
 
     private DoltBackup(DoltConnectionManager connectionManager) {
@@ -21,20 +22,15 @@ public class DoltBackup extends DoltRepository implements DoltProcedure {
     }
 
 
-    public static synchronized DoltBackup instance(DoltConnectionManager connectionManager) {
+    public static DoltBackup instance(DoltConnectionManager connectionManager) {
         if (instance == null) {
-            instance = new DoltBackup(connectionManager);
+            synchronized (DoltBranch.class) {
+                if (instance == null) {
+                    instance = new DoltBackup(connectionManager);
+                }
+            }
         }
         return instance;
     }
 
-    @Override
-    public <T> ProcedureResult<T> call(Class<T> resultClass, String... params) {
-        return null;
-    }
-
-    @Override
-    public boolean call(String... params) {
-        return false;
-    }
 }

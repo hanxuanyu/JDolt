@@ -159,7 +159,7 @@ public class DoltRepository {
         }
     }
 
-    protected boolean commonDoltExecute(String sql, String... params) {
+    public boolean commonDoltExecute(String sql, String... params) {
         try {
             CommonParamValidator.create(params)
                     .checkNotEmpty()
