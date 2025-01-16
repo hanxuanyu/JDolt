@@ -53,4 +53,9 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
     public boolean addTables(String... tables) {
         return call(tables);
     }
+
+    @Override
+    public String buildSql(String... params) {
+        return DoltSqlTemplate.buildAddSql(params);
+    }
 }

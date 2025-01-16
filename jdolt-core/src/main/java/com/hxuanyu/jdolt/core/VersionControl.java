@@ -3,6 +3,7 @@ package com.hxuanyu.jdolt.core;
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
 import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
 import com.hxuanyu.jdolt.core.procedure.DoltAdd;
+import com.hxuanyu.jdolt.core.procedure.DoltBranch;
 import com.hxuanyu.jdolt.util.CommonParamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,5 +33,13 @@ public class VersionControl {
         return DoltAdd.instance(connectionManager);
     }
 
+    /**
+     * dolt_branch()存储过程，支持对dolt分支进行增、删、改操作
+     *
+     * @return doltBranch存储过程对象，对相关操作进行封装
+     */
+    public DoltBranch doltBranch() {
+        return DoltBranch.instance(connectionManager);
+    }
 
 }

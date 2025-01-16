@@ -13,7 +13,7 @@ public interface DoltProcedure {
 
 
     default boolean call(String... params) {
-        return commonDoltExecute(DoltSqlTemplate.buildAddSql(params), params);
+        return commonDoltExecute(buildSql(params), params);
     }
 
 
@@ -26,5 +26,7 @@ public interface DoltProcedure {
     }
 
     boolean commonDoltExecute(String sql, String... params);
+
+    String buildSql(String... params);
 
 }

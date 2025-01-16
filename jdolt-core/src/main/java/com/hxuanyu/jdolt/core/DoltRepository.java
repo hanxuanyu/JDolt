@@ -1,6 +1,7 @@
 package com.hxuanyu.jdolt.core;
 
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
+import com.hxuanyu.jdolt.exception.DoltException;
 import com.hxuanyu.jdolt.util.CommonParamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,7 +112,6 @@ public class DoltRepository {
     }
 
 
-
     /**
      * 开始事务。
      *
@@ -168,9 +168,10 @@ public class DoltRepository {
             boolean execResult = execute(sql, (Object[]) params);
             logger.debug("execute finished, result: [{}]", execResult);
             return execResult;
-        } catch (Exception e) {
-            logger.error("doltAdd error", e);
+        } catch (SQLException e) {
+            DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + Arrays.toString(params), e);
+            logger.error("dolt execute error, sql: {} params: {}", sql, params, doltException);
+            throw doltException;
         }
-        return false;
     }
 }

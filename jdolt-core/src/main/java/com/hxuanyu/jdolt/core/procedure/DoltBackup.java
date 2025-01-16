@@ -8,7 +8,6 @@ import com.hxuanyu.jdolt.model.ProcedureResult;
 
 /**
  * 添加或移除已配置的备份，与已配置的备份同步，将备份同步到远程URL，将远程URL备份恢复为一个新数据库。
- * TODO 待搭建完整的dolthub服务后再进行验证测试
  *
  * @author hanxuanyu
  * @version 1.0
@@ -33,4 +32,8 @@ public class DoltBackup extends DoltRepository implements DoltProcedure {
         return instance;
     }
 
+    @Override
+    public String buildSql(String... params) {
+        return DoltSqlTemplate.buildBackupSql(params);
+    }
 }

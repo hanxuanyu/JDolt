@@ -15,7 +15,7 @@ public class DoltSqlTemplate {
      * - '.': 将所有新增的表添加至暂存区区
      * - 'table1', 'table2' ...: 将指定的表列表添加至暂存区
      */
-    public static final String SQL_DOLT_ADD = "CALL DOLT_ADD(${PARAMS_LIST})";
+    public static final String SQL_PROCEDURE_DOLT_ADD = "CALL DOLT_ADD(${PARAMS_LIST})";
 
     /**
      * 将当前数据推送到指定的备份源或从备份源恢复数据
@@ -25,23 +25,26 @@ public class DoltSqlTemplate {
      * - 'remove', 'backup-name': 删除备份库
      * - 'restore', 'backup-name': 从指定备份库删除
      */
-    public static final String SQL_DOLT_BACKUP = "CALL DOLT_BACKUP(${PARAMS_LIST})";
+    public static final String SQL_PROCEDURE_DOLT_BACKUP = "CALL DOLT_BACKUP(${PARAMS_LIST})";
 
     /**
      * 分支新增、删除等操作
      * - ''
      */
-    public static final String SQL_DOLT_BRANCH = "CALL DOLT_BRANCH(${PARAMS_LIST})";
+    public static final String SQL_PROCEDURE_DOLT_BRANCH = "CALL DOLT_BRANCH(${PARAMS_LIST})";
 
 
     public static String buildAddSql(String... params) {
-        return buildSqlTemplate(SQL_DOLT_ADD, params);
+        return buildSqlTemplate(SQL_PROCEDURE_DOLT_ADD, params);
     }
 
-    public static String buildBackupSql(String[] params) {
-        return buildSqlTemplate(SQL_DOLT_BACKUP, params);
+    public static String buildBackupSql(String... params) {
+        return buildSqlTemplate(SQL_PROCEDURE_DOLT_BACKUP, params);
     }
 
+    public static String buildBranchSql(String... params) {
+        return buildSqlTemplate(SQL_PROCEDURE_DOLT_BRANCH, params);
+    }
 
     public static String buildSqlTemplate(String template, String... params) {
         if (params == null || params.length == 0) {
@@ -63,7 +66,6 @@ public class DoltSqlTemplate {
         }
         return template.replace("${PARAMS_LIST}", placeholders.toString());
     }
-
 
 }
 
