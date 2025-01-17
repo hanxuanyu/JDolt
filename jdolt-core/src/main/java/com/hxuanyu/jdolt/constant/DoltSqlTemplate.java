@@ -33,6 +33,10 @@ public class DoltSqlTemplate {
      */
     public static final String SQL_PROCEDURE_DOLT_BRANCH = "CALL DOLT_BRANCH(${PARAMS_LIST})";
 
+    /**
+     * 分支检出操作
+     */
+    public static final String SQL_PROCEDURE_DOLT_CHECKOUT = "CALL DOLT_CHECKOUT(${PARAMS_LIST})";
 
     public static String buildAddSql(String... params) {
         return buildSqlTemplate(SQL_PROCEDURE_DOLT_ADD, params);
@@ -44,6 +48,10 @@ public class DoltSqlTemplate {
 
     public static String buildBranchSql(String... params) {
         return buildSqlTemplate(SQL_PROCEDURE_DOLT_BRANCH, params);
+    }
+
+    public static String buildCheckoutSql(String... params) {
+        return buildSqlTemplate(SQL_PROCEDURE_DOLT_CHECKOUT, params);
     }
 
     public static String buildSqlTemplate(String template, String... params) {
