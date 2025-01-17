@@ -8,23 +8,23 @@ import java.util.*;
  * @author hanxuanyu
  * @version 2.2
  */
-public class CommonParamValidator {
+public class ParamValidator {
 
     private final String[] params;
     private final List<String> errors = new ArrayList<>();
 
     // 私有构造函数，防止直接实例化
-    private CommonParamValidator(String[] params) {
+    private ParamValidator(String[] params) {
         this.params = params;
     }
 
     // 静态方法创建验证器对象
-    public static CommonParamValidator create(String[] params) {
-        return new CommonParamValidator(params);
+    public static ParamValidator create(String[] params) {
+        return new ParamValidator(params);
     }
 
     // 检查参数是否有重复
-    public CommonParamValidator checkNoDuplicates() {
+    public ParamValidator checkNoDuplicates() {
         if (!noDuplicates()) {
             errors.add("Parameters contain duplicates.");
         }
@@ -37,7 +37,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数数量是否等于指定值
-    public CommonParamValidator checkSizeEquals(int size) {
+    public ParamValidator checkSizeEquals(int size) {
         if (!sizeEquals(size)) {
             errors.add("Parameter count must be exactly " + size + ".");
         }
@@ -49,7 +49,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数数量是否小于指定值
-    public CommonParamValidator checkSizeLessThan(int size) {
+    public ParamValidator checkSizeLessThan(int size) {
         if (!sizeLessThan(size)) {
             errors.add("Parameter count must be less than " + size + ".");
         }
@@ -61,7 +61,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数数量是否大于指定值
-    public CommonParamValidator checkSizeGreaterThan(int size) {
+    public ParamValidator checkSizeGreaterThan(int size) {
         if (!sizeGreaterThan(size)) {
             errors.add("Parameter count must be greater than " + size + ".");
         }
@@ -73,7 +73,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数是否非空
-    public CommonParamValidator checkNotEmpty() {
+    public ParamValidator checkNotEmpty() {
         if (!notEmpty()) {
             errors.add("Parameters cannot be null or empty.");
         }
@@ -93,7 +93,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数内容是否包含于给定集合
-    public CommonParamValidator checkContainedIn(Set<String> validSet) {
+    public ParamValidator checkContainedIn(Set<String> validSet) {
         if (!containedIn(validSet)) {
             for (String param : params) {
                 if (!validSet.contains(param)) {
@@ -114,7 +114,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数内容是否包含于给定列表
-    public CommonParamValidator checkContainedIn(List<String> validList) {
+    public ParamValidator checkContainedIn(List<String> validList) {
         return checkContainedIn(new HashSet<>(validList));
     }
 
@@ -123,7 +123,7 @@ public class CommonParamValidator {
     }
 
     // 检查参数内容是否包含于给定数组
-    public CommonParamValidator checkContainedIn(String... validList) {
+    public ParamValidator checkContainedIn(String... validList) {
         return checkContainedIn(Arrays.asList(validList));
     }
 
@@ -132,7 +132,7 @@ public class CommonParamValidator {
     }
 
     // 新增：检查参数列表是否包含给定列表
-    public CommonParamValidator checkContains(List<String> requiredList) {
+    public ParamValidator checkContains(List<String> requiredList) {
         if (!contains(requiredList)) {
             errors.add("Parameters must contain all elements of the required list: " + requiredList);
         }
@@ -145,7 +145,7 @@ public class CommonParamValidator {
     }
 
     // 新增：检查参数列表是否包含给定数组
-    public CommonParamValidator checkContains(String... requiredArray) {
+    public ParamValidator checkContains(String... requiredArray) {
         return checkContains(Arrays.asList(requiredArray));
     }
 
@@ -198,7 +198,7 @@ public class CommonParamValidator {
         // 使用 Collections.unmodifiableSet 创建不可变集合
         Set<String> validSet = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("param1", "param2", "param3", "param4")));
 
-        CommonParamValidator validator = CommonParamValidator.create(params)
+        ParamValidator validator = ParamValidator.create(params)
                 .checkNotEmpty()
                 .checkNoDuplicates()
                 .checkSizeEquals(3)
@@ -213,7 +213,7 @@ public class CommonParamValidator {
             System.out.println(result);
         }
 
-        // 示例：仅判断而不记录错误
+        // 仅判断而不记录错误
         System.out.println("Is no duplicates: " + validator.noDuplicates());
         System.out.println("Is size equals 3: " + validator.sizeEquals(3));
         System.out.println("Is contained in valid set: " + validator.containedIn(validSet));

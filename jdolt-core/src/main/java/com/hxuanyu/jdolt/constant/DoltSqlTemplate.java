@@ -29,7 +29,7 @@ public class DoltSqlTemplate {
 
     /**
      * 分支新增、删除等操作
-     * - ''
+     * - '-c','--copy': 复制分支，必须跟随要复制的源分支名称以及要创建的新分支名称。如果没有`--force`选项，当新分支已存在时复制将失败。
      */
     public static final String SQL_PROCEDURE_DOLT_BRANCH = "CALL DOLT_BRANCH(${PARAMS_LIST})";
 

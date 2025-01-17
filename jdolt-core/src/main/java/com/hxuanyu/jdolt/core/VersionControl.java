@@ -1,15 +1,10 @@
 package com.hxuanyu.jdolt.core;
 
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
-import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
 import com.hxuanyu.jdolt.core.procedure.DoltAdd;
 import com.hxuanyu.jdolt.core.procedure.DoltBranch;
-import com.hxuanyu.jdolt.util.CommonParamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
-import java.util.Arrays;
 
 /**
  * 封装版本管理相关操作

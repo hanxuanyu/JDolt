@@ -2,7 +2,7 @@ package com.hxuanyu.jdolt.core;
 
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
 import com.hxuanyu.jdolt.exception.DoltException;
-import com.hxuanyu.jdolt.util.CommonParamValidator;
+import com.hxuanyu.jdolt.util.ParamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -161,7 +161,7 @@ public class DoltRepository {
 
     public boolean commonDoltExecute(String sql, String... params) {
         try {
-            CommonParamValidator.create(params)
+            ParamValidator.create(params)
                     .checkNotEmpty()
                     .checkNoDuplicates();
             logger.debug("start execute sql: [{}], params: [{}]", sql, Arrays.toString(params));
