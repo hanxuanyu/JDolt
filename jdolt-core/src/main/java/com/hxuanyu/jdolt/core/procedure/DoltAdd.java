@@ -4,10 +4,28 @@ import com.hxuanyu.jdolt.connection.DoltConnectionManager;
 import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
 import com.hxuanyu.jdolt.core.DoltProcedure;
 import com.hxuanyu.jdolt.core.DoltRepository;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+
 
 /**
- * DoltAdd()相关操作
+ * `DOLT_ADD()`
+ * <p>
+ * 将当前会话中的工作区更改添加到暂存区。功能与CLI中的`dolt add`完全相同，并接受相同的参数。
+ * <p>
+ * 将表添加到暂存区后，可以使用`DOLT_COMMIT()`提交这些更改。
+ * <p>
+ * 用法示例：
+ * <pre>
+ * CALL DOLT_ADD('-A');
+ * CALL DOLT_ADD('.');
+ * CALL DOLT_ADD('table1', 'table2');
+ * </pre>
+ *
+ * <h3>选项</h3>
+ *
+ * <ul>
+ *   <li><code>table</code>：要添加到暂存区的表。可以使用缩写<code>.</code>来添加所有表。</li>
+ *   <li><code>-A</code>：暂存所有有更改的表。</li>
+ * </ul>
  *
  * @author hanxuanyu
  * @version 1.0
