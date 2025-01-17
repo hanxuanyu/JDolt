@@ -2,6 +2,7 @@ package com.hxuanyu.jdolt.core;
 
 import com.hxuanyu.jdolt.connection.DoltConnectionManager;
 import com.hxuanyu.jdolt.exception.DoltException;
+import com.hxuanyu.jdolt.util.BranchNameValidator;
 import com.hxuanyu.jdolt.util.ParamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -172,6 +173,18 @@ public class DoltRepository {
             DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + Arrays.toString(params), e);
             logger.error("dolt execute error, sql: {} params: {}", sql, params, doltException);
             throw doltException;
+        }
+    }
+
+
+    protected void checkBranchName(String... branchNames) {
+        if (branchNames == null) {
+            throw new IllegalArgumentException("branchNames is null");
+        }
+        for (String param : branchNames) {
+            if (!BranchNameValidator.isValidBranchName(param)) {
+                throw new IllegalArgumentException("branchName is invalid, current: " + param);
+            }
         }
     }
 }

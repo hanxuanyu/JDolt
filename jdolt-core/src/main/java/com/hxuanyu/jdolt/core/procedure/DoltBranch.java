@@ -82,16 +82,7 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
         return call("-d", "-f", branchName);
     }
 
-    private void checkBranchName(String... branchNames) {
-        if (branchNames == null) {
-            throw new IllegalArgumentException("branchNames is null");
-        }
-        for (String param : branchNames) {
-            if (!BranchNameValidator.isValidBranchName(param)) {
-                throw new IllegalArgumentException("branchName is invalid, current: " + param);
-            }
-        }
-    }
+
 
     @Override
     public String buildSql(String... params) {
