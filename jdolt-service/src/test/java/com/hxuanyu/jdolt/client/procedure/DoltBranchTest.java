@@ -24,7 +24,7 @@ public class DoltBranchTest extends DoltClientTest {
     public void testRenameBranch() {
         DoltBranch doltBranch = versionControl.doltBranch();
         doltBranch.renameBranch("testNewBranch", "tetNewBranchRenamed");
-        doltBranch.forceRenameBranch("newBranch", "tetNewBranchRenamed");
+        doltBranch.renameBranchForced("newBranch", "tetNewBranchRenamed");
     }
 
     @Test

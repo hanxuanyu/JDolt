@@ -73,15 +73,15 @@ public class DoltCheckout extends DoltRepository implements DoltProcedure {
     }
 
     public boolean createAndSwitch(String newBranchName) {
-        return call("-b", newBranchName);
+        return call("-b", newBranchName).isSuccess();
     }
 
     public boolean createAndSwitchForced(String newBranchName) {
-        return call("-B", newBranchName);
+        return call("-B", newBranchName).isSuccess();
     }
 
     public boolean traceBranch(String newBranchName) {
-        return call("-t", newBranchName);
+        return call("-t", newBranchName).isSuccess();
     }
 
 

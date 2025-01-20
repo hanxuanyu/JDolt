@@ -3,6 +3,9 @@ package com.hxuanyu.jdolt.core;
 import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * TODO
  *
@@ -12,20 +15,23 @@ import com.hxuanyu.jdolt.model.ProcedureResult;
 public interface DoltProcedure {
 
 
-    default boolean call(String... params) {
+    default boolean callWithResult(String... params) {
         return commonDoltExecute(buildSql(params), params);
     }
 
 
-    default <T> ProcedureResult<T> call(Class<T> resultClass, String... params) {
-        if (call(params)) {
-            return ProcedureResult.success();
+    default ProcedureResult call(String... params) {
+        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params), params);
+        if (resultMaps != null && !resultMaps.isEmpty()) {
+            return ProcedureResult.success("success", resultMaps);
         } else {
-            return ProcedureResult.failed();
+            return ProcedureResult.failed("failed");
         }
     }
 
     boolean commonDoltExecute(String sql, String... params);
+
+    List<Map<String, Object>> executeQueryAsList(String sql, String... params);
 
     String buildSql(String... params);
 

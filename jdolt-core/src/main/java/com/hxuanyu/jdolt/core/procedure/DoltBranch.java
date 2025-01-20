@@ -44,7 +44,7 @@ import com.hxuanyu.jdolt.util.BranchNameValidator;
  * <p>
  * 注意事项：
  * 分支名称有一些限制，与Git对分支名称的约束类似。Dolt的分支名称限制更严格，要求必须使用
- * {@link https://en.wikipedia.org/wiki/ASCII ASCII} 字符。规则如下：
+ * {@link <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>} 字符。规则如下：
  * <ul>
  * <li>所有字符必须是ASCII（7位）</li>
  * <li>不得以 '.'（句点）开头</li>
@@ -102,52 +102,52 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
 
     public boolean newBranch(String branchName) {
         checkBranchName(branchName);
-        return call(branchName);
+        return call(branchName).isSuccess();
     }
 
     public boolean newBranch(String branchName, String parentBranch) {
         checkBranchName(branchName, parentBranch);
-        return call(branchName, parentBranch);
+        return call(branchName, parentBranch).isSuccess();
     }
 
     public boolean copyBranch(String branchName, String originBranch) {
         checkBranchName(branchName, originBranch);
-        return call("-c", branchName, originBranch);
+        return call("-c", branchName, originBranch).isSuccess();
     }
 
     public boolean copyBranchForced(String branchName, String originBranch) {
         checkBranchName(branchName, originBranch);
-        return call("-c", "-f", branchName, originBranch);
+        return call("-c", "-f", branchName, originBranch).isSuccess();
     }
 
     public boolean moveBranch(String branchName, String newBranch) {
         checkBranchName(branchName, newBranch);
-        return call("-m", branchName, newBranch);
+        return call("-m", branchName, newBranch).isSuccess();
     }
 
     public boolean moveBranchForced(String branchName, String newBranch) {
         checkBranchName(branchName, newBranch);
-        return call("-m", "-f", branchName, newBranch);
+        return call("-m", "-f", branchName, newBranch).isSuccess();
     }
 
     public boolean renameBranch(String branchName, String newBranch) {
         checkBranchName(branchName, newBranch);
-        return call("-m", branchName, newBranch);
+        return call("-m", branchName, newBranch).isSuccess();
     }
 
     public boolean renameBranchForced(String branchName, String newBranch) {
         checkBranchName(branchName, newBranch);
-        return call("-m", "-f", branchName, newBranch);
+        return call("-m", "-f", branchName, newBranch).isSuccess();
     }
 
     public boolean deleteBranch(String branchName) {
         checkBranchName(branchName);
-        return call("-d", branchName);
+        return call("-d", branchName).isSuccess();
     }
 
     public boolean deleteBranchForced(String branchName) {
         checkBranchName(branchName);
-        return call("-d", "-f", branchName);
+        return call("-d", "-f", branchName).isSuccess();
     }
 
 

@@ -58,7 +58,7 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
      * @return 执行结果，true：执行成功，false：执行失败
      */
     public boolean addAll() {
-        return call("-A");
+        return call("-A").isSuccess();
     }
 
 
@@ -69,7 +69,7 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
      * @return 执行结果，true：执行成功，false：执行失败
      */
     public boolean addTables(String... tables) {
-        return call(tables);
+        return call(tables).isSuccess();
     }
 
     @Override

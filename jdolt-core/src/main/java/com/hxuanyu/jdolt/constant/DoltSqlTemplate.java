@@ -38,6 +38,8 @@ public class DoltSqlTemplate {
      */
     public static final String SQL_PROCEDURE_DOLT_CHECKOUT = "CALL DOLT_CHECKOUT(${PARAMS_LIST})";
 
+    public static final String SQL_PROCEDURE_DOLT_CHERRY_PICK = "CALL DOLT_CHERRY_PICK(${PARAMS_LIST})";
+
     public static String buildAddSql(String... params) {
         return buildSqlTemplate(SQL_PROCEDURE_DOLT_ADD, params);
     }
@@ -52,6 +54,10 @@ public class DoltSqlTemplate {
 
     public static String buildCheckoutSql(String... params) {
         return buildSqlTemplate(SQL_PROCEDURE_DOLT_CHECKOUT, params);
+    }
+
+    public static String buildCherryPickSql(String... params) {
+        return buildSqlTemplate(SQL_PROCEDURE_DOLT_CHERRY_PICK, params);
     }
 
     public static String buildSqlTemplate(String template, String... params) {

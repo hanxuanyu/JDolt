@@ -69,12 +69,12 @@ public class DoltRepository {
      * @return 查询结果封装为 List<Map<String, Object>>
      * @throws SQLException 如果执行失败
      */
-    protected List<Map<String, Object>> executeQueryAsList(String sql, Object... params) throws SQLException {
+    public List<Map<String, Object>> executeQueryAsList(String sql, String... params) {
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            setParameters(preparedStatement, params);
+            setParameters(preparedStatement, (Object) params);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<Map<String, Object>> results = new ArrayList<>();
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -90,6 +90,10 @@ public class DoltRepository {
 
                 return results;
             }
+        } catch (SQLException e) {
+            DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + Arrays.toString(params), e);
+            logger.error("dolt execute error, sql: {} params: {}", sql, params, doltException);
+            throw doltException;
         }
     }
 
