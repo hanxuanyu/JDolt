@@ -34,7 +34,7 @@ public class DoltRepository {
      * @return 受影响的行数
      * @throws SQLException 如果执行失败
      */
-    protected int executeUpdate(String sql, Object... params) throws SQLException {
+    protected int executeUpdate(String sql, String... params) throws SQLException {
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
@@ -53,7 +53,7 @@ public class DoltRepository {
      * @return 查询结果集（ResultSet）
      * @throws SQLException 如果执行失败
      */
-    protected ResultSet executeQuery(String sql, Object... params) throws SQLException {
+    protected ResultSet executeQuery(String sql, String... params) throws SQLException {
         Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         setParameters(preparedStatement, params);
@@ -74,7 +74,7 @@ public class DoltRepository {
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            setParameters(preparedStatement, (Object) params);
+            setParameters(preparedStatement, params);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<Map<String, Object>> results = new ArrayList<>();
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -106,7 +106,7 @@ public class DoltRepository {
      * @return 是否成功执行
      * @throws SQLException 如果执行失败
      */
-    protected boolean execute(String sql, Object... params) throws SQLException {
+    protected boolean execute(String sql, String... params) throws SQLException {
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
@@ -156,10 +156,10 @@ public class DoltRepository {
      * @param params            参数列表
      * @throws SQLException 如果设置参数失败
      */
-    private void setParameters(PreparedStatement preparedStatement, Object... params) throws SQLException {
+    private void setParameters(PreparedStatement preparedStatement, String... params) throws SQLException {
         if (params != null) {
             for (int i = 0; i < params.length; i++) {
-                preparedStatement.setObject(i + 1, params[i]);
+                preparedStatement.setString(i + 1, params[i]);
             }
         }
     }
@@ -170,7 +170,7 @@ public class DoltRepository {
                     .checkNotEmpty()
                     .checkNoDuplicates();
             logger.debug("start execute sql: [{}], params: [{}]", sql, Arrays.toString(params));
-            boolean execResult = execute(sql, (Object[]) params);
+            boolean execResult = execute(sql, params);
             logger.debug("execute finished, result: [{}]", execResult);
             return execResult;
         } catch (SQLException e) {
