@@ -1,10 +1,7 @@
 package com.hxuanyu.jdolt.core.api;
 
+import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
-import com.hxuanyu.jdolt.core.procedure.DoltCherryPick;
-import com.hxuanyu.jdolt.core.procedure.DoltAdd;
-import com.hxuanyu.jdolt.core.procedure.DoltBranch;
-import com.hxuanyu.jdolt.core.procedure.DoltCheckout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +42,10 @@ public class VersionControl {
 
     public DoltCherryPick doltCherryPick() {
         return DoltCherryPick.instance(connectionManager);
+    }
+
+    public DoltClean doltClean() {
+        return DoltClean.instance(connectionManager);
     }
 
 }

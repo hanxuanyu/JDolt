@@ -73,7 +73,7 @@ public class DoltCherryPick extends DoltRepository implements DoltProcedure {
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildCherryPickSql(params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.SQL_PROCEDURE_DOLT_CHERRY_PICK, params);
     }
 }
 

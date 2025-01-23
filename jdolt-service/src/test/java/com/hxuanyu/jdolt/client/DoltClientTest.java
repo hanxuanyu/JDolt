@@ -1,6 +1,7 @@
 package com.hxuanyu.jdolt.client;
 
 import com.hxuanyu.jdolt.core.api.DoltClient;
+import com.hxuanyu.jdolt.core.api.VersionControl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class DoltClientTest {
 
     protected DoltClient doltClient;
-    protected DoltClient.VersionControl versionControl;
+    protected VersionControl versionControl;
 
     @Autowired
     public void setDoltClient(DoltClient doltClient) {

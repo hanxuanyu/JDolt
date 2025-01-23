@@ -1,12 +1,7 @@
 package com.hxuanyu.jdolt.core.api;
 
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
-import com.hxuanyu.jdolt.core.procedure.DoltAdd;
-import com.hxuanyu.jdolt.core.procedure.DoltBranch;
-import com.hxuanyu.jdolt.core.procedure.DoltCheckout;
-import com.hxuanyu.jdolt.core.procedure.DoltCherryPick;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import javax.sql.DataSource;
 
@@ -30,35 +25,4 @@ public class DoltClient {
         return versionControl;
     }
 
-    /**
-     * 封装版本管理相关操作
-     */
-    public static class VersionControl {
-        private final Logger logger = LoggerFactory.getLogger(VersionControl.class);
-
-        DoltConnectionManager connectionManager;
-
-        public VersionControl(DoltConnectionManager connectionManager) {
-            this.connectionManager = connectionManager;
-        }
-
-
-
-        public DoltAdd doltAdd() {
-            return DoltAdd.instance(connectionManager);
-        }
-
-        public DoltBranch doltBranch() {
-            return DoltBranch.instance(connectionManager);
-        }
-
-        public DoltCheckout doltCheckout() {
-            return DoltCheckout.instance(connectionManager);
-        }
-
-        public DoltCherryPick doltCherryPick() {
-            return DoltCherryPick.instance(connectionManager);
-        }
-
-    }
 }

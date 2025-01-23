@@ -152,6 +152,6 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildBranchSql(params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.SQL_PROCEDURE_DOLT_BRANCH, params);
     }
 }

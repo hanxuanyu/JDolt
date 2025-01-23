@@ -33,6 +33,6 @@ public class DoltBackup extends DoltRepository implements DoltProcedure {
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildBackupSql(params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.SQL_PROCEDURE_DOLT_BACKUP, params);
     }
 }

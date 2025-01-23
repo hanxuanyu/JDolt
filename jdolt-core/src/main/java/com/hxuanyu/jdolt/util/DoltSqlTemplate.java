@@ -40,29 +40,14 @@ public class DoltSqlTemplate {
 
     public static final String SQL_PROCEDURE_DOLT_CHERRY_PICK = "CALL DOLT_CHERRY_PICK(${PARAMS_LIST})";
 
-    public static String buildAddSql(String... params) {
-        return buildSqlTemplate(SQL_PROCEDURE_DOLT_ADD, params);
-    }
-
-    public static String buildBackupSql(String... params) {
-        return buildSqlTemplate(SQL_PROCEDURE_DOLT_BACKUP, params);
-    }
-
-    public static String buildBranchSql(String... params) {
-        return buildSqlTemplate(SQL_PROCEDURE_DOLT_BRANCH, params);
-    }
-
-    public static String buildCheckoutSql(String... params) {
-        return buildSqlTemplate(SQL_PROCEDURE_DOLT_CHECKOUT, params);
-    }
-
-    public static String buildCherryPickSql(String... params) {
-        return buildSqlTemplate(SQL_PROCEDURE_DOLT_CHERRY_PICK, params);
-    }
+    /**
+     * 分支清理操作
+     */
+    public static final String SQL_PROCEDURE_DOLT_CLEAN = "CALL DOLT_CLEAN(${PARAMS_LIST})";
 
     public static String buildSqlTemplate(String template, String... params) {
         if (params == null || params.length == 0) {
-            throw new IllegalArgumentException("params is null or empty");
+            return template.replace("${PARAMS_LIST}", "");
         }
 
         // 替换模板中的 ${PARAMS_LIST} 为占位符字符串
