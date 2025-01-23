@@ -1,9 +1,9 @@
 package com.hxuanyu.jdolt.core.procedure;
 
-import com.hxuanyu.jdolt.core.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
-import com.hxuanyu.jdolt.core.interfaces.DoltProcedure;
-import com.hxuanyu.jdolt.core.repository.DoltRepository;
+import com.hxuanyu.jdolt.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.repository.DoltRepository;
 
 /**
  * `DOLT_CHECKOUT()` 存储过程允许将当前会话切换到其他分支，或者将指定的表恢复到当前 HEAD 的内容。

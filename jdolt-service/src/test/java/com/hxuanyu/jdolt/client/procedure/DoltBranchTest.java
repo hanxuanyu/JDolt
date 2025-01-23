@@ -2,7 +2,7 @@ package com.hxuanyu.jdolt.client.procedure;
 
 import com.hxuanyu.jdolt.client.DoltClientTest;
 import com.hxuanyu.jdolt.core.procedure.DoltBranch;
-import com.hxuanyu.jdolt.core.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.ProcedureResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package com.hxuanyu.jdolt.core.repository;
+package com.hxuanyu.jdolt.repository;
 
-import com.hxuanyu.jdolt.core.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.exception.DoltException;
 import com.hxuanyu.jdolt.util.BranchNameValidator;
 import com.hxuanyu.jdolt.util.ParamValidator;

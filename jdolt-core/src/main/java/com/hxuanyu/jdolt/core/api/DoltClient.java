@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.core.api;
 
-import com.hxuanyu.jdolt.core.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.core.procedure.DoltAdd;
 import com.hxuanyu.jdolt.core.procedure.DoltBranch;
 import com.hxuanyu.jdolt.core.procedure.DoltCheckout;

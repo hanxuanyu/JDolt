@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.core.manager;
+package com.hxuanyu.jdolt.manager;
 
 import com.hxuanyu.jdolt.exception.DoltConnectionException;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
-package com.hxuanyu.jdolt.core.interfaces;
+package com.hxuanyu.jdolt.interfaces;
 
-import com.hxuanyu.jdolt.core.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.ProcedureResult;
 
 import java.util.List;
 import java.util.Map;
