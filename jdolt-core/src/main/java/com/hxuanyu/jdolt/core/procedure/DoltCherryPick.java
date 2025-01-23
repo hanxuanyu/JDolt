@@ -1,13 +1,11 @@
 package com.hxuanyu.jdolt.core.procedure;
 
-import com.hxuanyu.jdolt.connection.DoltConnectionManager;
-import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
-import com.hxuanyu.jdolt.core.DoltProcedure;
-import com.hxuanyu.jdolt.core.DoltRepository;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.core.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.core.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.core.repository.DoltRepository;
+import com.hxuanyu.jdolt.core.model.ProcedureResult;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * 应用现有提交引入的更改。
@@ -65,8 +63,38 @@ public class DoltCherryPick extends DoltRepository implements DoltProcedure {
         return instance;
     }
 
+    public ProcedureResult abort() {
+        return call("--abort");
+    }
+
+    public ProcedureResult callAllowEmpty(String sourceRef) {
+        return call("--allow-empty", sourceRef);
+    }
+
     @Override
     public String buildSql(String... params) {
         return DoltSqlTemplate.buildCherryPickSql(params);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
