@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.model;
+package com.hxuanyu.jdolt.core.model;
 
 import java.util.List;
 import java.util.Map;

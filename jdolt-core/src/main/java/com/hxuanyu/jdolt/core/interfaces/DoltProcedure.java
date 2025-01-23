@@ -1,7 +1,6 @@
-package com.hxuanyu.jdolt.core;
+package com.hxuanyu.jdolt.core.interfaces;
 
-import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.core.model.ProcedureResult;
 
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.config;
 
-import com.hxuanyu.jdolt.api.DoltClient;
+import com.hxuanyu.jdolt.core.api.DoltClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

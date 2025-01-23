@@ -1,14 +1,9 @@
 package com.hxuanyu.jdolt.client;
 
-import com.hxuanyu.jdolt.api.DoltClient;
-import com.hxuanyu.jdolt.core.VersionControl;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.core.api.DoltClient;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 /**
  * dolt客户端测试
@@ -21,7 +16,7 @@ import java.util.List;
 public class DoltClientTest {
 
     protected DoltClient doltClient;
-    protected VersionControl versionControl;
+    protected DoltClient.VersionControl versionControl;
 
     @Autowired
     public void setDoltClient(DoltClient doltClient) {

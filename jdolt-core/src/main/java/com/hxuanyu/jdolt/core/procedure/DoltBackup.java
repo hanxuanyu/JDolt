@@ -1,10 +1,9 @@
 package com.hxuanyu.jdolt.core.procedure;
 
-import com.hxuanyu.jdolt.connection.DoltConnectionManager;
-import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
-import com.hxuanyu.jdolt.core.DoltProcedure;
-import com.hxuanyu.jdolt.core.DoltRepository;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.core.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.core.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.core.repository.DoltRepository;
 
 /**
  * 添加或移除已配置的备份，与已配置的备份同步，将备份同步到远程URL，将远程URL备份恢复为一个新数据库。

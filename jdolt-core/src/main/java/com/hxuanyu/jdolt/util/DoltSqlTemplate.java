@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.constant;
+package com.hxuanyu.jdolt.util;
 
 /**
  * dolt相关sql模板，用于prepared statement 拼装sql语句

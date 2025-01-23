@@ -1,9 +1,9 @@
 package com.hxuanyu.jdolt.core.procedure;
 
-import com.hxuanyu.jdolt.connection.DoltConnectionManager;
-import com.hxuanyu.jdolt.constant.DoltSqlTemplate;
-import com.hxuanyu.jdolt.core.DoltProcedure;
-import com.hxuanyu.jdolt.core.DoltRepository;
+import com.hxuanyu.jdolt.core.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.core.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.core.repository.DoltRepository;
 
 
 /**
