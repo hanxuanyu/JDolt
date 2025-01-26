@@ -73,15 +73,15 @@ public class DoltClone extends DoltRepository implements DoltProcedure {
     }
 
     public ProcedureResult cloneBranch(String url, String databaseName, String originBranch, String remoteName) {
-        return call(url, databaseName, "-branch", originBranch, "-remote", remoteName);
+        return call(url, databaseName, "-branch", originBranch, "--remote", remoteName);
     }
 
     public ProcedureResult cloneBranchWithDepth(String url, String databaseName, String originBranch, int depth) {
-        return call(url, databaseName, "-branch", originBranch, "--depth", depth + "");
+        return call(url, databaseName, "-branch", originBranch, "--depth", String.valueOf(depth));
     }
 
     public ProcedureResult cloneBranchWithDepth(String url, String databaseName, String originBranch, String remoteName, int depth) {
-        return call(url, databaseName, "-branch", originBranch, "-remote", remoteName, "--depth", depth + "");
+        return call(url, databaseName, "-branch", originBranch, "--remote", remoteName, "--depth", String.valueOf(depth));
     }
 
 
