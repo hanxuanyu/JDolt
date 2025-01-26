@@ -40,6 +40,7 @@ public class DoltSqlTemplate {
 
     public static final String SQL_PROCEDURE_DOLT_CHERRY_PICK = "CALL DOLT_CHERRY_PICK(${PARAMS_LIST})";
 
+    public static final String SQL_PROCEDURE_DOLT_CLONE = "CALL DOLT_CLONE(${PARAMS_LIST})";
     /**
      * 分支清理操作
      */
