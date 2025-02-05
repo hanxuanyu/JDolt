@@ -46,6 +46,8 @@ public class DoltSqlTemplate {
      */
     public static final String SQL_PROCEDURE_DOLT_CLEAN = "CALL DOLT_CLEAN(${PARAMS_LIST})";
 
+    public static final String SQL_PROCEDURE_DOLT_COMMIT = "CALL DOLT_COMMIT(${PARAMS_LIST})";
+
     public static String buildSqlTemplate(String template, String... params) {
         if (params == null || params.length == 0) {
             return template.replace("${PARAMS_LIST}", "");
