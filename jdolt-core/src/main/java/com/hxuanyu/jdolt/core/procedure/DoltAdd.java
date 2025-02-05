@@ -8,16 +8,15 @@ import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
  * ## `DOLT_ADD()`
- *
+ * <p>
  * 将当前会话中的工作区更改添加到暂存区。功能与CLI中的`dolt add`完全相同，并接受相同的参数。
- *
+ * <p>
  * 将表添加到暂存区后，可以使用`DOLT_COMMIT()`提交这些更改。
  *
  * <pre>
@@ -27,12 +26,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * CALL DOLT_ADD('table1', 'table2');
  * }
  * </pre>
- *
+ * <p>
  * ### 选项
- *
+ * <p>
  * - `table`：要添加到暂存区的表。可以使用缩写`.`来添加所有表。
  * - `-A`：暂存所有有更改的表。
- *
+ * <p>
  * ### 输出模式
  *
  * <pre>
@@ -44,7 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * +--------+------+---------------------------+
  * }
  * </pre>
- *
+ * <p>
  * ### 示例
  *
  * <pre>
@@ -89,7 +88,7 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
             private final List<String> flags = new ArrayList<>();
             private boolean addAllFlags = false;
             private boolean addCurrentFlags = false;
-            private List<String> tables = new ArrayList<>();
+            private final List<String> tables = new ArrayList<>();
 
             public Builder addAll() {
                 addAllFlags = true;
@@ -161,8 +160,6 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
 
     /**
      * 执行存储过程
-     *
-     * @return
      */
     public ProcedureResult execute(Params params) {
         return call(params.toProcedureArgs());
