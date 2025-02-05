@@ -24,7 +24,7 @@ public class VersionControl {
      * @return doltAdd存储过程对象，对相关操作进行封装
      */
     public DoltAdd doltAdd() {
-        return DoltAdd.instance(connectionManager);
+        return DoltAdd.getInstance(connectionManager);
     }
 
     /**
