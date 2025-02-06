@@ -27,7 +27,7 @@ public class VersionControl {
     }
 
     public DoltBranch doltBranch() {
-        return DoltBranch.instance(connectionManager);
+        return DoltBranch.getInstance(connectionManager);
     }
 
     public DoltCheckout doltCheckout() {

@@ -17,22 +17,31 @@ public class DoltBranchTest extends DoltClientTest {
     @Test
     public void testCreateBranch() {
         DoltBranch doltBranch = versionControl.doltBranch();
-        doltBranch.newBranch("testNewBranch");
-        doltBranch.newBranch("testNewBranchWithParent", "main");
-    }
-
-    @Test
-    public void testRenameBranch() {
-        DoltBranch doltBranch = versionControl.doltBranch();
-        ProcedureResult result = doltBranch.call("-m", "testNewBranch", "tetNewBranchRenamed");
+        DoltBranch.Params params = doltBranch.prepare()
+                .create("test_new_branch")
+                .force()
+                .build();
+        ProcedureResult result = doltBranch.execute(params);
         log.info("result: {}", result);
-
     }
 
     @Test
-    public void testDeleteBranch() {
+    public void testMoveBranch() {
         DoltBranch doltBranch = versionControl.doltBranch();
-        doltBranch.deleteBranch("tetNewBranchRenamed");
-        doltBranch.deleteBranch("new_branch");
+        DoltBranch.Params params = doltBranch.prepare()
+                .move("test_new_branch", "test_new_branch_new")
+                .build();
+        ProcedureResult result = doltBranch.execute(params);
+        log.info("result: {}", result);
+    }
+
+    @Test
+    public void testRemoveBranch() {
+        DoltBranch doltBranch = versionControl.doltBranch();
+        DoltBranch.Params params = doltBranch.prepare()
+                .delete("test_new_branch_new")
+                .build();
+        ProcedureResult result = doltBranch.execute(params);
+        log.info("result: {}", result);
     }
 }
