@@ -89,7 +89,7 @@ public class DoltClean extends DoltRepository implements DoltProcedure {
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.SQL_PROCEDURE_DOLT_CLEAN
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("dolt_clean")
                 , params);
     }
 }

@@ -16,7 +16,6 @@ public class DoltAddTest extends DoltClientTest {
         ProcedureResult result = doltAdd.execute(
                 doltAdd.prepare()
                         .addAll()
-                        .build()
         );
 
         log.info(result.toString());
@@ -29,7 +28,6 @@ public class DoltAddTest extends DoltClientTest {
         ProcedureResult result = doltAdd.execute(
                 doltAdd.prepare()
                         .addCurrent()
-                        .build()
         );
 
         log.info(result.toString());
@@ -42,7 +40,6 @@ public class DoltAddTest extends DoltClientTest {
         ProcedureResult result = doltAdd.execute(
                 doltAdd.prepare()
                         .withTable("test_table")
-                        .build()
         );
 
         log.info(result.toString());

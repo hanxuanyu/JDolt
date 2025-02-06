@@ -70,6 +70,7 @@ public class DoltRepository {
      * @throws SQLException 如果执行失败
      */
     public List<Map<String, Object>> executeQueryAsList(String sql, String... params) {
+        logger.debug("executeQueryAsList start, sql: {} params: {}", sql, params);
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
@@ -107,6 +108,7 @@ public class DoltRepository {
      * @throws SQLException 如果执行失败
      */
     protected boolean execute(String sql, String... params) throws SQLException {
+        logger.debug("execute start, sql: {} params: {}", sql, params);
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)

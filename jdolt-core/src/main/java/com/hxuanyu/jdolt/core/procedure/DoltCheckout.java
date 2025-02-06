@@ -86,6 +86,6 @@ public class DoltCheckout extends DoltRepository implements DoltProcedure {
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.SQL_PROCEDURE_DOLT_CHECKOUT, params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("dolt_checkout"), params);
     }
 }

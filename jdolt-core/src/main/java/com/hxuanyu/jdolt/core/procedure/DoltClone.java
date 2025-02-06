@@ -87,6 +87,6 @@ public class DoltClone extends DoltRepository implements DoltProcedure {
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.SQL_PROCEDURE_DOLT_CLONE, params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("dolt_clone"), params);
     }
 }
