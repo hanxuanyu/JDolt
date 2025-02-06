@@ -15,11 +15,27 @@ public class DoltBackupTest extends DoltClientTest {
 
         ProcedureResult result = doltBackup.execute(
                 doltBackup.prepare()
-                        .addSyncUrl("testUrl", "file://d:/home/doltBackupTest")
-                        .build()
+                        .addSyncUrl("testUrl", "file:/home/dolt/doltBackupTest")
         );
+    }
 
-        log.info(result.toString());
+    @Test
+    public void testBackup() {
+        DoltBackup doltBackup = versionControl.doltBackup();
+        ProcedureResult result = doltBackup.execute(
+                doltBackup.prepare()
+                        .sync("testUrl")
+        );
+    }
+
+
+    @Test
+    public void testRestore() {
+        DoltBackup doltBackup = versionControl.doltBackup();
+        ProcedureResult result = doltBackup.execute(
+                doltBackup.prepare()
+                        .restore("file:/home/dolt/doltBackupTest", "restoredDb2")
+        );
     }
 
     @Test
@@ -29,10 +45,7 @@ public class DoltBackupTest extends DoltClientTest {
         ProcedureResult result = doltBackup.execute(
                 doltBackup.prepare()
                         .removeUrl("testUrl")
-                        .build()
         );
-
-        log.info(result.toString());
     }
 
 }

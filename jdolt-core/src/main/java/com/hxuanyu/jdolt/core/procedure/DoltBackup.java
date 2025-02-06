@@ -1,9 +1,11 @@
 package com.hxuanyu.jdolt.core.procedure;
 
+import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
+import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.ArrayList;
@@ -75,75 +77,54 @@ public class DoltBackup extends DoltRepository implements DoltProcedure {
     }
 
     // 参数包装类作为静态内部类
-    public static class Params {
-        private final List<String> flags;
+    public static class Params extends AbstractParamBuilder<Params> {
 
-        private Params(Builder builder) {
-            this.flags = List.copyOf(builder.flags);
+
+        protected Params() {
+            super(Params.class);
         }
 
-        public static class Builder {
-            private final List<String> flags = new ArrayList<>();
-
-            // backup存储过程的各个方法不允许同时存在，因此使用计数器来对调用进行计数，若存在两个或两个以上的调用，则build方法中直接抛出异常
-            private int invokeCount = 0;
-
-
-            public Builder syncToUrl(String url) {
-                invokeCount++;
-                flags.add("sync-url");
-                flags.add(url);
-                return this;
-            }
-
-            public Builder addSyncUrl(String name, String url) {
-                invokeCount++;
-                flags.add("add");
-                flags.add(name);
-                flags.add(url);
-                return this;
-            }
-
-            public Builder removeUrl(String name) {
-                invokeCount++;
-                flags.add("remove");
-                flags.add(name);
-                return this;
-            }
-
-            public Builder restore(String url, String newDbName) {
-                invokeCount++;
-                flags.add("restore");
-                flags.add(url);
-                flags.add(newDbName);
-                return this;
-            }
-
-
-            /**
-             * 构建参数对象
-             */
-            public Params build() {
-                if (invokeCount > 1) {
-                    throw new IllegalStateException("Cannot call multiple methods (syncToUrl, addSyncUrl, removeUrl, restore) simultaneously.");
-                }
-                return new Params(this);
-            }
+        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        public Params syncToUrl(String url) {
+            validator.checkAndMark("syncToUrl");
+            addFlags("sync-url", url);
+            return this;
         }
 
-        /**
-         * 将参数转换为存储过程调用所需的字符串数组
-         */
-        String[] toProcedureArgs() {
-            return flags.toArray(new String[0]);
+        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        public Params addSyncUrl(String backupName, String url) {
+            validator.checkAndMark("addSyncUrl");
+            addFlags("add", backupName, url);
+            return this;
+        }
+
+        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        public Params removeUrl(String backupName) {
+            validator.checkAndMark("removeUrl");
+            addFlags("remove", backupName);
+            return this;
+        }
+
+        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        public Params sync(String backupName) {
+            validator.checkAndMark("removeUrl");
+            addFlags("sync", backupName);
+            return this;
+        }
+
+        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore"})
+        public Params restore(String url, String newDbName) {
+            validator.checkAndMark("restore");
+            addFlags("restore", url, newDbName);
+            return this;
         }
     }
 
     /**
      * 准备参数构建器
      */
-    public Params.Builder prepare() {
-        return new Params.Builder();
+    public Params prepare() {
+        return new Params();
     }
 
     /**
