@@ -18,20 +18,14 @@ public class VersionControl {
     }
 
 
-    /**
-     * dolt_add() 存储过程，支持传入要纳入版本管理的table数组或 "."、"-A"
-     *
-     * @return doltAdd存储过程对象，对相关操作进行封装
-     */
     public DoltAdd doltAdd() {
         return DoltAdd.getInstance(connectionManager);
     }
 
-    /**
-     * dolt_branch()存储过程，支持对dolt分支进行增、删、改操作
-     *
-     * @return doltBranch存储过程对象，对相关操作进行封装
-     */
+    public DoltBackup doltBackup() {
+        return DoltBackup.getInstance(connectionManager);
+    }
+
     public DoltBranch doltBranch() {
         return DoltBranch.instance(connectionManager);
     }
