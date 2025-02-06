@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 /**
- * TODO
+ * Jdolt配置类
  *
  * @author hanxuanyu
  * @version 1.0

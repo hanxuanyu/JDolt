@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO
+ * Dolt存储过程接口定义，dolt存储过程应实现本接口定义的方法，对于通用的call方法， 可以使用默认实现或根据需要进行重写
  *
  * @author hanxuanyu
  * @version 1.0
