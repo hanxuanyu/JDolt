@@ -3,12 +3,12 @@ package com.hxuanyu.jdolt.core.procedure;
 import com.hxuanyu.jdolt.annotation.MethodDependsOn;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
-import com.hxuanyu.jdolt.interfaces.ParamBuilder;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
+import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
-import com.hxuanyu.jdolt.util.MethodConstraintValidator;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,8 +131,10 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
     }
 
     // 参数封装类
-    public static class Params implements ParamBuilder<Params> {
-        private final MethodConstraintValidator validator = new MethodConstraintValidator(Params.class);
+    public static class Params extends AbstractParamBuilder<Params> {
+        protected Params() {
+            super(Params.class);
+        }
 
         // 链式调用方法
         @MethodMutexGroup({"create", "move", "delete", "copy"})
@@ -176,11 +178,6 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
             validator.checkAndMark("delete");
             addFlags("-d", branch);
             return this;
-        }
-
-        @Override
-        public Params self() {
-            return null;
         }
     }
 

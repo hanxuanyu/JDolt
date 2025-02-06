@@ -3,6 +3,8 @@ package com.hxuanyu.jdolt.client;
 import com.hxuanyu.jdolt.core.api.DoltClient;
 import com.hxuanyu.jdolt.core.api.VersionControl;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 @Slf4j
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // 按 @Order 注解指定的顺序执行
 public class DoltClientTest {
 
     protected DoltClient doltClient;
