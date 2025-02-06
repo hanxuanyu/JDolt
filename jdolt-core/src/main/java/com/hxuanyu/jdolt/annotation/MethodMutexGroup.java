@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface MethodMutexGroup {
-    String value(); // 互斥组的名称
+    String[] value(); // 互斥组的名称
 }
 
 

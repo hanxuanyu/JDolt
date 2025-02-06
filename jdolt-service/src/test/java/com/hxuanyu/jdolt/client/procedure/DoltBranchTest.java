@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 /**
- * TODO
+ * DoltBranchTest
  *
  * @author hanxuanyu
  * @version 1.0
@@ -30,6 +30,7 @@ public class DoltBranchTest extends DoltClientTest {
         DoltBranch doltBranch = versionControl.doltBranch();
         DoltBranch.Params params = doltBranch.prepare()
                 .move("test_new_branch", "test_new_branch_new")
+                .force()
                 .build();
         ProcedureResult result = doltBranch.execute(params);
         log.info("result: {}", result);
@@ -40,6 +41,7 @@ public class DoltBranchTest extends DoltClientTest {
         DoltBranch doltBranch = versionControl.doltBranch();
         DoltBranch.Params params = doltBranch.prepare()
                 .delete("test_new_branch_new")
+                .force()
                 .build();
         ProcedureResult result = doltBranch.execute(params);
         log.info("result: {}", result);

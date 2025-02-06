@@ -141,14 +141,14 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
             private MethodConstraintValidator validator = new MethodConstraintValidator(Builder.class);
 
 
-            @MethodMutexGroup("create")
+            @MethodMutexGroup({"create", "move", "delete", "copy"})
             public Builder create(String newBranchName) {
                 validator.checkAndMark("create");
                 flags.add(newBranchName);
                 return this;
             }
 
-            @MethodMutexGroup("create")
+            @MethodMutexGroup({"create", "move", "delete", "copy"})
             public Builder create(String newBranch, String sourceBranch) {
                 validator.checkAndMark("create");
                 flags.add(newBranch);
@@ -156,7 +156,7 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
                 return this;
             }
 
-            @MethodMutexGroup("copy")
+            @MethodMutexGroup({"create", "move", "delete", "copy"})
             public Builder copy(String sourceBranch, String newBranch) {
                 validator.checkAndMark("copy");
                 flags.add("-c");
@@ -173,7 +173,7 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
                 return this;
             }
 
-            @MethodMutexGroup("move")
+            @MethodMutexGroup({"create", "move", "delete", "copy"})
             public Builder move(String oldBranch, String newBranch) {
                 validator.checkAndMark("move");
                 flags.add("-m");
@@ -182,7 +182,7 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
                 return this;
             }
 
-            @MethodMutexGroup("delete")
+            @MethodMutexGroup({"create", "move", "delete", "copy"})
             public Builder delete(String branch) {
                 validator.checkAndMark("delete");
                 flags.add("-d");
