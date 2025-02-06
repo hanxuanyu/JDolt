@@ -70,6 +70,7 @@ public class DoltRepository {
      * @throws SQLException 如果执行失败
      */
     public List<Map<String, Object>> executeQueryAsList(String sql, String... params) {
+        long start = System.currentTimeMillis();
         logger.debug("executeQueryAsList start, sql: {} params: {}", sql, params);
         try (
                 Connection connection = connectionManager.getConnection();
@@ -88,7 +89,8 @@ public class DoltRepository {
                     }
                     results.add(row);
                 }
-
+                long end = System.currentTimeMillis();
+                logger.debug("executeQueryAsList finish, sql: {} params: {}， result: {}, cost: {}ms", sql, params, results, (end - start));
                 return results;
             }
         } catch (SQLException e) {
