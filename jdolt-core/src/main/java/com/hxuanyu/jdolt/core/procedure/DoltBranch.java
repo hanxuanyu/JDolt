@@ -3,6 +3,7 @@ package com.hxuanyu.jdolt.core.procedure;
 import com.hxuanyu.jdolt.annotation.MethodDependsOn;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.interfaces.ParamBuilder;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
@@ -10,6 +11,7 @@ import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.MethodConstraintValidator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -128,90 +130,65 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
         return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltBranch(connectionManager));
     }
 
-    // 参数包装类作为静态内部类
-    public static class Params {
-        private final List<String> flags;
+    // 参数封装类
+    public static class Params implements ParamBuilder<Params> {
+        private final MethodConstraintValidator validator = new MethodConstraintValidator(Params.class);
 
-        private Params(Builder builder) {
-            this.flags = List.copyOf(builder.flags);
+        // 链式调用方法
+        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        public Params create(String newBranchName) {
+            validator.checkAndMark("create");
+            addFlag(newBranchName);
+            return this;
         }
 
-        public static class Builder {
-            private final List<String> flags = new ArrayList<>();
-            private MethodConstraintValidator validator = new MethodConstraintValidator(Builder.class);
-
-
-            @MethodMutexGroup({"create", "move", "delete", "copy"})
-            public Builder create(String newBranchName) {
-                validator.checkAndMark("create");
-                flags.add(newBranchName);
-                return this;
-            }
-
-            @MethodMutexGroup({"create", "move", "delete", "copy"})
-            public Builder create(String newBranch, String sourceBranch) {
-                validator.checkAndMark("create");
-                flags.add(newBranch);
-                flags.add(sourceBranch);
-                return this;
-            }
-
-            @MethodMutexGroup({"create", "move", "delete", "copy"})
-            public Builder copy(String sourceBranch, String newBranch) {
-                validator.checkAndMark("copy");
-                flags.add("-c");
-                flags.add(sourceBranch);
-                flags.add(newBranch);
-                return this;
-            }
-
-            @MethodMutexGroup("force")
-            @MethodDependsOn({"move", "delete", "create"})
-            public Builder force() {
-                validator.checkAndMark("force");
-                flags.add("-f");
-                return this;
-            }
-
-            @MethodMutexGroup({"create", "move", "delete", "copy"})
-            public Builder move(String oldBranch, String newBranch) {
-                validator.checkAndMark("move");
-                flags.add("-m");
-                flags.add(oldBranch);
-                flags.add(newBranch);
-                return this;
-            }
-
-            @MethodMutexGroup({"create", "move", "delete", "copy"})
-            public Builder delete(String branch) {
-                validator.checkAndMark("delete");
-                flags.add("-d");
-                flags.add(branch);
-                return this;
-            }
-
-            /**
-             * 构建参数对象
-             */
-            public Params build() {
-
-                return new Params(this);
-            }
+        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        public Params create(String newBranch, String sourceBranch) {
+            validator.checkAndMark("create");
+            addFlags(newBranch, sourceBranch);
+            return this;
         }
 
-        /**
-         * 将参数转换为存储过程调用所需的字符串数组
-         */
-        String[] toProcedureArgs() {
-            return flags.toArray(new String[0]);
+        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        public Params copy(String sourceBranch, String newBranch) {
+            validator.checkAndMark("copy");
+            addFlags("-c", sourceBranch, newBranch);
+            return this;
+        }
+
+        @MethodMutexGroup("force")
+        @MethodDependsOn({"move", "delete", "create"})
+        public Params force() {
+            validator.checkAndMark("force");
+            addFlag("-f");
+            return this;
+        }
+
+        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        public Params move(String oldBranch, String newBranch) {
+            validator.checkAndMark("move");
+            addFlags("-m", oldBranch, newBranch);
+            return this;
+        }
+
+        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        public Params delete(String branch) {
+            validator.checkAndMark("delete");
+            addFlags("-d", branch);
+            return this;
+        }
+
+        @Override
+        public Params self() {
+            return null;
         }
     }
 
     /**
      * 准备参数构建器
      */
-    public Params.Builder prepare() {
-        return new Params.Builder();
+    public Params prepare() {
+        return new Params();
     }
 
     /**

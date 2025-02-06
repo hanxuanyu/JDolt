@@ -19,10 +19,9 @@ public class DoltBranchTest extends DoltClientTest {
         DoltBranch doltBranch = versionControl.doltBranch();
         DoltBranch.Params params = doltBranch.prepare()
                 .create("test_new_branch")
-                .force()
-                .build();
+                .force();
         ProcedureResult result = doltBranch.execute(params);
-        log.info("result: {}", result);
+        log.info("result: {}, params: {}", result, params.toProcedureArgs());
     }
 
     @Test
@@ -30,10 +29,9 @@ public class DoltBranchTest extends DoltClientTest {
         DoltBranch doltBranch = versionControl.doltBranch();
         DoltBranch.Params params = doltBranch.prepare()
                 .move("test_new_branch", "test_new_branch_new")
-                .force()
-                .build();
+                .force();
         ProcedureResult result = doltBranch.execute(params);
-        log.info("result: {}", result);
+        log.info("result: {}, params: {}", result, params.toProcedureArgs());
     }
 
     @Test
@@ -41,9 +39,8 @@ public class DoltBranchTest extends DoltClientTest {
         DoltBranch doltBranch = versionControl.doltBranch();
         DoltBranch.Params params = doltBranch.prepare()
                 .delete("test_new_branch_new")
-                .force()
-                .build();
+                .force();
         ProcedureResult result = doltBranch.execute(params);
-        log.info("result: {}", result);
+        log.info("result: {}, params: {}", result, params.toProcedureArgs());
     }
 }

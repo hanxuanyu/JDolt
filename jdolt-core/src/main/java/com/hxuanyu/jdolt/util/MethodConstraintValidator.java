@@ -52,23 +52,30 @@ public class MethodConstraintValidator {
      * 检查互斥关系（支持多组）
      */
     private void checkMutex(String methodName) {
+        // 检查是否重复调用同名方法
+        if (calledMethods.contains(methodName)) {
+            throw new IllegalStateException(
+                    "Method '" + methodName + "' cannot be called multiple times. " +
+                            "This includes all overloads of the method."
+            );
+        }
+
+        // 获取当前方法的互斥组
         Set<String> groups = methodToMutexGroups.get(methodName);
         if (groups != null) {
-            // 遍历当前方法的所有互斥组
-            for (String group : groups) {
-                // 检查所有属于同组的方法
-                for (Map.Entry<String, Set<String>> entry : methodToMutexGroups.entrySet()) {
-                    String otherMethod = entry.getKey();
-                    Set<String> otherGroups = entry.getValue();
-
-                    // 如果发现同组且已调用的方法
-                    if (otherGroups.contains(group)
-                            && !otherMethod.equals(methodName)
-                            && calledMethods.contains(otherMethod)) {
-                        throw new IllegalStateException(
-                                "Method '" + methodName + "' cannot be called. " +
-                                        "Conflict with '" + otherMethod + "' in mutex group '" + group + "'."
-                        );
+            // 遍历所有已调用的方法，检查是否存在互斥冲突
+            for (String calledMethod : calledMethods) {
+                Set<String> calledMethodGroups = methodToMutexGroups.get(calledMethod);
+                if (calledMethodGroups != null) {
+                    // 如果当前方法与已调用方法存在互斥组交集，则抛出异常
+                    for (String group : groups) {
+                        if (calledMethodGroups.contains(group)) {
+                            throw new IllegalStateException(
+                                    "Method '" + methodName + "' cannot be called. " +
+                                            "Conflict with previously called method '" + calledMethod + "' " +
+                                            "in mutex group '" + group + "'."
+                            );
+                        }
                     }
                 }
             }
