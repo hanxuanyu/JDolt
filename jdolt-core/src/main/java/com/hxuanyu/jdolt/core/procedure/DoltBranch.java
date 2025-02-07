@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.core.procedure;
 
+import com.hxuanyu.jdolt.annotation.MethodAllowGroup;
 import com.hxuanyu.jdolt.annotation.MethodDependsOn;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
@@ -9,10 +10,6 @@ import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -137,21 +134,21 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
         }
 
         // 链式调用方法
-        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        @MethodAllowGroup("force")
         public Params create(String newBranchName) {
             validator.checkAndMark("create");
             addFlag(newBranchName);
             return this;
         }
 
-        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        @MethodAllowGroup("force")
         public Params create(String newBranch, String sourceBranch) {
             validator.checkAndMark("create");
             addFlags(newBranch, sourceBranch);
             return this;
         }
 
-        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        @MethodAllowGroup("force")
         public Params copy(String sourceBranch, String newBranch) {
             validator.checkAndMark("copy");
             addFlags("-c", sourceBranch, newBranch);
@@ -166,14 +163,14 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
             return this;
         }
 
-        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        @MethodAllowGroup("force")
         public Params move(String oldBranch, String newBranch) {
             validator.checkAndMark("move");
             addFlags("-m", oldBranch, newBranch);
             return this;
         }
 
-        @MethodMutexGroup({"create", "move", "delete", "copy"})
+        @MethodAllowGroup("force")
         public Params delete(String branch) {
             validator.checkAndMark("delete");
             addFlags("-d", branch);
