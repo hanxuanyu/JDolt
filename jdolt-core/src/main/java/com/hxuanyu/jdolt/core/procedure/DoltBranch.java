@@ -5,7 +5,6 @@ import com.hxuanyu.jdolt.annotation.MethodDependsOn;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
-import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
@@ -129,8 +128,8 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
 
     // 参数封装类
     public static class Params extends AbstractParamBuilder<Params> {
-        protected Params() {
-            super(Params.class);
+        protected Params(DoltProcedure doltProcedure) {
+            super(Params.class, doltProcedure);
         }
 
         // 链式调用方法
@@ -182,16 +181,7 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
      * 准备参数构建器
      */
     public Params prepare() {
-        return new Params();
-    }
-
-    /**
-     * 执行存储过程
-     *
-     * @return 执行结果
-     */
-    public ProcedureResult execute(Params params) {
-        return call(params.toProcedureArgs());
+        return new Params(this);
     }
 
     @Override

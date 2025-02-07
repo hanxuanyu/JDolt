@@ -1,13 +1,18 @@
 package com.hxuanyu.jdolt.util;
 
+import com.hxuanyu.jdolt.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.model.ProcedureResult;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
     protected final MethodConstraintValidator validator;
+    protected DoltProcedure doltProcedure;
 
-    protected AbstractParamBuilder(Class<?> clazz) {
+    protected AbstractParamBuilder(Class<?> clazz, DoltProcedure doltProcedure) {
+        this.doltProcedure = doltProcedure;
         this.validator = new MethodConstraintValidator(clazz);
     }
 
@@ -27,6 +32,10 @@ public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
     // 默认方法：获取所有参数
     public String[] toProcedureArgs() {
         return flags.toArray(new String[0]);
+    }
+
+    public ProcedureResult execute() {
+        return doltProcedure.call(this.toProcedureArgs());
     }
 
 }

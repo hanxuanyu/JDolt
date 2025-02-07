@@ -31,7 +31,7 @@ public class VersionControl {
     }
 
     public DoltCheckout doltCheckout() {
-        return DoltCheckout.instance(connectionManager);
+        return DoltCheckout.getInstance(connectionManager);
     }
 
     public DoltCherryPick doltCherryPick() {

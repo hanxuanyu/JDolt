@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.interfaces;
 
+import com.hxuanyu.jdolt.core.procedure.DoltAdd;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public interface DoltProcedure {
     boolean commonDoltExecute(String sql, String... params);
 
     List<Map<String, Object>> executeQueryAsList(String sql, String... params);
+
+    DoltAdd.Params prepare();
 
     String buildSql(String... params);
 

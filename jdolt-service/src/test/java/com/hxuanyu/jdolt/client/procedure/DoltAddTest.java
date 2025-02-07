@@ -13,10 +13,9 @@ public class DoltAddTest extends DoltClientTest {
     public void testDoltAddAll() {
 
         DoltAdd doltAdd = versionControl.doltAdd();
-        ProcedureResult result = doltAdd.execute(
-                doltAdd.prepare()
-                        .addAll()
-        );
+        ProcedureResult result = doltAdd.prepare()
+                .addAll()
+                .execute();
 
         log.info(result.toString());
     }
@@ -25,10 +24,10 @@ public class DoltAddTest extends DoltClientTest {
     public void testDoltAddCurrent() {
 
         DoltAdd doltAdd = versionControl.doltAdd();
-        ProcedureResult result = doltAdd.execute(
-                doltAdd.prepare()
-                        .addCurrent()
-        );
+        ProcedureResult result = doltAdd
+                .prepare()
+                .addCurrent()
+                .execute();
 
         log.info(result.toString());
     }
@@ -37,10 +36,9 @@ public class DoltAddTest extends DoltClientTest {
     public void testDoltAddTable() {
 
         DoltAdd doltAdd = versionControl.doltAdd();
-        ProcedureResult result = doltAdd.execute(
-                doltAdd.prepare()
-                        .withTable("test_table")
-        );
+        ProcedureResult result = doltAdd.prepare()
+                .withTable("test_table")
+                .execute();
 
         log.info(result.toString());
     }

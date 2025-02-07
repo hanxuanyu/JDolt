@@ -4,7 +4,6 @@ import com.hxuanyu.jdolt.annotation.MethodAllowGroup;
 import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
-import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
@@ -78,8 +77,8 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
 
     public static class Params extends AbstractParamBuilder<Params> {
 
-        protected Params() {
-            super(Params.class);
+        protected Params(DoltProcedure doltProcedure) {
+            super(Params.class, doltProcedure);
         }
 
 
@@ -112,19 +111,12 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
         }
     }
 
-    /**
-     * 准备参数构建器
-     */
+
+    @Override
     public Params prepare() {
-        return new Params();
+        return new Params(this);
     }
 
-    /**
-     * 执行存储过程
-     */
-    public ProcedureResult execute(Params params) {
-        return call(params.toProcedureArgs());
-    }
 
     @Override
     public String buildSql(String... params) {
