@@ -2,10 +2,10 @@
 
 #### DoltProcedure
 
-```java
-package com.hxuanyu.jdolt.core.procedure;
+```text
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};
 
-
+#end
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
@@ -16,16 +16,17 @@ import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DoltCherryPick extends DoltRepository implements DoltProcedure<DoltCherryPick.Params> {
+#parse("File Header.java")
+public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DoltCherryPick> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, ${NAME}> INSTANCES = new ConcurrentHashMap<>();
 
-    private DoltCherryPick(DoltConnectionManager connectionManager) {
+    private ${NAME}(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DoltCherryPick getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltCherryPick(connectionManager));
+    public static ${NAME} getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new ${NAME}(connectionManager));
     }
 
     public static class Params extends AbstractParamBuilder<Params> {
@@ -33,6 +34,8 @@ public class DoltCherryPick extends DoltRepository implements DoltProcedure<Dolt
         protected Params(DoltProcedure<Params> doltProcedure) {
             super(Params.class, doltProcedure);
         }
+        
+        doltParamMethod
 
 
     }
@@ -45,7 +48,7 @@ public class DoltCherryPick extends DoltRepository implements DoltProcedure<Dolt
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("dolt_cherry_pick"), params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("${Procedure}"), params);
     }
 
 }
