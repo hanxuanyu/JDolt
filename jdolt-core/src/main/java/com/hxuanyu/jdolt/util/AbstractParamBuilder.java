@@ -35,6 +35,7 @@ public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
     }
 
     public ProcedureResult execute() {
+        validator.checkRequired();
         return doltProcedure.call(this.toProcedureArgs());
     }
 

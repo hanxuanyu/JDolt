@@ -4,6 +4,7 @@ import com.hxuanyu.jdolt.annotation.MethodAllowGroup;
 import com.hxuanyu.jdolt.annotation.MethodDependsOn;
 import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
+import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -23,6 +24,9 @@ public class MethodConstraintValidator {
 
     // 唯一调用方法集合
     private final Set<String> exclusiveMethods = new HashSet<>();
+
+    // 必须调用的方法集合
+    private final Set<String> requiredMethods = new HashSet<>();
 
     private final Class<?> clazz;
 
@@ -71,6 +75,11 @@ public class MethodConstraintValidator {
                         method.getName(),
                         new HashSet<>(Arrays.asList(methodDependsOn.value()))
                 );
+            }
+
+            // 解析必须调用
+            if (method.isAnnotationPresent(MethodInvokeRequired.class)) {
+                requiredMethods.add(method.getName());
             }
         }
     }
@@ -197,6 +206,19 @@ public class MethodConstraintValidator {
                                     calledMethod + "' has already been called."
                     );
                 }
+            }
+        }
+    }
+
+    /**
+     * 检查所有标注了 @MethodInvokeRequired 的方法是否都被调用
+     */
+    public void checkRequired() {
+        for (String requiredMethod : requiredMethods) {
+            if (!calledMethods.contains(requiredMethod)) {
+                throw new IllegalStateException(
+                        "Method '" + requiredMethod + "' is required to be called but was not."
+                );
             }
         }
     }
