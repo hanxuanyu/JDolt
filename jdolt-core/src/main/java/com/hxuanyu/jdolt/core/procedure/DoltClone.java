@@ -1,6 +1,7 @@
 package com.hxuanyu.jdolt.core.procedure;
 
 import com.hxuanyu.jdolt.annotation.MethodDependsOn;
+import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
@@ -108,7 +109,6 @@ public class DoltClone extends DoltRepository implements DoltProcedure<DoltClone
         }
 
         @MethodMutexGroup({"specifyRemoteName"})
-        @MethodDependsOn("withUrl")
         public Params specifyRemoteName(String remoteName) {
             validator.checkAndMark("specifyRemoteName");
             addFlags("-remote", remoteName);
@@ -124,13 +124,13 @@ public class DoltClone extends DoltRepository implements DoltProcedure<DoltClone
         }
 
         @MethodMutexGroup({"withBranch"})
-        @MethodDependsOn("withUrl")
         public Params withBranch(String branch) {
             validator.checkAndMark("withBranch");
             addFlags("--branch", branch);
             return this;
         }
 
+        @MethodInvokeRequired
         @MethodMutexGroup({"withUrl"})
         public Params withUrl(String url) {
             validator.checkAndMark("withUrl");
