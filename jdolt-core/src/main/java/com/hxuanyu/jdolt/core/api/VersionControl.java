@@ -47,6 +47,10 @@ public class VersionControl {
         return DoltClone.getInstance(connectionManager);
     }
 
+    public DoltCommit doltCommit() {
+        return DoltCommit.getInstance(connectionManager);
+    }
+
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
     }
