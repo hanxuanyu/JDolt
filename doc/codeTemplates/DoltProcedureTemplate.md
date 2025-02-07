@@ -57,7 +57,7 @@ public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Par
 
 doltParamMethod:
 
-```java
+```text
 
 @MethodMutexGroup({"$METHOD_NAME$"})
 public Params $METHOD_NAME$($PARAMS$) {
