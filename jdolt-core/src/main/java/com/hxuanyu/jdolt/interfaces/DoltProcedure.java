@@ -1,7 +1,7 @@
 package com.hxuanyu.jdolt.interfaces;
 
-import com.hxuanyu.jdolt.core.procedure.DoltAdd;
 import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @author hanxuanyu
  * @version 1.0
  */
-public interface DoltProcedure {
+public interface DoltProcedure<T extends AbstractParamBuilder<T>> {
 
 
     default boolean callWithResult(String... params) {
@@ -33,7 +33,7 @@ public interface DoltProcedure {
 
     List<Map<String, Object>> executeQueryAsList(String sql, String... params);
 
-    DoltAdd.Params prepare();
+    AbstractParamBuilder<T> prepare();
 
     String buildSql(String... params);
 
