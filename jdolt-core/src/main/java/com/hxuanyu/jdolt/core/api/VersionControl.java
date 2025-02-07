@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.core.api;
 
+import com.hxuanyu.jdolt.core.function.ActiveBranch;
 import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;
@@ -55,6 +56,9 @@ public class VersionControl {
         return DoltConflictsResolve.getInstance(connectionManager);
     }
 
+    public ActiveBranch activeBranch() {
+        return ActiveBranch.getInstance(connectionManager);
+    }
 
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
