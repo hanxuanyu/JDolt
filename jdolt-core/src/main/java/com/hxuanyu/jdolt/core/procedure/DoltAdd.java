@@ -2,7 +2,6 @@ package com.hxuanyu.jdolt.core.procedure;
 
 import com.hxuanyu.jdolt.annotation.MethodAllowGroup;
 import com.hxuanyu.jdolt.annotation.MethodExclusive;
-import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.model.ProcedureResult;
@@ -105,7 +104,7 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
             return this;
         }
 
-        @MethodMutexGroup("with")
+        @MethodAllowGroup("withTable")
         public Params withTable(String... tables) {
             validator.checkAndMark("withTable");
             addFlags(tables);
