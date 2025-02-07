@@ -43,6 +43,10 @@ public class VersionControl {
         return DoltClean.getInstance(connectionManager);
     }
 
+    public DoltClone doltClone() {
+        return DoltClone.getInstance(connectionManager);
+    }
+
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
     }
