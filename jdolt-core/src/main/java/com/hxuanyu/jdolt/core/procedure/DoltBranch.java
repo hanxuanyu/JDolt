@@ -14,9 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 创建、删除和重命名分支。
  * <p>
- * 要列出分支，请使用 {@link dolt-system-tables.md#dolt_branches DOLT_BRANCHES 系统表}，而不是 `DOLT_BRANCH()` 存储过程。
+ * 要列出分支，请使用 { DOLT_BRANCHES 系统表}，而不是 `DOLT_BRANCH()` 存储过程。
  * <p>
- * 要查看当前分支，请使用 {@link dolt-sysvars.md#dbname_head_ref @@<dbname>_head_ref 系统变量}，或使用 `active_branch()` SQL 函数，如下方示例部分所示。
+ * 要查看当前分支，请使用 {dolt-sysvars.md#dbname_head_ref @@<dbname>_head_ref 系统变量}，或使用 `active_branch()` SQL 函数，如下方示例部分所示。
  *
  * <p><b>警告：</b>在多会话服务器环境中，如果某个分支正在其他会话中使用，Dolt将阻止您删除或重命名该分支。
  * 您可以通过传递 `--force` 选项强制重命名或删除，但需要注意的是，其他会话中正在使用该分支的客户端将无法再执行语句，并需要结束会话后重新连接。
@@ -114,7 +114,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * CALL DOLT_BRANCH('-d', 'old-unused-branch');
  * }</pre>
  */
-public class DoltBranch extends DoltRepository implements DoltProcedure {
+public class DoltBranch extends DoltRepository implements DoltProcedure<DoltBranch.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, DoltBranch> INSTANCES = new ConcurrentHashMap<>();
 
@@ -128,7 +128,7 @@ public class DoltBranch extends DoltRepository implements DoltProcedure {
 
     // 参数封装类
     public static class Params extends AbstractParamBuilder<Params> {
-        protected Params(DoltProcedure doltProcedure) {
+        protected Params(DoltProcedure<Params> doltProcedure) {
             super(Params.class, doltProcedure);
         }
 

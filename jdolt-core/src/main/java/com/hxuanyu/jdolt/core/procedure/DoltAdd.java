@@ -63,7 +63,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * }
  * </pre>
  */
-public class DoltAdd extends DoltRepository implements DoltProcedure {
+public class DoltAdd extends DoltRepository implements DoltProcedure<DoltAdd.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, DoltAdd> INSTANCES = new ConcurrentHashMap<>();
 
@@ -77,7 +77,7 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
 
     public static class Params extends AbstractParamBuilder<Params> {
 
-        protected Params(DoltProcedure doltProcedure) {
+        protected Params(DoltProcedure<Params> doltProcedure) {
             super(Params.class, doltProcedure);
         }
 

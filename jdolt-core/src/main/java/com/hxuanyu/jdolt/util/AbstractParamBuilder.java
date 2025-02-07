@@ -9,9 +9,9 @@ import java.util.List;
 
 public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
     protected final MethodConstraintValidator validator;
-    protected DoltProcedure doltProcedure;
+    protected DoltProcedure<? extends AbstractParamBuilder<T>> doltProcedure;
 
-    protected AbstractParamBuilder(Class<?> clazz, DoltProcedure doltProcedure) {
+    protected AbstractParamBuilder(Class<?> clazz, DoltProcedure<? extends AbstractParamBuilder<T>> doltProcedure) {
         this.doltProcedure = doltProcedure;
         this.validator = new MethodConstraintValidator(clazz);
     }

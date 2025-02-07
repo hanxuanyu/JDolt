@@ -61,7 +61,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * CALL dolt_backup('restore', 'https://dolthub.com/some_organization/some_dolthub_repository', 'mydb_restored');
  * }</pre>
  */
-public class DoltBackup extends DoltRepository implements DoltProcedure {
+public class DoltBackup extends DoltRepository implements DoltProcedure<DoltBackup.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, DoltBackup> INSTANCES = new ConcurrentHashMap<>();
 
@@ -77,7 +77,7 @@ public class DoltBackup extends DoltRepository implements DoltProcedure {
     public static class Params extends AbstractParamBuilder<Params> {
 
 
-        protected Params(DoltProcedure doltProcedure) {
+        protected Params(DoltProcedure<Params> doltProcedure) {
             super(Params.class, doltProcedure);
         }
 
