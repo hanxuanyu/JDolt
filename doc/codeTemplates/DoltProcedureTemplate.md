@@ -27,7 +27,7 @@ public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Par
         return INSTANCES.computeIfAbsent(connectionManager, k -> new ${NAME}(connectionManager));
     }
 
-    public static class Params extends AbstractParamBuilder<Params> {
+    public static class Params extends AbstractProcedureParamBuilder<Params> {
 
         protected Params(DoltProcedure<Params> doltProcedure) {
             super(Params.class, doltProcedure);

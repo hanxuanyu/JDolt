@@ -2,7 +2,7 @@ package com.hxuanyu.jdolt.client.procedure;
 
 import com.hxuanyu.jdolt.client.DoltClientTest;
 import com.hxuanyu.jdolt.core.procedure.DoltBranch;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class DoltBranchTest extends DoltClientTest {
     public void testCreateBranch() {
         DoltBranch doltBranch = versionControl.doltBranch();
 
-        ProcedureResult result = doltBranch.prepare()
+        SqlExecuteResult result = doltBranch.prepare()
                 .create("test_new_branch")
                 .force()
                 .execute();
@@ -30,7 +30,7 @@ public class DoltBranchTest extends DoltClientTest {
     @Order(2)
     public void testMoveBranch() {
         DoltBranch doltBranch = versionControl.doltBranch();
-        ProcedureResult result = doltBranch.prepare()
+        SqlExecuteResult result = doltBranch.prepare()
                 .move("test_new_branch", "test_new_branch_new")
                 .force()
                 .execute();
@@ -40,7 +40,7 @@ public class DoltBranchTest extends DoltClientTest {
     @Order(3)
     public void testRemoveBranch() {
         DoltBranch doltBranch = versionControl.doltBranch();
-        ProcedureResult result = doltBranch.prepare()
+        SqlExecuteResult result = doltBranch.prepare()
                 .delete("test_new_branch_new")
                 .force()
                 .execute();

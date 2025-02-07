@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.interfaces;
 
-import com.hxuanyu.jdolt.model.FunctionResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
 
 
@@ -21,12 +21,12 @@ public interface DoltFunction<T extends AbstractFunctionParamBuilder<T>> {
     }
 
 
-    default FunctionResult invoke(String... params) {
+    default SqlExecuteResult invoke(String... params) {
         List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params), params);
         if (resultMaps != null && !resultMaps.isEmpty()) {
-            return FunctionResult.success("success", resultMaps);
+            return SqlExecuteResult.success("success", resultMaps);
         } else {
-            return FunctionResult.failed("failed");
+            return SqlExecuteResult.failed("failed");
         }
     }
 

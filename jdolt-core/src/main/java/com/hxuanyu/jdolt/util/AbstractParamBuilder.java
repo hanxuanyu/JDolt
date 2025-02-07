@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.util;
 
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,5 +32,5 @@ public abstract class AbstractParamBuilder {
     }
 
 
-    public abstract ProcedureResult execute();
+    public abstract SqlExecuteResult execute();
 }

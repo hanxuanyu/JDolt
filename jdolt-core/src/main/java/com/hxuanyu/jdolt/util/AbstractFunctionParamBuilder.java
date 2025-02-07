@@ -1,9 +1,7 @@
 package com.hxuanyu.jdolt.util;
 
 import com.hxuanyu.jdolt.interfaces.DoltFunction;
-import com.hxuanyu.jdolt.interfaces.DoltProcedure;
-import com.hxuanyu.jdolt.model.FunctionResult;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 
 public abstract class AbstractFunctionParamBuilder<T extends AbstractFunctionParamBuilder<T>> extends AbstractParamBuilder{
 
@@ -16,7 +14,7 @@ public abstract class AbstractFunctionParamBuilder<T extends AbstractFunctionPar
 
 
     @Override
-    public FunctionResult execute() {
+    public SqlExecuteResult execute() {
         validator.checkRequired();
         return doltFunction.invoke(this.toProcedureArgs());
     }

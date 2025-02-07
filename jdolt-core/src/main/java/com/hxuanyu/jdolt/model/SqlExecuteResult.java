@@ -9,7 +9,7 @@ import java.util.Map;
  * @author hanxuanyu
  * @version 1.0
  */
-public class ProcedureResult {
+public class SqlExecuteResult {
     /**
      * 成功状态码
      */
@@ -34,13 +34,13 @@ public class ProcedureResult {
     /**
      * 构造器
      */
-    private ProcedureResult() {
+    private SqlExecuteResult() {
     }
 
     /**
      * 全参构造器
      */
-    private ProcedureResult(Integer status, String msg, List<Map<String, Object>> data) {
+    private SqlExecuteResult(Integer status, String msg, List<Map<String, Object>> data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -49,21 +49,21 @@ public class ProcedureResult {
     /**
      * 构造成功消息，如果本次返回需要返回数据，则调用该方法并将数据传入
      */
-    public static ProcedureResult success(String msg, List<Map<String, Object>> data) {
-        return new ProcedureResult(ProcedureResult.CALL_STATUS_SUCCESS, msg, data);
+    public static SqlExecuteResult success(String msg, List<Map<String, Object>> data) {
+        return new SqlExecuteResult(SqlExecuteResult.CALL_STATUS_SUCCESS, msg, data);
     }
 
     /**
      * 构造成功消息，本方法适用于不需要数据返回的情况
      */
-    public static ProcedureResult success(String msg) {
+    public static SqlExecuteResult success(String msg) {
         return success(msg, null);
     }
 
     /**
      * 构造简单的成功消息，使用默认的msg
      */
-    public static ProcedureResult success() {
+    public static SqlExecuteResult success() {
         return success("成功");
     }
 
@@ -73,14 +73,14 @@ public class ProcedureResult {
      *
      * @return
      */
-    public static ProcedureResult failed(String msg) {
-        return new ProcedureResult(ProcedureResult.CALL_STATUS_FAILED, msg, null);
+    public static SqlExecuteResult failed(String msg) {
+        return new SqlExecuteResult(SqlExecuteResult.CALL_STATUS_FAILED, msg, null);
     }
 
     /**
      * 构造带有默认msg字段的失败消息
      */
-    public static  ProcedureResult failed() {
+    public static SqlExecuteResult failed() {
         return failed("失败");
     }
 

@@ -2,7 +2,7 @@ package com.hxuanyu.jdolt.client.procedure;
 
 import com.hxuanyu.jdolt.client.DoltClientTest;
 import com.hxuanyu.jdolt.core.procedure.DoltConflictsResolve;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ public class DoltConflictResolveTest extends DoltClientTest {
     public void testDoltConflictResolve() {
         DoltConflictsResolve doltConflictsResolve = versionControl.doltConflictsResolve();
 
-        ProcedureResult result = doltConflictsResolve.prepare()
+        SqlExecuteResult result = doltConflictsResolve.prepare()
                 .acceptOurs()
                 .withTables("test_table")
                 .execute();

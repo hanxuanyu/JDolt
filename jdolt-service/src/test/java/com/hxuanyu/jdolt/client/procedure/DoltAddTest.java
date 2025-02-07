@@ -2,7 +2,7 @@ package com.hxuanyu.jdolt.client.procedure;
 
 import com.hxuanyu.jdolt.client.DoltClientTest;
 import com.hxuanyu.jdolt.core.procedure.DoltAdd;
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ public class DoltAddTest extends DoltClientTest {
     public void testDoltAddAll() {
 
         DoltAdd doltAdd = versionControl.doltAdd();
-        ProcedureResult result = doltAdd.prepare()
+        SqlExecuteResult result = doltAdd.prepare()
                 .addAll()
                 .execute();
 
@@ -24,7 +24,7 @@ public class DoltAddTest extends DoltClientTest {
     public void testDoltAddCurrent() {
 
         DoltAdd doltAdd = versionControl.doltAdd();
-        ProcedureResult result = doltAdd
+        SqlExecuteResult result = doltAdd
                 .prepare()
                 .addCurrent()
                 .execute();
@@ -36,7 +36,7 @@ public class DoltAddTest extends DoltClientTest {
     public void testDoltAddTable() {
 
         DoltAdd doltAdd = versionControl.doltAdd();
-        ProcedureResult result = doltAdd.prepare()
+        SqlExecuteResult result = doltAdd.prepare()
                 .withTable("test_table")
                 .execute();
 

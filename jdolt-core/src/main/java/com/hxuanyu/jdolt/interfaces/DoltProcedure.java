@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.interfaces;
 
-import com.hxuanyu.jdolt.model.ProcedureResult;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.util.AbstractProcedureParamBuilder;
 
 import java.util.List;
@@ -20,12 +20,12 @@ public interface DoltProcedure<T extends AbstractProcedureParamBuilder<T>> {
     }
 
 
-    default ProcedureResult call(String... params) {
+    default SqlExecuteResult call(String... params) {
         List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params), params);
         if (resultMaps != null && !resultMaps.isEmpty()) {
-            return ProcedureResult.success("success", resultMaps);
+            return SqlExecuteResult.success("success", resultMaps);
         } else {
-            return ProcedureResult.failed("failed");
+            return SqlExecuteResult.failed("failed");
         }
     }
 

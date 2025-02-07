@@ -14,6 +14,10 @@ public class DoltSqlTemplate {
         return "CALL " + procedureName.toUpperCase() + "(" + REPLACE_STRING + ")";
     }
 
+    public static String getFunctionTemplate(String functionName) {
+        return "SELECT " + functionName.toUpperCase() + "(" + REPLACE_STRING + ")";
+    }
+
     public static String buildSqlTemplate(String template, String... params) {
         if (params == null || params.length == 0) {
             return template.replace(REPLACE_STRING, "");
