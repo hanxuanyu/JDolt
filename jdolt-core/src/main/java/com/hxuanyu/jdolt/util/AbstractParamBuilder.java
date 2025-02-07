@@ -20,12 +20,12 @@ public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
     List<String> flags = new ArrayList<>();
 
     // 默认方法：添加单个参数
-    protected void addFlag(String flag) {
+    public void addFlag(String flag) {
         flags.add(flag);
     }
 
     // 默认方法：添加多个参数
-    protected void addFlags(String... flags) {
+    public void addFlags(String... flags) {
         this.flags.addAll(Arrays.asList(flags));
     }
 
