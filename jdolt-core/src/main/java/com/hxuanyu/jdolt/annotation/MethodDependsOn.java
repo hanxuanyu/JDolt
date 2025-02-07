@@ -9,4 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface MethodDependsOn {
     String[] value(); // 依赖的方法名称
+
+    boolean allRequired() default false; // 是否需要所有依赖的方法都被调用
+
 }

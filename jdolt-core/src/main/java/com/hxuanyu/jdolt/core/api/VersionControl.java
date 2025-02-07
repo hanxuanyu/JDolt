@@ -42,4 +42,7 @@ public class VersionControl {
         return DoltClean.instance(connectionManager);
     }
 
+    public DoltConnectionManager getConnectionManager() {
+        return connectionManager;
+    }
 }

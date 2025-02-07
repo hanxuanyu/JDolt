@@ -24,7 +24,10 @@ public class MethodConstraintValidator {
     // 唯一调用方法集合
     private final Set<String> exclusiveMethods = new HashSet<>();
 
+    private final Class<?> clazz;
+
     public MethodConstraintValidator(Class<?> clazz) {
+        this.clazz = clazz; // 保存类引用
         for (Method method : clazz.getDeclaredMethods()) {
             // 检查注解互相不能共存
             boolean hasMutex = method.isAnnotationPresent(MethodMutexGroup.class);
@@ -87,19 +90,6 @@ public class MethodConstraintValidator {
      * 检查互斥关系
      */
     private void checkMutex(String methodName) {
-        // 特殊处理：如果方法名允许自身重复调用，则跳过互斥检查
-        Set<String> allowGroup = methodToAllowGroups.get(methodName);
-        if (allowGroup != null && allowGroup.contains(methodName)) {
-            return; // 方法名允许自身重复调用，直接跳过互斥校验
-        }
-
-        // 默认不允许同名方法重复调用
-        if (calledMethods.contains(methodName)) {
-            throw new IllegalStateException(
-                    "Method '" + methodName + "' cannot be called multiple times."
-            );
-        }
-
         // 检查与其他方法的互斥组冲突
         Set<String> groups = methodToMutexGroups.get(methodName);
         if (groups != null) {
@@ -126,11 +116,6 @@ public class MethodConstraintValidator {
     private void checkAllowGroup(String methodName) {
         Set<String> allowGroup = methodToAllowGroups.get(methodName);
         if (allowGroup != null) {
-            // 特殊处理：如果方法名在允许共存组中，允许方法自身重复调用
-            if (allowGroup.contains(methodName)) {
-                return;
-            }
-
             // 遍历所有已调用的方法，检查是否都在允许共存组中
             for (String calledMethod : calledMethods) {
                 if (!allowGroup.contains(calledMethod)) {
@@ -150,18 +135,46 @@ public class MethodConstraintValidator {
     private void checkDependencies(String methodName) {
         Set<String> dependencies = methodToDependencies.get(methodName);
         if (dependencies != null && !dependencies.isEmpty()) {
-            boolean satisfied = false;
-            for (String dep : dependencies) {
-                if (calledMethods.contains(dep)) {
-                    satisfied = true;
-                    break;
+            // 获取当前方法的依赖注解
+            MethodDependsOn methodDependsOn = getMethodDependsOnAnnotation(methodName);
+            boolean allRequired = methodDependsOn != null && methodDependsOn.allRequired();
+
+            if (allRequired) {
+                // 如果要求所有依赖方法都被调用
+                for (String dep : dependencies) {
+                    if (!calledMethods.contains(dep)) {
+                        throw new IllegalStateException(
+                                "Method '" + methodName + "' requires all of the following methods to be called: " + dependencies
+                        );
+                    }
+                }
+            } else {
+                // 如果只要求至少一个依赖方法被调用
+                boolean satisfied = false;
+                for (String dep : dependencies) {
+                    if (calledMethods.contains(dep)) {
+                        satisfied = true;
+                        break;
+                    }
+                }
+                if (!satisfied) {
+                    throw new IllegalStateException(
+                            "Method '" + methodName + "' requires at least one of: " + dependencies
+                    );
                 }
             }
-            if (!satisfied) {
-                throw new IllegalStateException(
-                        "Method '" + methodName + "' requires at least one of: " + dependencies
-                );
-            }
+        }
+    }
+
+    /**
+     * 获取方法的 MethodDependsOn 注解
+     */
+    private MethodDependsOn getMethodDependsOnAnnotation(String methodName) {
+        try {
+            Method method = clazz.getDeclaredMethod(methodName);
+            return method.getAnnotation(MethodDependsOn.class);
+        } catch (NoSuchMethodException e) {
+            return null;
         }
     }
 
