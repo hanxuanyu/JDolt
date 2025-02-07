@@ -51,6 +51,11 @@ public class VersionControl {
         return DoltCommit.getInstance(connectionManager);
     }
 
+    public DoltConflictsResolve doltConflictsResolve() {
+        return DoltConflictsResolve.getInstance(connectionManager);
+    }
+
+
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
     }
