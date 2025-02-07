@@ -39,6 +39,10 @@ public class VersionControl {
         return DoltCherryPick.getInstance(connectionManager);
     }
 
+    public DoltClean doltClean() {
+        return DoltClean.getInstance(connectionManager);
+    }
+
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
     }
