@@ -1,8 +1,10 @@
 package com.hxuanyu.jdolt.core.procedure;
 
+import com.hxuanyu.jdolt.annotation.MethodAllowGroup;
+import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
-import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
+import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractParamBuilder;
@@ -82,28 +84,28 @@ public class DoltAdd extends DoltRepository implements DoltProcedure {
         }
 
 
-        @MethodMutexGroup({"addCurrent", "withTable", "addAll"})
+        @MethodExclusive
         public Params addAll() {
             validator.checkAndMark("addAll");
             addFlag("-A");
             return this;
         }
 
-        @MethodMutexGroup({"addCurrent", "withTable", "addAll"})
+        @MethodExclusive
         public Params addCurrent() {
             validator.checkAndMark("addCurrent");
             addFlags(".");
             return this;
         }
 
-        @MethodMutexGroup({"addCurrent", "addAll"})
+        @MethodAllowGroup("withTable")
         public Params withTable(String table) {
             validator.checkAndMark("withTable");
             addFlag(table);
             return this;
         }
 
-        @MethodMutexGroup({"addCurrent", "addAll"})
+        @MethodMutexGroup("with")
         public Params withTable(String... tables) {
             validator.checkAndMark("withTable");
             addFlags(tables);
