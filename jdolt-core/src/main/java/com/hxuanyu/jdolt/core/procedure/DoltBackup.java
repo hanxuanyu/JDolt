@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.core.procedure;
 
-import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
+import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.model.ProcedureResult;
@@ -8,8 +8,6 @@ import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -84,35 +82,35 @@ public class DoltBackup extends DoltRepository implements DoltProcedure {
             super(Params.class);
         }
 
-        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        @MethodExclusive
         public Params syncToUrl(String url) {
             validator.checkAndMark("syncToUrl");
             addFlags("sync-url", url);
             return this;
         }
 
-        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        @MethodExclusive
         public Params addSyncUrl(String backupName, String url) {
             validator.checkAndMark("addSyncUrl");
             addFlags("add", backupName, url);
             return this;
         }
 
-        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        @MethodExclusive
         public Params removeUrl(String backupName) {
             validator.checkAndMark("removeUrl");
             addFlags("remove", backupName);
             return this;
         }
 
-        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore", "sync"})
+        @MethodExclusive
         public Params sync(String backupName) {
-            validator.checkAndMark("removeUrl");
+            validator.checkAndMark("sync");
             addFlags("sync", backupName);
             return this;
         }
 
-        @MethodMutexGroup({"syncToUrl", "addSyncUrl", "removeUrl", "restore"})
+        @MethodExclusive
         public Params restore(String url, String newDbName) {
             validator.checkAndMark("restore");
             addFlags("restore", url, newDbName);
