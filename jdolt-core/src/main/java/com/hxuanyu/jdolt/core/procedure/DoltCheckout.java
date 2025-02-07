@@ -5,7 +5,7 @@ import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractParamBuilder;
+import com.hxuanyu.jdolt.util.AbstractProcedureParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -106,7 +106,7 @@ public class DoltCheckout extends DoltRepository implements DoltProcedure<DoltCh
         return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltCheckout(connectionManager));
     }
 
-    public static class Params extends AbstractParamBuilder<Params> {
+    public static class Params extends AbstractProcedureParamBuilder<Params> {
 
         protected Params(DoltProcedure<Params> procedure) {
             super(Params.class, procedure);

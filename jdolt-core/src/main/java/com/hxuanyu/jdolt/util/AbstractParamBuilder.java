@@ -1,18 +1,15 @@
 package com.hxuanyu.jdolt.util;
 
-import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.model.ProcedureResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
+public abstract class AbstractParamBuilder {
     protected final MethodConstraintValidator validator;
-    protected DoltProcedure<? extends AbstractParamBuilder<T>> doltProcedure;
 
-    protected AbstractParamBuilder(Class<?> clazz, DoltProcedure<? extends AbstractParamBuilder<T>> doltProcedure) {
-        this.doltProcedure = doltProcedure;
+    public AbstractParamBuilder(Class<?> clazz) {
         this.validator = new MethodConstraintValidator(clazz);
     }
 
@@ -34,9 +31,6 @@ public abstract class AbstractParamBuilder<T extends AbstractParamBuilder<T>> {
         return flags.toArray(new String[0]);
     }
 
-    public ProcedureResult execute() {
-        validator.checkRequired();
-        return doltProcedure.call(this.toProcedureArgs());
-    }
 
+    public abstract ProcedureResult execute();
 }

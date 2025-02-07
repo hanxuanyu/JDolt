@@ -5,7 +5,7 @@ import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractParamBuilder;
+import com.hxuanyu.jdolt.util.AbstractProcedureParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,7 +69,7 @@ public class DoltConflictsResolve extends DoltRepository implements DoltProcedur
         return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltConflictsResolve(connectionManager));
     }
 
-    public static class Params extends AbstractParamBuilder<Params> {
+    public static class Params extends AbstractProcedureParamBuilder<Params> {
 
         protected Params(DoltProcedure<Params> doltProcedure) {
             super(Params.class, doltProcedure);

@@ -4,7 +4,7 @@ import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractParamBuilder;
+import com.hxuanyu.jdolt.util.AbstractProcedureParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -74,7 +74,7 @@ public class DoltBackup extends DoltRepository implements DoltProcedure<DoltBack
     }
 
     // 参数包装类作为静态内部类
-    public static class Params extends AbstractParamBuilder<Params> {
+    public static class Params extends AbstractProcedureParamBuilder<Params> {
 
 
         protected Params(DoltProcedure<Params> doltProcedure) {
