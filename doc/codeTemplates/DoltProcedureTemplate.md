@@ -6,10 +6,8 @@
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};
 
 #end
-import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
-import com.hxuanyu.jdolt.model.ProcedureResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
