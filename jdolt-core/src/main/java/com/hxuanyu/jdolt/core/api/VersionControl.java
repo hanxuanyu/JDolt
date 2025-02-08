@@ -73,6 +73,10 @@ public class VersionControl {
         return DoltPull.getInstance(connectionManager);
     }
 
+    public DoltPurgeDroppedDatabases doltPurgeDroppedDatabases() {
+        return DoltPurgeDroppedDatabases.getInstance(connectionManager);
+    }
+
 
     //---------------------------------------------------------------
 
