@@ -81,10 +81,10 @@ public class DoltFetch extends DoltRepository implements DoltProcedure<DoltFetch
             return this;
         }
 
-        @MethodMutexGroup({"withRef"})
+        @MethodMutexGroup({"withRefSpec"})
         @MethodDependsOn({"withRemote"})
-        public Params withRef(String ref) {
-            validator.checkAndMark("withRef");
+        public Params withRefSpec(String ref) {
+            validator.checkAndMark("withRefSpec");
             addFlags(ref);
             return this;
         }

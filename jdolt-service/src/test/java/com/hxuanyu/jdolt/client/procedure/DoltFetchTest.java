@@ -15,7 +15,7 @@ public class DoltFetchTest extends DoltClientTest {
     public void testFetch() {
         versionControl.doltFetch().prepare()
                 .withRemote("origin")
-                .withRef("main")
+                .withRefSpec("main")
                 .execute();
     }
 }
