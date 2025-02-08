@@ -1,10 +1,6 @@
 package com.hxuanyu.jdolt.util;
 
-import com.hxuanyu.jdolt.annotation.MethodAllowGroup;
-import com.hxuanyu.jdolt.annotation.MethodDependsOn;
-import com.hxuanyu.jdolt.annotation.MethodExclusive;
-import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
-import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
+import com.hxuanyu.jdolt.annotation.*;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -28,10 +24,22 @@ public class MethodConstraintValidator {
     // 必须调用的方法集合
     private final Set<String> requiredMethods = new HashSet<>();
 
+    // 类级别的必须调用方法组
+    private final Set<String> requiredGroupMethods = new HashSet<>();
+    private boolean groupAllRequired = true; // 默认要求所有方法都必须调用
+
     private final Class<?> clazz;
 
     public MethodConstraintValidator(Class<?> clazz) {
         this.clazz = clazz; // 保存类引用
+
+        // 解析类上的 MethodInvokeRequiredGroup 注解
+        if (clazz.isAnnotationPresent(MethodInvokeRequiredGroup.class)) {
+            MethodInvokeRequiredGroup groupAnnotation = clazz.getAnnotation(MethodInvokeRequiredGroup.class);
+            requiredGroupMethods.addAll(Arrays.asList(groupAnnotation.value()));
+            groupAllRequired = groupAnnotation.allRequired();
+        }
+
         for (Method method : clazz.getDeclaredMethods()) {
             // 检查注解互相不能共存
             boolean hasMutex = method.isAnnotationPresent(MethodMutexGroup.class);
@@ -211,14 +219,43 @@ public class MethodConstraintValidator {
     }
 
     /**
-     * 检查所有标注了 @MethodInvokeRequired 的方法是否都被调用
+     * 检查所有标注了 @MethodInvokeRequired 和 @MethodInvokeRequiredGroup 的方法是否都被调用
      */
     public void checkRequired() {
+        // 检查方法级别的 @MethodInvokeRequired
         for (String requiredMethod : requiredMethods) {
             if (!calledMethods.contains(requiredMethod)) {
                 throw new IllegalStateException(
                         "Method '" + requiredMethod + "' is required to be called but was not."
                 );
+            }
+        }
+
+        // 检查类级别的 @MethodInvokeRequiredGroup
+        if (!requiredGroupMethods.isEmpty()) {
+            if (groupAllRequired) {
+                // 如果要求所有方法都必须调用
+                for (String requiredMethod : requiredGroupMethods) {
+                    if (!calledMethods.contains(requiredMethod)) {
+                        throw new IllegalStateException(
+                                "Method '" + requiredMethod + "' is required to be called as part of the group but was not."
+                        );
+                    }
+                }
+            } else {
+                // 如果只要求至少一个方法被调用
+                boolean satisfied = false;
+                for (String requiredMethod : requiredGroupMethods) {
+                    if (calledMethods.contains(requiredMethod)) {
+                        satisfied = true;
+                        break;
+                    }
+                }
+                if (!satisfied) {
+                    throw new IllegalStateException(
+                            "At least one of the following methods must be called: " + requiredGroupMethods
+                    );
+                }
             }
         }
     }
