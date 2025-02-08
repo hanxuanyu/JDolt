@@ -78,6 +78,10 @@ public class VersionControl {
     }
 
 
+    public DoltReset doltReset() {
+        return DoltReset.getInstance(connectionManager);
+    }
+
     //---------------------------------------------------------------
 
     public ActiveBranch activeBranch() {
