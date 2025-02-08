@@ -81,6 +81,10 @@ public class VersionControl {
         return DoltPush.getInstance(connectionManager);
     }
 
+    public DoltRebase doltRebase() {
+        return DoltRebase.getInstance(connectionManager);
+    }
+
 
     public DoltReset doltReset() {
         return DoltReset.getInstance(connectionManager);
