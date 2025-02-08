@@ -69,6 +69,10 @@ public class VersionControl {
         return DoltMerge.getInstance(connectionManager);
     }
 
+    public DoltPull doltPull() {
+        return DoltPull.getInstance(connectionManager);
+    }
+
 
     //---------------------------------------------------------------
 
