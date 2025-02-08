@@ -15,7 +15,7 @@ public abstract class AbstractProcedureParamBuilder<T extends AbstractProcedureP
 
     @Override
     public SqlExecuteResult execute() {
-        validator.checkRequired();
+        checkParam();
         return doltProcedure.call(this.toProcedureArgs());
     }
 

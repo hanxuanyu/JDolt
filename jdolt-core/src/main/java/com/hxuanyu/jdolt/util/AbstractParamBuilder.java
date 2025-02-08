@@ -31,6 +31,10 @@ public abstract class AbstractParamBuilder {
         return flags.toArray(new String[0]);
     }
 
+    public String[] checkParam() {
+        validator.checkRequired();
+        return toProcedureArgs();
+    }
 
     public abstract SqlExecuteResult execute();
 }

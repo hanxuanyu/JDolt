@@ -1,6 +1,7 @@
 package com.hxuanyu.jdolt.core.procedure;
 
 import com.hxuanyu.jdolt.annotation.MethodExclusive;
+import com.hxuanyu.jdolt.annotation.MethodInvokeRequiredGroup;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
@@ -86,6 +87,7 @@ public class DoltMerge extends DoltRepository implements DoltProcedure<DoltMerge
         return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltMerge(connectionManager));
     }
 
+    @MethodInvokeRequiredGroup(value = {"withBranch", "abort"}, allRequired = false)
     public static class Params extends AbstractProcedureParamBuilder<Params> {
 
         protected Params(DoltProcedure<Params> doltProcedure) {
