@@ -61,6 +61,10 @@ public class VersionControl {
         return DoltFetch.getInstance(connectionManager);
     }
 
+    public DoltGc doltGc() {
+        return DoltGc.getInstance(connectionManager);
+    }
+
     public ActiveBranch activeBranch() {
         return ActiveBranch.getInstance(connectionManager);
     }
