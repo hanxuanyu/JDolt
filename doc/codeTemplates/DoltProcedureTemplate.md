@@ -98,7 +98,7 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("${Function}"), params);
+        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("${Function}"), params);
     }
 
 }
