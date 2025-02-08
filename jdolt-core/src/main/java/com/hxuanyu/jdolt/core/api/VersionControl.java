@@ -85,6 +85,10 @@ public class VersionControl {
         return DoltRebase.getInstance(connectionManager);
     }
 
+    public DoltRemote doltRemote() {
+        return DoltRemote.getInstance(connectionManager);
+    }
+
 
     public DoltReset doltReset() {
         return DoltReset.getInstance(connectionManager);
