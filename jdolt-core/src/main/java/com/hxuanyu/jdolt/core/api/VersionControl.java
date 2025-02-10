@@ -94,6 +94,10 @@ public class VersionControl {
         return DoltReset.getInstance(connectionManager);
     }
 
+    public DoltRevert doltRevert() {
+        return DoltRevert.getInstance(connectionManager);
+    }
+
     //---------------------------------------------------------------
 
     public ActiveBranch activeBranch() {
