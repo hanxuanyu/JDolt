@@ -106,6 +106,10 @@ public class VersionControl {
         return DoltUnDrop.getInstance(connectionManager);
     }
 
+    public DolrVerifyConstraints doltVerifyConstraints() {
+        return DolrVerifyConstraints.getInstance(connectionManager);
+    }
+
     //---------------------------------------------------------------
 
     public ActiveBranch activeBranch() {
