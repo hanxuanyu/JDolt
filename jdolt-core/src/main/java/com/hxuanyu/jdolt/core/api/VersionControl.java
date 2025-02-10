@@ -102,6 +102,10 @@ public class VersionControl {
         return DoltTag.getInstance(connectionManager);
     }
 
+    public DoltUnDrop doltUnDrop() {
+        return DoltUnDrop.getInstance(connectionManager);
+    }
+
     //---------------------------------------------------------------
 
     public ActiveBranch activeBranch() {
