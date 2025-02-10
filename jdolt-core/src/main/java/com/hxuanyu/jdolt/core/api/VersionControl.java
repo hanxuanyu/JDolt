@@ -98,6 +98,10 @@ public class VersionControl {
         return DoltRevert.getInstance(connectionManager);
     }
 
+    public DoltTag doltTag() {
+        return DoltTag.getInstance(connectionManager);
+    }
+
     //---------------------------------------------------------------
 
     public ActiveBranch activeBranch() {
