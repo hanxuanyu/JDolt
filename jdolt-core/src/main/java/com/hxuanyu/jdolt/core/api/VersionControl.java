@@ -1,9 +1,6 @@
 package com.hxuanyu.jdolt.core.api;
 
-import com.hxuanyu.jdolt.core.function.ActiveBranch;
-import com.hxuanyu.jdolt.core.function.DoltHashOf;
-import com.hxuanyu.jdolt.core.function.DoltHashOfTable;
-import com.hxuanyu.jdolt.core.function.DoltMergeBase;
+import com.hxuanyu.jdolt.core.function.*;
 import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;
@@ -130,6 +127,21 @@ public class VersionControl {
         return DoltHashOfTable.getInstance(connectionManager);
     }
 
+    public DoltHashOfDB doltHashOfDB() {
+        return DoltHashOfDB.getInstance(connectionManager);
+    }
+
+    public DoltVersion doltVersion() {
+        return DoltVersion.getInstance(connectionManager);
+    }
+
+    public HasAncestor hasAncestor() {
+        return HasAncestor.getInstance(connectionManager);
+    }
+
+    public LastInsertUUID lastInsertUUID() {
+        return LastInsertUUID.getInstance(connectionManager);
+    }
 
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
