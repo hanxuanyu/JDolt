@@ -2,6 +2,7 @@ package com.hxuanyu.jdolt.core.api;
 
 import com.hxuanyu.jdolt.core.function.ActiveBranch;
 import com.hxuanyu.jdolt.core.function.DoltHashOf;
+import com.hxuanyu.jdolt.core.function.DoltHashOfTable;
 import com.hxuanyu.jdolt.core.function.DoltMergeBase;
 import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
@@ -124,6 +125,11 @@ public class VersionControl {
     public DoltHashOf doltHashOf() {
         return DoltHashOf.getInstance(connectionManager);
     }
+
+    public DoltHashOfTable doltHashOfTable() {
+        return DoltHashOfTable.getInstance(connectionManager);
+    }
+
 
     public DoltConnectionManager getConnectionManager() {
         return connectionManager;
