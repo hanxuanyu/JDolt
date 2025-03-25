@@ -64,7 +64,7 @@ public class DoltInfoHashOfTable extends DoltRepository implements DoltInfoFunct
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("dolt_hashof_table")
                 .withParams(params)
                 .build();

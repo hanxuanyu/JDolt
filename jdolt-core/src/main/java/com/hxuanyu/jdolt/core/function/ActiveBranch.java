@@ -36,7 +36,7 @@ public class ActiveBranch extends DoltRepository implements DoltInfoFunction<Act
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("active_branch")
                 .withParams(params)
                 .build();

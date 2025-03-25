@@ -81,7 +81,7 @@ public class LastInsertUUID extends DoltRepository implements DoltInfoFunction<L
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("last_insert_uuid")
                 .withParams(params)
                 .build();

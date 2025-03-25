@@ -51,7 +51,7 @@ public class DoltInfoVersion extends DoltRepository implements DoltInfoFunction<
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("dolt_version")
                 .withParams(params)
                 .build();

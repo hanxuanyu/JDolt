@@ -87,7 +87,7 @@ public class HasAncestor extends DoltRepository implements DoltInfoFunction<HasA
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("has_ancestor")
                 .withParams(params)
                 .build();

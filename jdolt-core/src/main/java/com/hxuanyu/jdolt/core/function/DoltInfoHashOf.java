@@ -47,7 +47,7 @@ public class DoltInfoHashOf extends DoltRepository implements DoltInfoFunction<D
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("dolt_hashof")
                 .withParams(params)
                 .build();

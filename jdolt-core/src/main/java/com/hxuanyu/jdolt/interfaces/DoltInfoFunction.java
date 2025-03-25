@@ -17,12 +17,12 @@ public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
 
 
     default boolean invokeWithResult(String... params) {
-        return commonDoltExecute(buildSql(params));
+        return commonDoltExecute(buildSqlTemplate(params));
     }
 
 
     default SqlExecuteResult invoke(String... params) {
-        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params));
+        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSqlTemplate(params));
         if (resultMaps != null && !resultMaps.isEmpty()) {
             return SqlExecuteResult.success("success", resultMaps);
         } else {
@@ -36,6 +36,6 @@ public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
 
     AbstractFunctionParamBuilder<T> prepare();
 
-    SqlBuilder.SqlTemplate buildSql(String... params);
+    SqlBuilder.SqlTemplate buildSqlTemplate(String... params);
 
 }

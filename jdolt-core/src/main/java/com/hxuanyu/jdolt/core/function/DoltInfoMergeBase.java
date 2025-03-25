@@ -47,7 +47,7 @@ public class DoltInfoMergeBase extends DoltRepository implements DoltInfoFunctio
 
 
     @Override
-    public SqlBuilder.SqlTemplate buildSql(String... params) {
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
         return SqlBuilder.selectFunction("dolt_merge_base")
                 .withParams(params)
                 .build();
