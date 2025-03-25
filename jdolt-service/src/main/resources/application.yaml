@@ -5,4 +5,4 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: abcabc..123
-    url: jdbc:mysql://dolt.server.hxuanyu.com:19320/test_database?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048
+    url: jdbc:mysql://dolt.server.hxuanyu.com:19320/testDatabase?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSize=250&prepStmtCacheSqlLimit=2048
