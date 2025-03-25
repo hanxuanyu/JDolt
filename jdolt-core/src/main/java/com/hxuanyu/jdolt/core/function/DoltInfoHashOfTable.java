@@ -2,7 +2,7 @@ package com.hxuanyu.jdolt.core.function;
 
 import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -28,22 +28,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * 1 row in set (0.01 sec)
  * }</pre>
  */
-public class DoltHashOfTable extends DoltRepository implements DoltFunction<DoltHashOfTable.Params> {
+public class DoltInfoHashOfTable extends DoltRepository implements DoltInfoFunction<DoltInfoHashOfTable.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DoltHashOfTable> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, DoltInfoHashOfTable> INSTANCES = new ConcurrentHashMap<>();
 
-    private DoltHashOfTable(DoltConnectionManager connectionManager) {
+    private DoltInfoHashOfTable(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DoltHashOfTable getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltHashOfTable(connectionManager));
+    public static DoltInfoHashOfTable getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltInfoHashOfTable(connectionManager));
     }
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
         @MethodInvokeRequired

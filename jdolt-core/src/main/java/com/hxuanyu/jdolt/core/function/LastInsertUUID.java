@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.core.function;
 
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -54,7 +54,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * +-----+
  * }</pre>
  */
-public class LastInsertUUID extends DoltRepository implements DoltFunction<LastInsertUUID.Params> {
+public class LastInsertUUID extends DoltRepository implements DoltInfoFunction<LastInsertUUID.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, LastInsertUUID> INSTANCES = new ConcurrentHashMap<>();
 
@@ -68,8 +68,8 @@ public class LastInsertUUID extends DoltRepository implements DoltFunction<LastI
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
     }

@@ -3,7 +3,7 @@ package com.hxuanyu.jdolt.core.function;
 import com.hxuanyu.jdolt.annotation.MethodDependsOn;
 import com.hxuanyu.jdolt.annotation.MethodInvokeRequiredGroup;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * select has_ancestor('G', 'main');    // true
  * </pre>
  */
-public class HasAncestor extends DoltRepository implements DoltFunction<HasAncestor.Params> {
+public class HasAncestor extends DoltRepository implements DoltInfoFunction<HasAncestor.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, HasAncestor> INSTANCES = new ConcurrentHashMap<>();
 
@@ -50,8 +50,8 @@ public class HasAncestor extends DoltRepository implements DoltFunction<HasAnces
     @MethodInvokeRequiredGroup(value = {"withAncestor", "check"}, allRequired = false)
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
         @MethodMutexGroup({"targetRef"})

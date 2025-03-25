@@ -1,22 +1,22 @@
 package com.hxuanyu.jdolt.util;
 
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 
 public abstract class AbstractFunctionParamBuilder<T extends AbstractFunctionParamBuilder<T>> extends AbstractParamBuilder{
 
-    protected DoltFunction<? extends AbstractFunctionParamBuilder<T>> doltFunction;
+    protected DoltInfoFunction<? extends AbstractFunctionParamBuilder<T>> doltInfoFunction;
 
-    protected AbstractFunctionParamBuilder(Class<?> clazz, DoltFunction<? extends AbstractFunctionParamBuilder<T>> doltFunction) {
+    protected AbstractFunctionParamBuilder(Class<?> clazz, DoltInfoFunction<? extends AbstractFunctionParamBuilder<T>> doltInfoFunction) {
         super(clazz);
-        this.doltFunction = doltFunction;
+        this.doltInfoFunction = doltInfoFunction;
     }
 
 
     @Override
     public SqlExecuteResult execute() {
         checkParam();
-        return doltFunction.invoke(this.toProcedureArgs());
+        return doltInfoFunction.invoke(this.toProcedureArgs());
     }
 
 }

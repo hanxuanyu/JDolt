@@ -115,24 +115,24 @@ public class VersionControl {
         return ActiveBranch.getInstance(connectionManager);
     }
 
-    public DoltMergeBase doltMergeBase() {
-        return DoltMergeBase.getInstance(connectionManager);
+    public DoltInfoMergeBase doltMergeBase() {
+        return DoltInfoMergeBase.getInstance(connectionManager);
     }
 
-    public DoltHashOf doltHashOf() {
-        return DoltHashOf.getInstance(connectionManager);
+    public DoltInfoHashOf doltHashOf() {
+        return DoltInfoHashOf.getInstance(connectionManager);
     }
 
-    public DoltHashOfTable doltHashOfTable() {
-        return DoltHashOfTable.getInstance(connectionManager);
+    public DoltInfoHashOfTable doltHashOfTable() {
+        return DoltInfoHashOfTable.getInstance(connectionManager);
     }
 
-    public DoltHashOfDB doltHashOfDB() {
-        return DoltHashOfDB.getInstance(connectionManager);
+    public DoltInfoHashOfDB doltHashOfDB() {
+        return DoltInfoHashOfDB.getInstance(connectionManager);
     }
 
-    public DoltVersion doltVersion() {
-        return DoltVersion.getInstance(connectionManager);
+    public DoltInfoVersion doltVersion() {
+        return DoltInfoVersion.getInstance(connectionManager);
     }
 
     public HasAncestor hasAncestor() {

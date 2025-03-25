@@ -1,7 +1,7 @@
 package com.hxuanyu.jdolt.core.function;
 
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -12,22 +12,22 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * DOLT_HASHOF() 函数返回某个分支或其他提交规范的提交哈希值。
  */
-public class DoltHashOf extends DoltRepository implements DoltFunction<DoltHashOf.Params> {
+public class DoltInfoHashOf extends DoltRepository implements DoltInfoFunction<DoltInfoHashOf.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DoltHashOf> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, DoltInfoHashOf> INSTANCES = new ConcurrentHashMap<>();
 
-    private DoltHashOf(DoltConnectionManager connectionManager) {
+    private DoltInfoHashOf(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DoltHashOf getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltHashOf(connectionManager));
+    public static DoltInfoHashOf getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltInfoHashOf(connectionManager));
     }
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
         @MethodMutexGroup({"withBranch"})

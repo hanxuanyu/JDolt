@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.core.function;
 
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -8,7 +8,7 @@ import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ActiveBranch extends DoltRepository implements DoltFunction<ActiveBranch.Params> {
+public class ActiveBranch extends DoltRepository implements DoltInfoFunction<ActiveBranch.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, ActiveBranch> INSTANCES = new ConcurrentHashMap<>();
 
@@ -22,8 +22,8 @@ public class ActiveBranch extends DoltRepository implements DoltFunction<ActiveB
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
     }

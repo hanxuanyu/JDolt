@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.core.function;
 
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -23,22 +23,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * +----------------+
  * </pre>
  */
-public class DoltVersion extends DoltRepository implements DoltFunction<DoltVersion.Params> {
+public class DoltInfoVersion extends DoltRepository implements DoltInfoFunction<DoltInfoVersion.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DoltVersion> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, DoltInfoVersion> INSTANCES = new ConcurrentHashMap<>();
 
-    private DoltVersion(DoltConnectionManager connectionManager) {
+    private DoltInfoVersion(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DoltVersion getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltVersion(connectionManager));
+    public static DoltInfoVersion getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltInfoVersion(connectionManager));
     }
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
     }

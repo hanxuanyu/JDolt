@@ -3,7 +3,6 @@ package com.hxuanyu.jdolt.interfaces;
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import java.util.Map;
  * @author hanxuanyu
  * @version 1.0
  */
-public interface DoltFunction<T extends AbstractFunctionParamBuilder<T>> {
+public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
 
 
     default boolean invokeWithResult(String... params) {

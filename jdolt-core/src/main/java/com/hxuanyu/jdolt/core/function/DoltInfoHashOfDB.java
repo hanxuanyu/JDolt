@@ -1,7 +1,7 @@
 package com.hxuanyu.jdolt.core.function;
 
 import com.hxuanyu.jdolt.annotation.MethodExclusive;
-import com.hxuanyu.jdolt.interfaces.DoltFunction;
+import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
@@ -32,22 +32,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 一般建议，当需要检测数据库的变化时，先连接到您需要使用的分支，然后调用不带参数的 `dolt_hashof_db()`。任何哈希值的变化都意味着数据库发生了更改。
  */
-public class DoltHashOfDB extends DoltRepository implements DoltFunction<DoltHashOfDB.Params> {
+public class DoltInfoHashOfDB extends DoltRepository implements DoltInfoFunction<DoltInfoHashOfDB.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DoltHashOfDB> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, DoltInfoHashOfDB> INSTANCES = new ConcurrentHashMap<>();
 
-    private DoltHashOfDB(DoltConnectionManager connectionManager) {
+    private DoltInfoHashOfDB(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DoltHashOfDB getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltHashOfDB(connectionManager));
+    public static DoltInfoHashOfDB getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltInfoHashOfDB(connectionManager));
     }
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltFunction) {
-            super(Params.class, doltFunction);
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
+            super(Params.class, doltInfoFunction);
         }
 
         @MethodExclusive
