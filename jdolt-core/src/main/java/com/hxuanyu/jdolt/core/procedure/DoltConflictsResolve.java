@@ -5,8 +5,8 @@ import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractProcedureParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -104,9 +104,11 @@ public class DoltConflictsResolve extends DoltRepository implements DoltProcedur
     }
 
 
-    @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("DOLT_CONFLICTS_RESOLVE"), params);
-    }
 
+    @Override
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
+        return SqlBuilder.callProcedure("DOLT_CONFLICTS_RESOLVE")
+                .withParams(params)
+                .build();
+    }
 }

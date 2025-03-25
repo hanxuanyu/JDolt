@@ -4,8 +4,8 @@ import com.hxuanyu.jdolt.annotation.MethodExclusive;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -85,9 +85,12 @@ public class DoltInfoHashOfDB extends DoltRepository implements DoltInfoFunction
     }
 
 
+
     @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("dolt_hashof_db"), params);
+    public SqlBuilder.SqlTemplate buildSql(String... params) {
+        return SqlBuilder.selectFunction("dolt_hashof_db")
+                .withParams(params)
+                .build();
     }
 
 }

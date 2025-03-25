@@ -3,8 +3,8 @@ package com.hxuanyu.jdolt.core.function;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -49,9 +49,11 @@ public class DoltInfoVersion extends DoltRepository implements DoltInfoFunction<
     }
 
 
-    @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("dolt_version"), params);
-    }
 
+    @Override
+    public SqlBuilder.SqlTemplate buildSql(String... params) {
+        return SqlBuilder.selectFunction("dolt_version")
+                .withParams(params)
+                .build();
+    }
 }

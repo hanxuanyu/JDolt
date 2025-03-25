@@ -5,8 +5,8 @@ import com.hxuanyu.jdolt.annotation.MethodInvokeRequiredGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractProcedureParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -114,9 +114,12 @@ public class DoltRemote extends DoltRepository implements DoltProcedure<DoltRemo
     }
 
 
+
     @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("dolt_remote"), params);
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
+        return SqlBuilder.callProcedure("dolt_remote")
+                .withParams(params)
+                .build();
     }
 
 }

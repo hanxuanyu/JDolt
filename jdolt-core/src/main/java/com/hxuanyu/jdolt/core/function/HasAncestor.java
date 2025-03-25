@@ -6,8 +6,8 @@ import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -85,9 +85,11 @@ public class HasAncestor extends DoltRepository implements DoltInfoFunction<HasA
     }
 
 
-    @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("has_ancestor"), params);
-    }
 
+    @Override
+    public SqlBuilder.SqlTemplate buildSql(String... params) {
+        return SqlBuilder.selectFunction("has_ancestor")
+                .withParams(params)
+                .build();
+    }
 }

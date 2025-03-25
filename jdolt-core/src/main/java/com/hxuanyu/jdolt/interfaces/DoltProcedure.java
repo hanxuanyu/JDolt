@@ -2,6 +2,7 @@ package com.hxuanyu.jdolt.interfaces;
 
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.util.builder.AbstractProcedureParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,12 @@ public interface DoltProcedure<T extends AbstractProcedureParamBuilder<T>> {
 
 
     default boolean callWithResult(String... params) {
-        return commonDoltExecute(buildSql(params), params);
+        return commonDoltExecute(buildSqlTemplate(params));
     }
 
 
     default SqlExecuteResult call(String... params) {
-        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params), params);
+        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSqlTemplate(params));
         if (resultMaps != null && !resultMaps.isEmpty()) {
             return SqlExecuteResult.success("success", resultMaps);
         } else {
@@ -29,12 +30,12 @@ public interface DoltProcedure<T extends AbstractProcedureParamBuilder<T>> {
         }
     }
 
-    boolean commonDoltExecute(String sql, String... params);
+    boolean commonDoltExecute(SqlBuilder.SqlTemplate sqlTemplate);
 
-    List<Map<String, Object>> executeQueryAsList(String sql, String... params);
+    List<Map<String, Object>> executeQueryAsList(SqlBuilder.SqlTemplate sqlTemplate);
 
     AbstractProcedureParamBuilder<T> prepare();
 
-    String buildSql(String... params);
+    SqlBuilder.SqlTemplate buildSqlTemplate(String... params);
 
 }

@@ -2,6 +2,7 @@ package com.hxuanyu.jdolt.interfaces;
 
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,12 @@ public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
 
 
     default boolean invokeWithResult(String... params) {
-        return commonDoltExecute(buildSql(params), params);
+        return commonDoltExecute(buildSql(params));
     }
 
 
     default SqlExecuteResult invoke(String... params) {
-        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params), params);
+        List<Map<String, Object>> resultMaps = executeQueryAsList(buildSql(params));
         if (resultMaps != null && !resultMaps.isEmpty()) {
             return SqlExecuteResult.success("success", resultMaps);
         } else {
@@ -29,12 +30,12 @@ public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
         }
     }
 
-    boolean commonDoltExecute(String sql, String... params);
+    boolean commonDoltExecute(SqlBuilder.SqlTemplate sql);
 
-    List<Map<String, Object>> executeQueryAsList(String sql, String... params);
+    List<Map<String, Object>> executeQueryAsList(SqlBuilder.SqlTemplate sql);
 
     AbstractFunctionParamBuilder<T> prepare();
 
-    String buildSql(String... params);
+    SqlBuilder.SqlTemplate buildSql(String... params);
 
 }

@@ -5,8 +5,8 @@ import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractProcedureParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -124,8 +124,10 @@ public class DoltPush extends DoltRepository implements DoltProcedure<DoltPush.P
 
 
     @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("dolt_push"), params);
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
+        return SqlBuilder.callProcedure("dolt_push")
+                .withParams(params)
+                .build();
     }
 
 }

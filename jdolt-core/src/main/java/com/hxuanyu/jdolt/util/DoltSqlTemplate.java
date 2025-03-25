@@ -39,6 +39,7 @@ public class DoltSqlTemplate {
         return template.replace(REPLACE_STRING, placeholders.toString());
     }
 
+
 }
 
 

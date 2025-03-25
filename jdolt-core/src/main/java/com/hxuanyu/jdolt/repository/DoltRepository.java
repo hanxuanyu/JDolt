@@ -2,13 +2,16 @@ package com.hxuanyu.jdolt.repository;
 
 import com.hxuanyu.jdolt.exception.DoltException;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 import com.hxuanyu.jdolt.util.validator.BranchNameValidator;
-import com.hxuanyu.jdolt.util.validator.ParamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a repository for managing Dolt commands execution against a database.
@@ -29,17 +32,17 @@ public class DoltRepository {
      * 执行一个通用的 DML/DDL 命令（如 INSERT, UPDATE, DELETE, CREATE, DROP 等）。
      * 使用 SQL 模板和参数列表的方式，防止 SQL 注入。
      *
-     * @param sql    要执行的 SQL 模板
-     * @param params 参数列表
+     * @param sqlTemplate    要执行的 SQL 模板
      * @return 受影响的行数
      * @throws SQLException 如果执行失败
      */
-    protected int executeUpdate(String sql, String... params) throws SQLException {
+    protected int executeUpdate(SqlBuilder.SqlTemplate sqlTemplate) throws SQLException {
+        String sql = sqlTemplate.sql();
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            setParameters(preparedStatement, params);
+            sqlTemplate.setParameters(preparedStatement);
             return preparedStatement.executeUpdate();
         }
     }
@@ -48,15 +51,15 @@ public class DoltRepository {
      * 执行查询语句，并返回结果集。
      * 使用 SQL 模板和参数列表的方式，防止 SQL 注入。
      *
-     * @param sql    要执行的查询 SQL 模板
-     * @param params 参数列表
+     * @param sqlTemplate    要执行的查询 SQL 模板
      * @return 查询结果集（ResultSet）
      * @throws SQLException 如果执行失败
      */
-    protected ResultSet executeQuery(String sql, String... params) throws SQLException {
+    protected ResultSet executeQuery(SqlBuilder.SqlTemplate sqlTemplate) throws SQLException {
+        String sql = sqlTemplate.sql();
         Connection connection = connectionManager.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        setParameters(preparedStatement, params);
+        sqlTemplate.setParameters(preparedStatement);
         return preparedStatement.executeQuery(); // 调用者需关闭 ResultSet 和 PreparedStatement
     }
 
@@ -64,19 +67,20 @@ public class DoltRepository {
      * 执行查询语句并返回封装的结果。
      * 使用 SQL 模板和参数列表的方式，防止 SQL 注入。
      *
-     * @param sql    要执行的查询 SQL 模板
-     * @param params 参数列表
+     * @param sqlTemplate    要执行的查询 SQL 模板
      * @return 查询结果封装为 List<Map<String, Object>>
      * @throws SQLException 如果执行失败
      */
-    public List<Map<String, Object>> executeQueryAsList(String sql, String... params) {
+    public List<Map<String, Object>> executeQueryAsList(SqlBuilder.SqlTemplate sqlTemplate) {
+        String sql = sqlTemplate.sql();
         long start = System.currentTimeMillis();
-        logger.debug("executeQueryAsList start, sql: {} params: {}", sql, params);
+        logger.debug("executeQueryAsList start, sql: {} params: {}", sqlTemplate, sqlTemplate.parameters());
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            setParameters(preparedStatement, params);
+
+            sqlTemplate.setParameters(preparedStatement);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<Map<String, Object>> results = new ArrayList<>();
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -90,12 +94,12 @@ public class DoltRepository {
                     results.add(row);
                 }
                 long end = System.currentTimeMillis();
-                logger.debug("executeQueryAsList finish, sql: {} params: {}， result: {}, cost: {}ms", sql, params, results, (end - start));
+                logger.debug("executeQueryAsList finish, sql: {} params: {}， result: {}, cost: {}ms", sql, sqlTemplate.parameters(), results, (end - start));
                 return results;
             }
         } catch (SQLException e) {
-            DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + Arrays.toString(params), e);
-            logger.error("dolt execute error, sql: {} params: {}", sql, params, doltException);
+            DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + sqlTemplate.parameters(), e);
+            logger.error("dolt execute error, sql: {} params: {}", sql, sqlTemplate.parameters(), doltException);
             throw doltException;
         }
     }
@@ -104,18 +108,19 @@ public class DoltRepository {
      * 执行任意 SQL 语句。
      * 仅保留最通用的方式，适用于不需要参数的简单 SQL。
      *
-     * @param sql 要执行的 SQL 语句
+     * @param sqlTemplate 要执行的 SQL 语句
      * @return 查询结果封装为 List<Map<String, Object>>
      * @return 是否成功执行
      * @throws SQLException 如果执行失败
      */
-    protected boolean execute(String sql, String... params) throws SQLException {
-        logger.debug("execute start, sql: {} params: {}", sql, params);
+    protected boolean execute(SqlBuilder.SqlTemplate sqlTemplate) throws SQLException {
+        String sql = sqlTemplate.sql();
+        logger.debug("execute start, sql: {} params: {}", sql, sqlTemplate.parameters());
         try (
                 Connection connection = connectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            setParameters(preparedStatement, params);
+            sqlTemplate.setParameters(preparedStatement);
             return preparedStatement.execute();
         }
     }
@@ -153,32 +158,17 @@ public class DoltRepository {
         connection.setAutoCommit(true);
     }
 
-    /**
-     * 设置 PreparedStatement 的参数。
-     *
-     * @param preparedStatement PreparedStatement 对象
-     * @param params            参数列表
-     * @throws SQLException 如果设置参数失败
-     */
-    private void setParameters(PreparedStatement preparedStatement, String... params) throws SQLException {
-        if (params != null) {
-            for (int i = 0; i < params.length; i++) {
-                preparedStatement.setString(i + 1, params[i]);
-            }
-        }
-    }
 
-    public boolean commonDoltExecute(String sql, String... params) {
+    public boolean commonDoltExecute(SqlBuilder.SqlTemplate sqlTemplate) {
+        List<Object> params = sqlTemplate.parameters();
+        String sql = sqlTemplate.sql();
         try {
-            ParamValidator.create(params)
-                    .checkNotEmpty()
-                    .checkNoDuplicates();
-            logger.debug("start execute sql: [{}], params: [{}]", sql, Arrays.toString(params));
-            boolean execResult = execute(sql, params);
+            logger.debug("start execute sql: [{}], params: [{}]", sql, params);
+            boolean execResult = execute(sqlTemplate);
             logger.debug("execute finished, result: [{}]", execResult);
             return execResult;
         } catch (SQLException e) {
-            DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + Arrays.toString(params), e);
+            DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + params, e);
             logger.error("dolt execute error, sql: {} params: {}", sql, params, doltException);
             throw doltException;
         }

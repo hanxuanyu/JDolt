@@ -3,8 +3,8 @@ package com.hxuanyu.jdolt.core.function;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -81,8 +81,10 @@ public class LastInsertUUID extends DoltRepository implements DoltInfoFunction<L
 
 
     @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("last_insert_uuid"), params);
+    public SqlBuilder.SqlTemplate buildSql(String... params) {
+        return SqlBuilder.selectFunction("last_insert_uuid")
+                .withParams(params)
+                .build();
     }
 
 }
