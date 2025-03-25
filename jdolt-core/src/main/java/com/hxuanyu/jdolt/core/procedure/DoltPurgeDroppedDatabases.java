@@ -3,8 +3,8 @@ package com.hxuanyu.jdolt.core.procedure;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractProcedureParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.util.builder.AbstractProcedureParamBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 

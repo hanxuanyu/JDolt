@@ -5,8 +5,8 @@ import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 

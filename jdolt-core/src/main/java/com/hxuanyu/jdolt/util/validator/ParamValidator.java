@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.util;
+package com.hxuanyu.jdolt.util.validator;
 
 import java.util.*;
 

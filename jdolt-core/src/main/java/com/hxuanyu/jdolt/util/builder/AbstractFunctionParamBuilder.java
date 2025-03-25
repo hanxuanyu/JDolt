@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.util;
+package com.hxuanyu.jdolt.util.builder;
 
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.model.SqlExecuteResult;

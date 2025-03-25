@@ -9,7 +9,7 @@
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.interfaces.DoltProcedure;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractProcedureParamBuilder;
+import com.hxuanyu.jdolt.util.builder.AbstractProcedureParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,7 +61,7 @@ public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Par
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -113,7 +113,7 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
 import com.hxuanyu.jdolt.util.DoltSqlTemplate;
 
 import java.util.concurrent.ConcurrentHashMap;

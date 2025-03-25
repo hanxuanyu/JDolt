@@ -1,7 +1,7 @@
 package com.hxuanyu.jdolt.interfaces;
 
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
-import com.hxuanyu.jdolt.util.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
 
 import java.util.List;
 import java.util.Map;
