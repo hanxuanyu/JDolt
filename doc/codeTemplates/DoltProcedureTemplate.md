@@ -52,7 +52,7 @@ public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Par
 }
 ```
 
-#### DoltFunction
+#### DoltInfoFunction
 
 ```txt
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};
@@ -61,13 +61,13 @@ public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Par
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.util.builder.AbstractInfoFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 #parse("File Header.java")
-public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Params> {
+public class ${NAME} extends DoltRepository implements DoltInfoFunction<${NAME}.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, ${NAME}> INSTANCES = new ConcurrentHashMap<>();
 
@@ -79,9 +79,9 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
         return INSTANCES.computeIfAbsent(connectionManager, k -> new ${NAME}(connectionManager));
     }
 
-    public static class Params extends AbstractFunctionParamBuilder<Params> {
+    public static class Params extends AbstractInfoFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltInfoFunction) {
+        protected Params(DoltInfoFunction<Params> doltInfoFunction) {
             super(Params.class, doltInfoFunction);
         }
   
@@ -97,8 +97,10 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
 
 
     @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("${Function}"), params);
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
+        return SqlBuilder.selectFunction("${Function}")
+                .withParams(params)
+                .build();
     }
 
 }
@@ -110,16 +112,17 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};
 
 #end
-import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
+import com.hxuanyu.jdolt.interfaces.DoltTableFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
-import com.hxuanyu.jdolt.util.DoltSqlTemplate;
+import com.hxuanyu.jdolt.util.builder.AbstractTableFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
+
 
 import java.util.concurrent.ConcurrentHashMap;
 
 #parse("File Header.java")
-public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Params> {
+public class ${NAME} extends DoltRepository implements DoltTableFunction<${NAME}.Params> {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, ${NAME}> INSTANCES = new ConcurrentHashMap<>();
 
@@ -133,8 +136,8 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
 
     public static class Params extends AbstractFunctionParamBuilder<Params> {
 
-        protected Params(DoltFunction<Params> doltInfoFunction) {
-            super(Params.class, doltInfoFunction);
+        protected Params(DoltTableFunction<Params> doltTableFunction) {
+            super(Params.class, doltTableFunction);
         }
   
         doltParamMethod
@@ -149,8 +152,10 @@ public class ${NAME} extends DoltRepository implements DoltFunction<${NAME}.Para
 
 
     @Override
-    public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getFunctionTemplate("${Function}"), params);
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
+        return SqlBuilder.selectFunction("${Function}")
+                .withParams(params)
+                .build();
     }
 
 }

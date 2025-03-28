@@ -1,7 +1,7 @@
 package com.hxuanyu.jdolt.interfaces;
 
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
-import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.AbstractInfoFunctionParamBuilder;
 import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @author hanxuanyu
  * @version 1.0
  */
-public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
+public interface DoltInfoFunction<T extends AbstractInfoFunctionParamBuilder<T>> {
 
 
     default boolean invokeWithResult(String... params) {
@@ -34,7 +34,7 @@ public interface DoltInfoFunction<T extends AbstractFunctionParamBuilder<T>> {
 
     List<Map<String, Object>> executeQueryAsList(SqlBuilder.SqlTemplate sql);
 
-    AbstractFunctionParamBuilder<T> prepare();
+    AbstractInfoFunctionParamBuilder<T> prepare();
 
     SqlBuilder.SqlTemplate buildSqlTemplate(String... params);
 

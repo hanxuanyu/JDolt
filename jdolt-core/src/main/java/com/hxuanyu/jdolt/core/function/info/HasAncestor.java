@@ -6,7 +6,7 @@ import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.builder.AbstractFunctionParamBuilder;
+import com.hxuanyu.jdolt.util.builder.AbstractInfoFunctionParamBuilder;
 import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,7 +48,7 @@ public class HasAncestor extends DoltRepository implements DoltInfoFunction<HasA
     }
 
     @MethodInvokeRequiredGroup(value = {"withAncestor", "check"}, allRequired = false)
-    public static class Params extends AbstractFunctionParamBuilder<Params> {
+    public static class Params extends AbstractInfoFunctionParamBuilder<Params> {
 
         protected Params(DoltInfoFunction<Params> doltInfoFunction) {
             super(Params.class, doltInfoFunction);

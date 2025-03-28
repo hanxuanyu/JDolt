@@ -3,11 +3,11 @@ package com.hxuanyu.jdolt.util.builder;
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 
-public abstract class AbstractFunctionParamBuilder<T extends AbstractFunctionParamBuilder<T>> extends AbstractParamBuilder{
+public abstract class AbstractInfoFunctionParamBuilder<T extends AbstractInfoFunctionParamBuilder<T>> extends AbstractParamBuilder {
 
-    protected DoltInfoFunction<? extends AbstractFunctionParamBuilder<T>> doltInfoFunction;
+    protected DoltInfoFunction<? extends AbstractInfoFunctionParamBuilder<T>> doltInfoFunction;
 
-    protected AbstractFunctionParamBuilder(Class<?> clazz, DoltInfoFunction<? extends AbstractFunctionParamBuilder<T>> doltInfoFunction) {
+    protected AbstractInfoFunctionParamBuilder(Class<?> clazz, DoltInfoFunction<? extends AbstractInfoFunctionParamBuilder<T>> doltInfoFunction) {
         super(clazz);
         this.doltInfoFunction = doltInfoFunction;
     }
