@@ -1,6 +1,6 @@
 package com.hxuanyu.jdolt.core.api;
 
-import com.hxuanyu.jdolt.core.function.*;
+import com.hxuanyu.jdolt.core.function.info.*;
 import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.core.function;
+package com.hxuanyu.jdolt.core.function.info;
 
 import com.hxuanyu.jdolt.interfaces.DoltInfoFunction;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;

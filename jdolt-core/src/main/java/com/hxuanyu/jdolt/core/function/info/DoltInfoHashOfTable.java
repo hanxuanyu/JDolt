@@ -1,4 +1,4 @@
-package com.hxuanyu.jdolt.core.function;
+package com.hxuanyu.jdolt.core.function.info;
 
 import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
