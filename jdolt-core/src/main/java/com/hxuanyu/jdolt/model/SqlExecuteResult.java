@@ -109,4 +109,169 @@ public class SqlExecuteResult {
     public boolean isSuccess() {
         return this.status.equals(CALL_STATUS_SUCCESS);
     }
+
+    /**
+     * 输出SQL执行结果到控制台，以表格形式展示
+     */
+    public void print() {
+        if (!isSuccess()) {
+            System.out.println("执行失败: " + this.msg);
+            return;
+        }
+
+        if (data == null || data.isEmpty()) {
+            System.out.println("执行成功，但没有返回数据");
+            return;
+        }
+
+        // 获取所有列名
+        List<String> columnNames = new java.util.ArrayList<>(data.get(0).keySet());
+
+        // 计算每列的最大宽度
+        Map<String, Integer> columnWidths = new java.util.HashMap<>();
+        for (String column : columnNames) {
+            columnWidths.put(column, column.length());
+        }
+
+        for (Map<String, Object> row : data) {
+            for (String column : columnNames) {
+                Object value = row.get(column);
+                String valueStr = value == null ? "NULL" : value.toString();
+                columnWidths.put(column, Math.max(columnWidths.get(column), valueStr.length()));
+            }
+        }
+
+        // 打印表头
+        StringBuilder headerLine = new StringBuilder();
+        StringBuilder separator = new StringBuilder();
+
+        for (String column : columnNames) {
+            int width = columnWidths.get(column);
+            headerLine.append(String.format("| %-" + width + "s ", column));
+            separator.append("+-");
+            for (int i = 0; i < width; i++) {
+                separator.append("-");
+            }
+            separator.append("-");
+        }
+        headerLine.append("|");
+        separator.append("+");
+
+        System.out.println(separator);
+        System.out.println(headerLine);
+        System.out.println(separator);
+
+        // 打印数据行
+        for (Map<String, Object> row : data) {
+            StringBuilder dataLine = new StringBuilder();
+            for (String column : columnNames) {
+                Object value = row.get(column);
+                String valueStr = value == null ? "NULL" : value.toString();
+                dataLine.append(String.format("| %-" + columnWidths.get(column) + "s ", valueStr));
+            }
+            dataLine.append("|");
+            System.out.println(dataLine);
+        }
+
+        System.out.println(separator);
+        System.out.println("共计 " + data.size() + " 条记录");
+    }
+
+    /**
+     * 输出SQL执行结果到控制台，以CSV格式展示
+     *
+     * @param delimiter 分隔符
+     */
+    public void print(String delimiter) {
+        if (!isSuccess()) {
+            System.out.println("执行失败: " + this.msg);
+            return;
+        }
+
+        if (data == null || data.isEmpty()) {
+            System.out.println("执行成功，但没有返回数据");
+            return;
+        }
+
+        // 获取所有列名
+        List<String> columnNames = new java.util.ArrayList<>(data.get(0).keySet());
+
+        // 打印表头
+        System.out.println(String.join(delimiter, columnNames));
+
+        // 打印数据行
+        for (Map<String, Object> row : data) {
+            StringBuilder dataLine = new StringBuilder();
+            for (int i = 0; i < columnNames.size(); i++) {
+                Object value = row.get(columnNames.get(i));
+                String valueStr = value == null ? "" : value.toString();
+                dataLine.append(valueStr);
+                if (i < columnNames.size() - 1) {
+                    dataLine.append(delimiter);
+                }
+            }
+            System.out.println(dataLine);
+        }
+
+        System.out.println("共计 " + data.size() + " 条记录");
+    }
+
+    /**
+     * 输出SQL执行结果到控制台，以CSV格式展示，使用逗号作为分隔符
+     */
+    public void printCsv() {
+        print(",");
+    }
+
+    /**
+     * 输出SQL执行结果到控制台，以CSV格式展示，使用制表符作为分隔符
+     */
+    public void printTsv() {
+        print("\t");
+    }
+
+    /**
+     * 输出SQL执行结果到控制台，使用自定义格式
+     *
+     * @param useHeader 是否显示表头
+     * @param delimiter 分隔符
+     * @param showCount 是否显示记录总数
+     */
+    public void print(boolean useHeader, String delimiter, boolean showCount) {
+        if (!isSuccess()) {
+            System.out.println("执行失败: " + this.msg);
+            return;
+        }
+
+        if (data == null || data.isEmpty()) {
+            System.out.println("执行成功，但没有返回数据");
+            return;
+        }
+
+        // 获取所有列名
+        List<String> columnNames = new java.util.ArrayList<>(data.get(0).keySet());
+
+        // 打印表头
+        if (useHeader) {
+            System.out.println(String.join(delimiter, columnNames));
+        }
+
+        // 打印数据行
+        for (Map<String, Object> row : data) {
+            StringBuilder dataLine = new StringBuilder();
+            for (int i = 0; i < columnNames.size(); i++) {
+                Object value = row.get(columnNames.get(i));
+                String valueStr = value == null ? "" : value.toString();
+                dataLine.append(valueStr);
+                if (i < columnNames.size() - 1) {
+                    dataLine.append(delimiter);
+                }
+            }
+            System.out.println(dataLine);
+        }
+
+        if (showCount) {
+            System.out.println("共计 " + data.size() + " 条记录");
+        }
+    }
 }
