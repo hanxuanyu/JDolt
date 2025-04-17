@@ -4,6 +4,7 @@ import com.hxuanyu.jdolt.core.function.info.*;
 import com.hxuanyu.jdolt.core.function.table.DoltDiff;
 import com.hxuanyu.jdolt.core.function.table.DoltDiffStat;
 import com.hxuanyu.jdolt.core.function.table.DoltDiffSummary;
+import com.hxuanyu.jdolt.core.function.table.DoltLog;
 import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;
@@ -148,6 +149,10 @@ public class VersionControl {
 
     public DoltDiffStat doltDiffStat() {
         return DoltDiffStat.getInstance(connectionManager);
+    }
+
+    public DoltLog doltLog() {
+        return DoltLog.getInstance(connectionManager);
     }
 
     public DoltDiffSummary doltDiffSummary() {
