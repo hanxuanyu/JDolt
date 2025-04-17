@@ -46,7 +46,9 @@ public class ${NAME} extends DoltRepository implements DoltProcedure<${NAME}.Par
 
     @Override
     public String buildSql(String... params) {
-        return DoltSqlTemplate.buildSqlTemplate(DoltSqlTemplate.getProcedureTemplate("${Procedure}"), params);
+        return SqlBuilder.callProcedure("${Procedure}")
+                .withParams(params)
+                .build();
     }
 
 }
@@ -98,7 +100,8 @@ public class ${NAME} extends DoltRepository implements DoltInfoFunction<${NAME}.
 
     @Override
     public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
-        return SqlBuilder.selectFunction("${Function}")
+        return SqlBuilder.select()
+                .fromFunction("${Function}")
                 .withParams(params)
                 .build();
     }
@@ -134,7 +137,7 @@ public class ${NAME} extends DoltRepository implements DoltTableFunction<${NAME}
         return INSTANCES.computeIfAbsent(connectionManager, k -> new ${NAME}(connectionManager));
     }
 
-    public static class Params extends AbstractFunctionParamBuilder<Params> {
+    public static class Params extends AbstractTableFunctionParamBuilder<Params> {
 
         protected Params(DoltTableFunction<Params> doltTableFunction) {
             super(Params.class, doltTableFunction);
@@ -153,7 +156,8 @@ public class ${NAME} extends DoltRepository implements DoltTableFunction<${NAME}
 
     @Override
     public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
-        return SqlBuilder.selectFunction("${Function}")
+        return SqlBuilder.select()
+                .fromFunction("${Function}")
                 .withParams(params)
                 .build();
     }
