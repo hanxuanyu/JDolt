@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.util.builder;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -445,7 +446,7 @@ public class SqlBuilder {
         /**
          * 将参数设置到PreparedStatement
          */
-        public void setParameters(java.sql.PreparedStatement pstmt) throws java.sql.SQLException {
+        public void setParameters(PreparedStatement pstmt) throws java.sql.SQLException {
             for (int i = 0; i < parameters.size(); i++) {
                 pstmt.setObject(i + 1, parameters.get(i));
             }
