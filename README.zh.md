@@ -7,7 +7,7 @@ JDolt 是一个面向 [Dolt](https://www.dolthub.com/) 的 Java 客户端库，D
 <p align="center">
   <a href="https://search.maven.org/artifact/com.hxuanyu.doltmanager/jdolt-core"><img src="https://img.shields.io/maven-central/v/com.hxuanyu.doltmanager/jdolt-core.svg?label=Maven%20Central" alt="Maven Central"></a>
   <a href="https://github.com/hanxuanyu/JDolt/actions/workflows/maven.yml"><img src="https://github.com/hanxuanyu/JDolt/actions/workflows/maven.yml/badge.svg" alt="Build Status"></a>
-  <a href="https://github.com/hanxuanyu/JDolt/blob/main/LICENSE"><img src="https://img.shields.io/github/license/hanxuanyu/JDolt.svg" alt="License"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/blob/master/LICENSE"><img src="https://img.shields.io/github/license/hanxuanyu/JDolt.svg" alt="License"></a>
   <a href="https://github.com/hanxuanyu/JDolt/stargazers"><img src="https://img.shields.io/github/stars/hanxuanyu/JDolt?style=social" alt="GitHub stars"></a>
 </p>
 
