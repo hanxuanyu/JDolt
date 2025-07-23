@@ -2,6 +2,16 @@
 
 JDolt 是一个面向 [Dolt](https://www.dolthub.com/) 的 Java 客户端库，Dolt 是一款具备 Git 风格版本控制能力的 SQL 数据库。JDolt 提供了高级 API，方便你在 Java 应用中对 Dolt 数据库进行版本控制操作，实现类似于 Git 对代码的管理。
 
+- [English Documentation](./README.md) | 中文文档
+
+<p align="center">
+  <a href="https://search.maven.org/artifact/com.hxuanyu.doltmanager/jdolt-core"><img src="https://img.shields.io/maven-central/v/com.hxuanyu.doltmanager/jdolt-core.svg?label=Maven%20Central" alt="Maven Central"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/actions"><img src="https://github.com/hanxuanyu/JDolt/workflows/CI/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/blob/main/LICENSE"><img src="https://img.shields.io/github/license/hanxuanyu/JDolt.svg" alt="License"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/stargazers"><img src="https://img.shields.io/github/stars/hanxuanyu/JDolt?style=social" alt="GitHub stars"></a>
+</p>
+
+
 ## 项目概述
 
 JDolt 将 Dolt 的版本控制功能封装为 Java API，便于在 Java 应用中集成数据库版本管理。支持如 commit、branch、merge、pull、push 等常见版本控制操作。
@@ -134,20 +144,7 @@ JDolt/
 </dependency>
 ```
 
-<p align="center">
-  <a href="https://search.maven.org/artifact/com.hxuanyu.doltmanager/jdolt-core"><img src="https://img.shields.io/maven-central/v/com.hxuanyu.doltmanager/jdolt-core.svg?label=Maven%20Central" alt="Maven Central"></a>
-  <a href="https://github.com/hanxuanyu/JDolt/actions"><img src="https://github.com/hanxuanyu/JDolt/workflows/CI/badge.svg" alt="Build Status"></a>
-  <a href="https://github.com/hanxuanyu/JDolt/blob/main/LICENSE"><img src="https://img.shields.io/github/license/hanxuanyu/JDolt.svg" alt="License"></a>
-  <a href="https://github.com/hanxuanyu/JDolt/stargazers"><img src="https://img.shields.io/github/stars/hanxuanyu/JDolt?style=social" alt="GitHub stars"></a>
-</p>
 
-## 标签
-
-`Java` `Dolt` `数据库` `版本控制` `Maven Central` `客户端库` `Git风格` `开源` `SQL` `数据同步`
-
-## 文档
-
-- [English Documentation](./README.md) | 中文文档
 
 ---
 
