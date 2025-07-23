@@ -159,6 +159,14 @@ public class VersionControl {
         return DoltDiffSummary.getInstance(connectionManager);
     }
 
+    public DoltRefLog doltRefLog() {
+        return DoltRefLog.getInstance(connectionManager);
+    }
+    
+    public DoltSchemaDiff doltSchemaDiff() {
+        return DoltSchemaDiff.getInstance(connectionManager);
+    }
+
     public LastInsertUUID lastInsertUUID() {
         return LastInsertUUID.getInstance(connectionManager);
     }
