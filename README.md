@@ -136,6 +136,20 @@ You can add JDolt to your project directly from Maven Central:
 </dependency>
 ```
 
+<p align="center">
+  <a href="https://search.maven.org/artifact/com.hxuanyu.doltmanager/jdolt-core"><img src="https://img.shields.io/maven-central/v/com.hxuanyu.doltmanager/jdolt-core.svg?label=Maven%20Central" alt="Maven Central"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/actions"><img src="https://github.com/hanxuanyu/JDolt/workflows/CI/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/blob/main/LICENSE"><img src="https://img.shields.io/github/license/hanxuanyu/JDolt.svg" alt="License"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/stargazers"><img src="https://img.shields.io/github/stars/hanxuanyu/JDolt?style=social" alt="GitHub stars"></a>
+</p>
+
+## Tags
+
+`Java` `Dolt` `Database` `Version Control` `Maven Central` `Client Library` `Git-like` `Open Source` `SQL` `Data Sync`
+
+## Documentation
+
+- English | [中文文档](./README.zh.md)
 
 ## Contribution
 
@@ -149,3 +163,7 @@ JDolt is licensed under the Apache License 2.0. See the [LICENSE](https://github
 
 - [Dolt](https://www.dolthub.com/) - The SQL database with Git-like version control
 - The developers and contributors to this project
+
+---
+
+> For more information, usage examples, and advanced features, please refer to the [Wiki](https://github.com/hanxuanyu/JDolt/wiki) or the [中文文档](./README.zh.md).

@@ -134,16 +134,21 @@ JDolt/
 </dependency>
 ```
 
-## 贡献
+<p align="center">
+  <a href="https://search.maven.org/artifact/com.hxuanyu.doltmanager/jdolt-core"><img src="https://img.shields.io/maven-central/v/com.hxuanyu.doltmanager/jdolt-core.svg?label=Maven%20Central" alt="Maven Central"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/actions"><img src="https://github.com/hanxuanyu/JDolt/workflows/CI/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/blob/main/LICENSE"><img src="https://img.shields.io/github/license/hanxuanyu/JDolt.svg" alt="License"></a>
+  <a href="https://github.com/hanxuanyu/JDolt/stargazers"><img src="https://img.shields.io/github/stars/hanxuanyu/JDolt?style=social" alt="GitHub stars"></a>
+</p>
 
-欢迎通过 [GitHub](https://github.com/hanxuanyu/JDolt) 提交 issue 或 pull request 参与贡献。
+## 标签
 
-## 许可证
+`Java` `Dolt` `数据库` `版本控制` `Maven Central` `客户端库` `Git风格` `开源` `SQL` `数据同步`
 
-JDolt 遵循 Apache License 2.0，详情见 [LICENSE](https://github.com/hanxuanyu/JDolt/blob/main/LICENSE) 文件。
+## 文档
 
-## 鸣谢
+- [English Documentation](./README.md) | 中文文档
 
-- [Dolt](https://www.dolthub.com/) - 具备 Git 风格版本控制的 SQL 数据库
-- 本项目的所有开发者与贡献者
+---
 
+> 更多信息、用法示例和高级特性，请参见 [Wiki](https://github.com/hanxuanyu/JDolt/wiki) 或 [English Documentation](./README.md)。
