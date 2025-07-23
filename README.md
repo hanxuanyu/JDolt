@@ -124,13 +124,26 @@ JDolt/
 └── pom.xml                 # Maven parent POM
 ```
 
-## Contributing
+## Dependency
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+You can add JDolt to your project directly from Maven Central:
+
+```xml
+<dependency>
+    <groupId>com.hxuanyu.doltmanager</groupId>
+    <artifactId>jdolt-core</artifactId>
+    <version>1.0.1</version>
+</dependency>
+```
+
+
+## Contribution
+
+Contributions are welcome! Please open issues or pull requests on [GitHub](https://github.com/hanxuanyu/JDolt).
 
 ## License
 
-This project is licensed under the [Your License] - see the LICENSE file for details.
+JDolt is licensed under the Apache License 2.0. See the [LICENSE](https://github.com/hanxuanyu/JDolt/blob/main/LICENSE) file for details.
 
 ## Acknowledgments
 
