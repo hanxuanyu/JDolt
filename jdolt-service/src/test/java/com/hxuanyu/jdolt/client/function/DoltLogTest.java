@@ -19,7 +19,6 @@ public class DoltLogTest extends DoltClientTest {
         DoltLog doltLog = versionControl.doltLog();
         SqlExecuteResult execute = doltLog.prepare()
                 .decorate("full")
-                .not("oqo3l2g7adr83a38q6i7ccd7d9a0i5ms")
                 .execute();
         execute.print();
     }
