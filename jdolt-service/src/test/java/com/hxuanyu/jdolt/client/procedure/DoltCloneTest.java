@@ -11,7 +11,7 @@ public class DoltCloneTest extends DoltClientTest {
     @Test
     public void testClone() {
 
-        DoltClone doltClone = versionControl.doltClone();
+        DoltClone doltClone = versionControl.procedure().doltClone();
 
         doltClone.prepare()
                 .withUrl("file:/home/dolt/data/test_database/.dolt/noms")

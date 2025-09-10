@@ -9,6 +9,6 @@ public class DoltPurgeDroppedDatabasesTest extends DoltClientTest {
 
     @Test
     public void testPurge() {
-        versionControl.doltPurgeDroppedDatabases().prepare().execute();
+        versionControl.procedure().doltPurgeDroppedDatabases().prepare().execute();
     }
 }

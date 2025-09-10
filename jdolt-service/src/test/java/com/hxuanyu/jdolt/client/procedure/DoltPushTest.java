@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 public class DoltPushTest extends DoltClientTest {
     @Test
     public void testPushNoArgs() {
-        versionControl.doltPush().call();
+        versionControl.procedure().doltPush().call();
     }
 
 
     @Test
     public void testPushWithBranch() {
-        versionControl.doltPush().prepare()
+        versionControl.procedure().doltPush().prepare()
                 .withRemote("testRemote")
                 .withRefSpec("testAddData")
                 .execute();
@@ -22,7 +22,7 @@ public class DoltPushTest extends DoltClientTest {
 
     @Test
     public void testPushWithBranchForced() {
-        versionControl.doltPush().prepare()
+        versionControl.procedure().doltPush().prepare()
                 .withRemote("testRemote")
                 .pushAll()
                 .force()

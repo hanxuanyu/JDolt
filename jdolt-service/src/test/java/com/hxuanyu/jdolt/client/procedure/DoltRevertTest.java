@@ -9,7 +9,7 @@ public class DoltRevertTest extends DoltClientTest {
     @Test
     public void testRevert() {
 
-        versionControl.doltRevert()
+        versionControl.procedure().doltRevert()
                 .prepare()
                 .withAuthor("hxuanyu", "hxuanyu@hxuanyu.com")
                 .withRevision("dksccqfgljn1ssbe93v51o4ggcp2pp80")

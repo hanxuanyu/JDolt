@@ -10,7 +10,7 @@ public class DoltBackupTest extends DoltClientTest {
 
     @Test
     public void testAddUrl() {
-        DoltBackup doltBackup = versionControl.doltBackup();
+        DoltBackup doltBackup = versionControl.procedure().doltBackup();
 
         doltBackup.prepare()
                 .addSyncUrl("testUrl", "file:/home/dolt/doltBackupTest")
@@ -19,7 +19,7 @@ public class DoltBackupTest extends DoltClientTest {
 
     @Test
     public void testBackup() {
-        DoltBackup doltBackup = versionControl.doltBackup();
+        DoltBackup doltBackup = versionControl.procedure().doltBackup();
         doltBackup.prepare()
                 .sync("testUrl")
                 .execute();
@@ -28,7 +28,7 @@ public class DoltBackupTest extends DoltClientTest {
 
     @Test
     public void testRestore() {
-        DoltBackup doltBackup = versionControl.doltBackup();
+        DoltBackup doltBackup = versionControl.procedure().doltBackup();
         doltBackup.prepare()
                 .restore("file:/home/dolt/doltBackupTest", "restoredDb2")
                 .execute();
@@ -36,7 +36,7 @@ public class DoltBackupTest extends DoltClientTest {
 
     @Test
     public void testRemoveUrl() {
-        DoltBackup doltBackup = versionControl.doltBackup();
+        DoltBackup doltBackup = versionControl.procedure().doltBackup();
 
         doltBackup.prepare()
                 .removeUrl("testUrl")

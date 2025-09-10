@@ -16,7 +16,7 @@ public class DoltLogTest extends DoltClientTest {
 
     @Test
     public void testDoltLog() {
-        DoltLog doltLog = versionControl.doltLog();
+        DoltLog doltLog = versionControl.function().doltLog();
         SqlExecuteResult execute = doltLog.prepare()
                 .decorate("full")
                 .execute();

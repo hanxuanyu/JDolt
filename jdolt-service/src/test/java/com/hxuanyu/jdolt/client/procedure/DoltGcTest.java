@@ -9,17 +9,17 @@ public class DoltGcTest extends DoltClientTest {
 
     @Test
     public void testGcDirectCall() {
-        versionControl.doltGc().call();
+        versionControl.procedure().doltGc().call();
     }
 
     @Test
     public void testGcWithParam() {
-        versionControl.doltGc().prepare().execute();
+        versionControl.procedure().doltGc().prepare().execute();
     }
 
     @Test
     public void testGcWithShallow() {
-        versionControl.doltGc().prepare().shallow().execute();
+        versionControl.procedure().doltGc().prepare().shallow().execute();
     }
 
 }

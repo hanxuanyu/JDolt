@@ -21,7 +21,7 @@ public class DoltSchemaDiffTest extends DoltClientTest {
      */
     @Test
     public void testDoltSchemaDiffWithFromAndToRevision() {
-        DoltSchemaDiff doltSchemaDiff = versionControl.doltSchemaDiff();
+        DoltSchemaDiff doltSchemaDiff = versionControl.function().doltSchemaDiff();
         SqlExecuteResult result = doltSchemaDiff.prepare()
                 .fromRevision("main~")
                 .toRevision("main")
@@ -36,7 +36,7 @@ public class DoltSchemaDiffTest extends DoltClientTest {
      */
     @Test
     public void testDoltSchemaDiffWithTwoPointDiff() {
-        DoltSchemaDiff doltSchemaDiff = versionControl.doltSchemaDiff();
+        DoltSchemaDiff doltSchemaDiff = versionControl.function().doltSchemaDiff();
         SqlExecuteResult result = doltSchemaDiff.prepare()
                 .twoPointDiff("main~..main")
                 .execute();
@@ -50,7 +50,7 @@ public class DoltSchemaDiffTest extends DoltClientTest {
      */
     @Test
     public void testDoltSchemaDiffWithThreePointDiff() {
-        DoltSchemaDiff doltSchemaDiff = versionControl.doltSchemaDiff();
+        DoltSchemaDiff doltSchemaDiff = versionControl.function().doltSchemaDiff();
         SqlExecuteResult result = doltSchemaDiff.prepare()
                 .threePointDiff("main~...main")
                 .execute();
@@ -66,7 +66,7 @@ public class DoltSchemaDiffTest extends DoltClientTest {
     public void testDoltSchemaDiffWithTableName() {
         // 假设有一个名为"test_table"的表
         String tableName = "test_table";
-        DoltSchemaDiff doltSchemaDiff = versionControl.doltSchemaDiff();
+        DoltSchemaDiff doltSchemaDiff = versionControl.function().doltSchemaDiff();
         SqlExecuteResult result = doltSchemaDiff.prepare()
                 .fromRevision("main~")
                 .toRevision("main")
@@ -83,7 +83,7 @@ public class DoltSchemaDiffTest extends DoltClientTest {
     public void testDoltSchemaDiffWithTwoPointDiffAndTableName() {
         // 假设有一个名为"test_table"的表
         String tableName = "test_table";
-        DoltSchemaDiff doltSchemaDiff = versionControl.doltSchemaDiff();
+        DoltSchemaDiff doltSchemaDiff = versionControl.function().doltSchemaDiff();
         SqlExecuteResult result = doltSchemaDiff.prepare()
                 .twoPointDiff("main~..main")
                 .tableName(tableName)

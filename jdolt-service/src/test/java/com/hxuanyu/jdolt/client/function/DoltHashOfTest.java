@@ -9,7 +9,7 @@ public class DoltHashOfTest extends DoltClientTest {
     @Test
     public void testHash() {
 
-        versionControl.doltHashOf().prepare()
+        versionControl.function().doltHashOf().prepare()
                 .withBranch("testAddData").execute();
 
     }

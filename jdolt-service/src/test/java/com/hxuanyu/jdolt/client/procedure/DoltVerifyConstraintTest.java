@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DoltVerifyConstraintTest extends DoltClientTest {
     @Test
     public void testVerify() {
-        versionControl.doltVerifyConstraints()
+        versionControl.procedure().doltVerifyConstraints()
                 .prepare()
                 .all()
                 .outputOnly()

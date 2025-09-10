@@ -10,7 +10,7 @@ public class DoltMergeBaseTest extends DoltClientTest {
     @Test
     public void testDoltMergeBase() {
 
-        versionControl.doltMergeBase().prepare()
+        versionControl.function().doltMergeBase().prepare()
                 .withBranch("main", "testAddData").execute();
 
     }

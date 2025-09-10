@@ -9,7 +9,7 @@ public class DoltMergeTest extends DoltClientTest {
 
     @Test
     public void testDoltMergeSquashed() {
-        versionControl.doltMerge().prepare()
+        versionControl.procedure().doltMerge().prepare()
                 .withSquash()
                 .withBranch("testAddData")
                 .execute();
@@ -17,7 +17,7 @@ public class DoltMergeTest extends DoltClientTest {
 
     @Test
     public void testDoltMergeNoFF() {
-        versionControl.doltMerge().prepare()
+        versionControl.procedure().doltMerge().prepare()
                 .noFastForward()
                 .withBranch("testAddData")
                 .execute();
@@ -25,7 +25,7 @@ public class DoltMergeTest extends DoltClientTest {
 
     @Test
     public void testDoltMergeNoFFWithCommitDesc() {
-        versionControl.doltMerge().prepare()
+        versionControl.procedure().doltMerge().prepare()
                 .noFastForward()
                 .withBranch("testAddData")
                 .withAuthor("hxuanyu", "hxuanyu@hxuanyu.com")

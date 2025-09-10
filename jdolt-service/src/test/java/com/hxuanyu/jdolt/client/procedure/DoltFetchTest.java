@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 public class DoltFetchTest extends DoltClientTest {
     @Test
     public void testFetchNoArgs() {
-        versionControl.doltFetch().prepare().execute();
+        versionControl.procedure().doltFetch().prepare().execute();
     }
 
     @Test
     public void testFetch() {
-        versionControl.doltFetch().prepare()
+        versionControl.procedure().doltFetch().prepare()
                 .withRemote("origin")
                 .withRefSpec("main")
                 .execute();

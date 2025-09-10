@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DoltRebaseTest extends DoltClientTest {
     @Test
     public void testDoltRebase() {
-        versionControl.doltRebase()
+        versionControl.procedure().doltRebase()
                 .prepare()
                 .withUpstream("testAddData")
                 .start()

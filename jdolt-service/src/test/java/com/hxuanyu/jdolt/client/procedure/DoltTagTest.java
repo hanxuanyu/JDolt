@@ -11,7 +11,7 @@ public class DoltTagTest extends DoltClientTest {
     @Test
     @Order(1)
     public void testDoltTagAdd() {
-        versionControl.doltTag()
+        versionControl.procedure().doltTag()
                 .prepare()
                 .withName("testTag01")
                 .execute();
@@ -20,7 +20,7 @@ public class DoltTagTest extends DoltClientTest {
     @Test
     @Order(2)
     public void testDoltAddWithRef() {
-        versionControl.doltTag()
+        versionControl.procedure().doltTag()
                 .prepare()
                 .withName("testTag02")
                 .withRef("mn0a0va835bg9vihruu5v7t9blp64pj9")
@@ -32,12 +32,12 @@ public class DoltTagTest extends DoltClientTest {
     @Test
     @Order(3)
     public void testDeleteTag() {
-        versionControl.doltTag()
+        versionControl.procedure().doltTag()
                 .prepare()
                 .delete("testTag01")
                 .execute();
 
-        versionControl.doltTag()
+        versionControl.procedure().doltTag()
                 .prepare()
                 .delete("testTag02")
                 .execute();

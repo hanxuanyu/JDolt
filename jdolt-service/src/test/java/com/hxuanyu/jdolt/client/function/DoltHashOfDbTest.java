@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DoltHashOfDbTest extends DoltClientTest {
     @Test
     public void testHashOfDbNoArgs() {
-        versionControl.doltHashOfDB()
+        versionControl.function().doltHashOfDB()
                 .prepare()
                 .execute();
     }
@@ -16,7 +16,7 @@ public class DoltHashOfDbTest extends DoltClientTest {
 
     @Test
     public void testHashOfDbWithBranch() {
-        versionControl.doltHashOfDB()
+        versionControl.function().doltHashOfDB()
                 .prepare()
                 .withBranch("testAddData")
                 .execute();
@@ -24,7 +24,7 @@ public class DoltHashOfDbTest extends DoltClientTest {
 
     @Test
     public void testHashOfDbWithHead() {
-        versionControl.doltHashOfDB()
+        versionControl.function().doltHashOfDB()
                 .prepare()
                 .withHead()
                 .execute();
@@ -32,7 +32,7 @@ public class DoltHashOfDbTest extends DoltClientTest {
 
     @Test
     public void testHashOfDbWithWorking() {
-        versionControl.doltHashOfDB()
+        versionControl.function().doltHashOfDB()
                 .prepare()
                 .withWorking()
                 .execute();
@@ -40,7 +40,7 @@ public class DoltHashOfDbTest extends DoltClientTest {
 
     @Test
     public void testHashOfDbWithStaged() {
-        versionControl.doltHashOfDB()
+        versionControl.function().doltHashOfDB()
                 .prepare()
                 .withStaged()
                 .execute();

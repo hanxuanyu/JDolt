@@ -9,7 +9,7 @@ public class HasAncestorTest extends DoltClientTest {
     @Test
     public void testHasAncestor() {
 
-        versionControl.hasAncestor()
+        versionControl.function().hasAncestor()
                 .prepare()
                 .check("HEAD", "testAddData")
                 .execute();

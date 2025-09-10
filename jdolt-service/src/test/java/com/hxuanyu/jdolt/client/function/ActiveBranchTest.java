@@ -10,7 +10,7 @@ public class ActiveBranchTest extends DoltClientTest {
     @Test
     public void testInvoke() {
 
-        ActiveBranch activeBranch = versionControl.activeBranch();
+        ActiveBranch activeBranch = versionControl.function().activeBranch();
         activeBranch.prepare().execute();
 
     }

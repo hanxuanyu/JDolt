@@ -13,7 +13,7 @@ public class DoltCommitTest extends DoltClientTest {
     @Test
     public void testDoltCommit() {
 
-        DoltCommit doltCommit = versionControl.doltCommit();
+        DoltCommit doltCommit = versionControl.procedure().doltCommit();
         doltCommit.prepare()
                 .allowEmpty()
 //                .skipEmpty()

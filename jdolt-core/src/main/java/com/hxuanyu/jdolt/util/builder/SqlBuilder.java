@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.util.builder;
 
+import com.hxuanyu.jdolt.model.WhereCondition;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class SqlBuilder {
     private List<Object> functionParams = new ArrayList<>(); // 普通函数参数  
     private String functionAlias; // 函数结果的别名  
     private Map<String, Object> conditions = new HashMap<>();
+    private List<WhereCondition> whereConditions = new ArrayList<>(); // 新的WHERE条件列表
     private Map<String, Object> updateValues = new HashMap<>();
     private List<String> orderByColumns = new ArrayList<>();
     private boolean orderAsc = true;
@@ -192,10 +194,18 @@ public class SqlBuilder {
     }
 
     /**
-     * 添加WHERE条件
+     * 添加WHERE条件 (简单等于条件)
      */
     public SqlBuilder where(String column, Object value) {
         this.conditions.put(column, value);
+        return this;
+    }
+
+    /**
+     * 添加WHERE条件 (使用WhereCondition对象)
+     */
+    public SqlBuilder where(WhereCondition whereCondition) {
+        this.whereConditions.add(whereCondition);
         return this;
     }
 
@@ -402,17 +412,39 @@ public class SqlBuilder {
     }
 
     private void appendWhereClause(StringBuilder sql, List<Object> params) {
-        if (!conditions.isEmpty()) {
-            sql.append(" WHERE ");
-            int i = 0;
-            for (Map.Entry<String, Object> entry : conditions.entrySet()) {
-                if (i > 0) {
-                    sql.append(" AND ");
-                }
-                sql.append(entry.getKey()).append(" = ?");
-                params.add(entry.getValue());
-                i++;
+        boolean hasConditions = !conditions.isEmpty() || !whereConditions.isEmpty();
+        if (!hasConditions) {
+            return;
+        }
+
+        sql.append(" WHERE ");
+        int conditionCount = 0;
+
+        // 处理旧的简单条件（等于条件）
+        for (Map.Entry<String, Object> entry : conditions.entrySet()) {
+            if (conditionCount > 0) {
+                sql.append(" AND ");
             }
+            sql.append(entry.getKey()).append(" = ?");
+            params.add(entry.getValue());
+            conditionCount++;
+        }
+
+        // 处理新的WhereCondition对象
+        for (WhereCondition whereCondition : whereConditions) {
+            if (conditionCount > 0) {
+                sql.append(" AND ");
+            }
+
+            sql.append(whereCondition.getColumn()).append(" ").append(whereCondition.getOperator().getSymbol());
+
+            // 某些操作符不需要参数（如IS NULL, IS NOT NULL）
+            if (whereCondition.needsValue()) {
+                sql.append(" ?");
+                params.add(whereCondition.getValue());
+            }
+
+            conditionCount++;
         }
     }
 

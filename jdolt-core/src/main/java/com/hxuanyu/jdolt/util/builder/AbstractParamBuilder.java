@@ -39,9 +39,13 @@ public abstract class AbstractParamBuilder {
 
 
     // params 属性由接口维护，保存了一系列键值对
-    Map<ParamType, List<String>> sqlParams = new HashMap<>();
+    Map<ParamType, List<Object>> sqlParams = new HashMap<>();
 
     public void addParam(ParamType type, String param) {
+        sqlParams.computeIfAbsent(type, k -> new ArrayList<>()).add(param);
+    }
+
+    public void addParam(ParamType type, Object param) {
         sqlParams.computeIfAbsent(type, k -> new ArrayList<>()).add(param);
     }
 
@@ -52,6 +56,10 @@ public abstract class AbstractParamBuilder {
 
     public void checkParam() {
         validator.checkRequired();
+    }
+
+    protected String[] convertToStringArray(List<Object> list) {
+        return list.stream().map(Object::toString).toArray(String[]::new);
     }
 
     public abstract SqlExecuteResult execute();

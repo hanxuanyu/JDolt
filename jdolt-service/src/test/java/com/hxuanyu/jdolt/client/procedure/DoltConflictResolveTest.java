@@ -11,7 +11,7 @@ public class DoltConflictResolveTest extends DoltClientTest {
 
     @Test
     public void testDoltConflictResolve() {
-        DoltConflictsResolve doltConflictsResolve = versionControl.doltConflictsResolve();
+        DoltConflictsResolve doltConflictsResolve = versionControl.procedure().doltConflictsResolve();
 
         SqlExecuteResult result = doltConflictsResolve.prepare()
                 .acceptOurs()

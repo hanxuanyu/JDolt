@@ -10,7 +10,7 @@ public class DoltCleanTest extends DoltClientTest {
 
     @Test
     public void testCleanUntracked() {
-        DoltClean doltClean = versionControl.doltClean();
+        DoltClean doltClean = versionControl.procedure().doltClean();
         DoltClean.Params params = doltClean.prepare()
                 .withTableName("untracked");
         params.execute();
@@ -18,14 +18,14 @@ public class DoltCleanTest extends DoltClientTest {
 
     @Test
     public void testClean() {
-        DoltClean doltClean = versionControl.doltClean();
+        DoltClean doltClean = versionControl.procedure().doltClean();
         DoltClean.Params params = doltClean.prepare();
         params.execute();
     }
 
     @Test
     public void testDryRun() {
-        DoltClean doltClean = versionControl.doltClean();
+        DoltClean doltClean = versionControl.procedure().doltClean();
         DoltClean.Params params = doltClean.prepare();
         params.dryRun();
     }

@@ -12,7 +12,7 @@ public class DoltAddTest extends DoltClientTest {
     @Test
     public void testDoltAddAll() {
 
-        DoltAdd doltAdd = versionControl.doltAdd();
+        DoltAdd doltAdd = versionControl.procedure().doltAdd();
         SqlExecuteResult result = doltAdd.prepare()
                 .addAll()
                 .execute();
@@ -23,7 +23,7 @@ public class DoltAddTest extends DoltClientTest {
     @Test
     public void testDoltAddCurrent() {
 
-        DoltAdd doltAdd = versionControl.doltAdd();
+        DoltAdd doltAdd = versionControl.procedure().doltAdd();
         SqlExecuteResult result = doltAdd
                 .prepare()
                 .addCurrent()
@@ -35,7 +35,7 @@ public class DoltAddTest extends DoltClientTest {
     @Test
     public void testDoltAddTable() {
 
-        DoltAdd doltAdd = versionControl.doltAdd();
+        DoltAdd doltAdd = versionControl.procedure().doltAdd();
         SqlExecuteResult result = doltAdd.prepare()
                 .withTable("test_table")
                 .execute();

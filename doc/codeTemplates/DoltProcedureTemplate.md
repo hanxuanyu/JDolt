@@ -165,6 +165,62 @@ public class ${NAME} extends DoltRepository implements DoltTableFunction<${NAME}
 }
 ```
 
+### DoltSystemTable
+
+```txt
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};
+
+#end
+import com.hxuanyu.jdolt.interfaces.DoltSystemTable;
+import com.hxuanyu.jdolt.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.repository.DoltRepository;
+import com.hxuanyu.jdolt.util.builder.AbstractSystemTableParamBuilder;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
+
+
+import java.util.concurrent.ConcurrentHashMap;
+
+#parse("File Header.java")
+public class ${NAME} extends DoltRepository implements DoltSystemTable<${NAME}.Params> {
+    // 单例管理
+    private static final ConcurrentHashMap<DoltConnectionManager, ${NAME}> INSTANCES = new ConcurrentHashMap<>();
+
+    private ${NAME}(DoltConnectionManager connectionManager) {
+        super(connectionManager);
+    }
+
+    public static ${NAME} getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new ${NAME}(connectionManager));
+    }
+
+    public static class Params extends AbstractSystemTableParamBuilder<Params> {
+
+        protected Params(DoltTableFunction<Params> doltTableFunction) {
+            super(Params.class, doltTableFunction);
+        }
+  
+        doltParamMethod
+
+
+    }
+
+    @Override
+    public Params prepare() {
+        return new Params(this);
+    }
+
+
+    @Override
+    public SqlBuilder.SqlTemplate buildSqlTemplate(String... params) {
+        return SqlBuilder.select()
+                .from("${Table}")
+                .withParams(params)
+                .build();
+    }
+
+}
+```
+
 ### 代码片段
 
 #### `doltParamMethod`

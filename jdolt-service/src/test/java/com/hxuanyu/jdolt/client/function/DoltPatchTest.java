@@ -17,7 +17,7 @@ public class DoltPatchTest extends DoltClientTest {
     @Test
     public void testDoltPatch() {
 
-        SqlExecuteResult execute = versionControl.doltPatch().prepare()
+        SqlExecuteResult execute = versionControl.function().doltPatch().prepare()
                 .fromRevision("oqo3l2g7adr83a38q6i7ccd7d9a0i5ms")
                 .toRevision("HEAD")
                 .execute();

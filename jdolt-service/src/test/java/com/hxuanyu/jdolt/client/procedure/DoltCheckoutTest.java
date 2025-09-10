@@ -12,7 +12,7 @@ public class DoltCheckoutTest extends DoltClientTest {
 
     @Test
     public void testCheckout() {
-        DoltCheckout doltCheckout = versionControl.doltCheckout();
+        DoltCheckout doltCheckout = versionControl.procedure().doltCheckout();
 
         SqlExecuteResult result = doltCheckout.prepare().newBranch("test_newBranch_01").execute();
 

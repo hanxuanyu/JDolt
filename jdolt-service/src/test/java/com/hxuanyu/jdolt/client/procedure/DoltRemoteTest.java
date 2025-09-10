@@ -11,7 +11,7 @@ public class DoltRemoteTest extends DoltClientTest {
     @Test
     @Order(1)
     public void testRemoteAdd() {
-        versionControl.doltRemote().prepare()
+        versionControl.procedure().doltRemote().prepare()
                 .add("testRemote02", "file:/home/dolt/testRemote02")
                 .execute();
     }
@@ -20,7 +20,7 @@ public class DoltRemoteTest extends DoltClientTest {
     @Test
     @Order(2)
     public void testRemoteRemove() {
-        versionControl.doltRemote().prepare()
+        versionControl.procedure().doltRemote().prepare()
                 .remove("testRemote02")
                 .execute();
     }

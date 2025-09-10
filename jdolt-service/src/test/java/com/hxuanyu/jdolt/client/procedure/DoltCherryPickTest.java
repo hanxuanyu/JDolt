@@ -11,7 +11,7 @@ public class DoltCherryPickTest extends DoltClientTest {
 
     @Test
     public void testPickByHash() {
-        DoltCherryPick doltCherryPick = versionControl.doltCherryPick();
+        DoltCherryPick doltCherryPick = versionControl.procedure().doltCherryPick();
         DoltCherryPick.Params params = doltCherryPick.prepare()
                 .withCommitHash("mn0a0va835bg9vihruu5v7t9blp64pj9");
         params.execute();
@@ -20,7 +20,7 @@ public class DoltCherryPickTest extends DoltClientTest {
 
     @Test
     public void testPickByBranchRef() {
-        DoltCherryPick doltCherryPick = versionControl.doltCherryPick();
+        DoltCherryPick doltCherryPick = versionControl.procedure().doltCherryPick();
         DoltCherryPick.Params params = doltCherryPick.prepare()
                 .withRelativeRef("testAddData", 1)
                 .allowEmpty();

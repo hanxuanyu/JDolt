@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DoltHashOfTableTest extends DoltClientTest {
     @Test
     public void testHashOfTable() {
-        versionControl.doltHashOfTable()
+        versionControl.function().doltHashOfTable()
                 .prepare()
                 .withTable("test_table")
                 .execute();

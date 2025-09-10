@@ -21,7 +21,7 @@ public class DoltRefLogTest extends DoltClientTest {
      */
     @Test
     public void testDoltRefLogNoParams() {
-        DoltRefLog doltRefLog = versionControl.doltRefLog();
+        DoltRefLog doltRefLog = versionControl.function().doltRefLog();
         SqlExecuteResult result = doltRefLog.prepare()
                 .execute();
         log.info("DoltRefLog without parameters:");
@@ -34,7 +34,7 @@ public class DoltRefLogTest extends DoltClientTest {
      */
     @Test
     public void testDoltRefLogWithAllFlag() {
-        DoltRefLog doltRefLog = versionControl.doltRefLog();
+        DoltRefLog doltRefLog = versionControl.function().doltRefLog();
         SqlExecuteResult result = doltRefLog.prepare()
                 .all()
                 .execute();
@@ -49,7 +49,7 @@ public class DoltRefLogTest extends DoltClientTest {
     @Test
     public void testDoltRefLogWithRefName() {
         // 使用main分支作为引用名称
-        DoltRefLog doltRefLog = versionControl.doltRefLog();
+        DoltRefLog doltRefLog = versionControl.function().doltRefLog();
         SqlExecuteResult result = doltRefLog.prepare()
                 .refName("main")
                 .execute();
@@ -62,7 +62,7 @@ public class DoltRefLogTest extends DoltClientTest {
      */
     @Test
     public void testDoltRefLogWithAllAndRefName() {
-        DoltRefLog doltRefLog = versionControl.doltRefLog();
+        DoltRefLog doltRefLog = versionControl.function().doltRefLog();
         SqlExecuteResult result = doltRefLog.prepare()
                 .all()
                 .refName("main")

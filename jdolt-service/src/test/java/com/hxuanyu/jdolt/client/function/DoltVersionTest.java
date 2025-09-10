@@ -9,11 +9,11 @@ public class DoltVersionTest extends DoltClientTest {
     @Test
     public void testDoltVersion() {
 
-        versionControl.doltVersion()
+        versionControl.function().doltVersion()
                 .prepare()
                 .execute();
 
-        versionControl.doltVersion()
+        versionControl.function().doltVersion()
                 .invoke();
 
     }

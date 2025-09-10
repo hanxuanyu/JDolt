@@ -3,6 +3,7 @@ package com.hxuanyu.jdolt.util.builder;
 import com.hxuanyu.jdolt.interfaces.DoltTableFunction;
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractTableFunctionParamBuilder<T extends AbstractTableFunctionParamBuilder<T>> extends AbstractParamBuilder {
@@ -26,11 +27,11 @@ public abstract class AbstractTableFunctionParamBuilder<T extends AbstractTableF
     @Override
     public SqlExecuteResult execute() {
         checkParam();
-        List<String> functionParams = this.sqlParams.get(ParamType.FUNCTION_PARAMS);
+        List<Object> functionParams = this.sqlParams.get(ParamType.FUNCTION_PARAMS);
         if (functionParams == null || functionParams.isEmpty()) {
             return doltFunction.invoke();
         } else {
-            return doltFunction.invoke(functionParams.toArray(new String[0]));
+            return doltFunction.invoke(convertToStringArray(functionParams));
         }
     }
 

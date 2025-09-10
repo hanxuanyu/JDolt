@@ -10,14 +10,14 @@ public class DoltUnDropTest extends DoltClientTest {
     @Test
     public void testUnDropNoArgs() {
 
-        versionControl.doltUnDrop().prepare().execute();
+        versionControl.procedure().doltUnDrop().prepare().execute();
 
     }
 
     @Test
     public void testUnDrop() {
 
-        versionControl.doltUnDrop().prepare()
+        versionControl.procedure().doltUnDrop().prepare()
                 .withDatabase("database1")
                 .execute();
 

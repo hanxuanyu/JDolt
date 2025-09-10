@@ -9,12 +9,12 @@ public class DoltPullTest extends DoltClientTest {
 
     @Test
     public void testPullNoArgs() {
-        versionControl.doltPull().call();
+        versionControl.procedure().doltPull().call();
     }
 
     @Test
     public void testPullOriginAndBranch() {
-        versionControl.doltPull().prepare()
+        versionControl.procedure().doltPull().prepare()
                 .withRemote("testRemote")
                 .withBranch("testAddData")
                 .execute();
@@ -22,7 +22,7 @@ public class DoltPullTest extends DoltClientTest {
 
     @Test
     public void testPullOriginAndBranchNoFF() {
-        versionControl.doltPull().prepare()
+        versionControl.procedure().doltPull().prepare()
                 .withRemote("testRemote")
                 .withBranch("testAddData")
                 .noFastForward()

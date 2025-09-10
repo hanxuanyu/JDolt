@@ -176,16 +176,16 @@ import java.util.concurrent.ConcurrentHashMap;
  * *\/
  * }</pre>
  */
-public class DolrVerifyConstraints extends DoltRepository implements DoltProcedure<DolrVerifyConstraints.Params> {
+public class DoltVerifyConstraints extends DoltRepository implements DoltProcedure<DoltVerifyConstraints.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DolrVerifyConstraints> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, DoltVerifyConstraints> INSTANCES = new ConcurrentHashMap<>();
 
-    private DolrVerifyConstraints(DoltConnectionManager connectionManager) {
+    private DoltVerifyConstraints(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DolrVerifyConstraints getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DolrVerifyConstraints(connectionManager));
+    public static DoltVerifyConstraints getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltVerifyConstraints(connectionManager));
     }
 
     public static class Params extends AbstractProcedureParamBuilder<Params> {

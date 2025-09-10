@@ -9,7 +9,7 @@ public class LastInsertUUIDTest extends DoltClientTest {
     @Test
     public void testLastInsertUUID() {
 
-        versionControl.lastInsertUUID()
+        versionControl.function().lastInsertUUID()
                 .prepare()
                 .execute();
 

@@ -18,7 +18,7 @@ public class DoltBranchTest extends DoltClientTest {
     @Test
     @Order(1)
     public void testCreateBranch() {
-        DoltBranch doltBranch = versionControl.doltBranch();
+        DoltBranch doltBranch = versionControl.procedure().doltBranch();
 
         SqlExecuteResult result = doltBranch.prepare()
                 .create("test_new_branch")
@@ -29,7 +29,7 @@ public class DoltBranchTest extends DoltClientTest {
     @Test
     @Order(2)
     public void testMoveBranch() {
-        DoltBranch doltBranch = versionControl.doltBranch();
+        DoltBranch doltBranch = versionControl.procedure().doltBranch();
         SqlExecuteResult result = doltBranch.prepare()
                 .move("test_new_branch", "test_new_branch_new")
                 .force()
@@ -39,7 +39,7 @@ public class DoltBranchTest extends DoltClientTest {
     @Test
     @Order(3)
     public void testRemoveBranch() {
-        DoltBranch doltBranch = versionControl.doltBranch();
+        DoltBranch doltBranch = versionControl.procedure().doltBranch();
         SqlExecuteResult result = doltBranch.prepare()
                 .delete("test_new_branch_new")
                 .force()

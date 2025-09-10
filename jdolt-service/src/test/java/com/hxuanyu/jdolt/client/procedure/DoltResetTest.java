@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 public class DoltResetTest extends DoltClientTest {
     @Test
     public void testResetNoArgs() {
-        versionControl.doltReset().prepare().execute();
+        versionControl.procedure().doltReset().prepare().execute();
     }
 
     @Test
     public void testResetToRevision() {
-        versionControl.doltReset()
+        versionControl.procedure().doltReset()
                 .prepare()
                 .withRevision("rqpj01210nga56vn3bcbisgo3copalp5")
                 .execute();
@@ -21,7 +21,7 @@ public class DoltResetTest extends DoltClientTest {
 
     @Test
     public void testResetToRevisionHard() {
-        versionControl.doltReset()
+        versionControl.procedure().doltReset()
                 .prepare()
                 .withRevision("rqpj01210nga56vn3bcbisgo3copalp5")
                 .hard()

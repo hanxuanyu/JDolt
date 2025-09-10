@@ -10,7 +10,7 @@ public class DoltDiffTest extends DoltMergeBaseTest {
 
     @Test
     public void testDoltDiff() {
-        DoltDiff doltDiff = versionControl.doltDiff();
+        DoltDiff doltDiff = versionControl.function().doltDiff();
         SqlExecuteResult execute = doltDiff.prepare()
                 .fromRevision("oqo3l2g7adr83a38q6i7ccd7d9a0i5ms")
                 .toRevision("HEAD")
@@ -22,7 +22,7 @@ public class DoltDiffTest extends DoltMergeBaseTest {
 
     @Test
     public void testTwoDoltDiff() {
-        DoltDiff doltDiff = versionControl.doltDiff();
+        DoltDiff doltDiff = versionControl.function().doltDiff();
         SqlExecuteResult execute = doltDiff.prepare()
                 .twoDot("oqo3l2g7adr83a38q6i7ccd7d9a0i5ms", "HEAD")
                 .withTable("products")
@@ -32,7 +32,7 @@ public class DoltDiffTest extends DoltMergeBaseTest {
 
     @Test
     public void testThreeDotDiff() {
-        DoltDiff doltDiff = versionControl.doltDiff();
+        DoltDiff doltDiff = versionControl.function().doltDiff();
         SqlExecuteResult execute = doltDiff.prepare()
                 .threeDot("oqo3l2g7adr83a38q6i7ccd7d9a0i5ms", "HEAD")
                 .withTable("products")
