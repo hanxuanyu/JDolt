@@ -3,6 +3,7 @@ package com.hxuanyu.jdolt.core.api;
 import com.hxuanyu.jdolt.core.function.info.*;
 import com.hxuanyu.jdolt.core.function.table.*;
 import com.hxuanyu.jdolt.core.procedure.*;
+import com.hxuanyu.jdolt.core.systemtable.DoltBranches;
 import com.hxuanyu.jdolt.core.systemtable.DoltSystemTable;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;
@@ -225,6 +226,11 @@ public class VersionControl {
         
         public DoltSystemTable anySystemTable() {
             return DoltSystemTable.getInstance(connectionManager);
+        }
+
+
+        public DoltBranches branches(){
+            return DoltBranches.getInstance(connectionManager);
         }
     }
 }

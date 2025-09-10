@@ -16,7 +16,7 @@ public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, DoltSystemTable> INSTANCES = new ConcurrentHashMap<>();
 
-    private DoltSystemTable(DoltConnectionManager connectionManager) {
+    protected DoltSystemTable(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
@@ -56,6 +56,28 @@ public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt
             }
             return this;
         }
+
+        public Params limit(int limit) {
+            addParam(ParamType.LIMIT, limit);
+            return this;
+        }
+
+        public Params offset(int offset) {
+            addParam(ParamType.OFFSET, offset);
+            return this;
+        }
+
+        public Params limit(String limit) {
+            addParam(ParamType.LIMIT, limit);
+            return this;
+        }
+
+        public Params offset(String offset) {
+            addParam(ParamType.OFFSET, offset);
+            return this;
+        }
+
+
 
     }
 

@@ -20,9 +20,11 @@ public class DoltSystemTableTest extends DoltClientTest {
 
     @Test
     public void testDoltBranches() {
-        DoltSystemTable systemTable = versionControl.systemTable().anySystemTable();
-        // 基本测试保留
-        systemTable.prepare().from("dolt_branches").execute().print();
+        versionControl.systemTable().branches().prepare()
+                .orderBy("name")
+                .limit(10)
+                .offset(0)
+                .execute().printJson();
     }
 
     @Test

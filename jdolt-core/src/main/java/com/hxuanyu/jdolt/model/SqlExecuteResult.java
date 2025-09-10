@@ -274,4 +274,84 @@ public class SqlExecuteResult {
             System.out.println("共计 " + data.size() + " 条记录");
         }
     }
+
+    /**
+     * 将SQL执行结果转换为JSON字符串
+     *
+     * @return JSON格式的结果字符串
+     */
+    public String toJson() {
+        StringBuilder json = new StringBuilder();
+        json.append("{");
+        
+        // 添加status字段
+        json.append("\"status\":").append(status).append(",");
+        
+        // 添加msg字段
+        json.append("\"msg\":\"").append(escapeJsonString(msg)).append("\",");
+        
+        // 添加data字段
+        json.append("\"data\":");
+        if (data == null) {
+            json.append("null");
+        } else {
+            json.append("[");
+            for (int i = 0; i < data.size(); i++) {
+                if (i > 0) {
+                    json.append(",");
+                }
+                Map<String, Object> row = data.get(i);
+                json.append("{");
+                boolean first = true;
+                for (Map.Entry<String, Object> entry : row.entrySet()) {
+                    if (!first) {
+                        json.append(",");
+                    }
+                    first = false;
+                    json.append("\"").append(escapeJsonString(entry.getKey())).append("\":");
+                    Object value = entry.getValue();
+                    if (value == null) {
+                        json.append("null");
+                    } else if (value instanceof String) {
+                        json.append("\"").append(escapeJsonString(value.toString())).append("\"");
+                    } else if (value instanceof Number || value instanceof Boolean) {
+                        json.append(value.toString());
+                    } else {
+                        json.append("\"").append(escapeJsonString(value.toString())).append("\"");
+                    }
+                }
+                json.append("}");
+            }
+            json.append("]");
+        }
+        
+        json.append("}");
+        return json.toString();
+    }
+
+    /**
+     * 输出SQL执行结果到控制台，以JSON格式展示
+     */
+    public void printJson() {
+        System.out.println(toJson());
+    }
+
+    /**
+     * 转义JSON字符串中的特殊字符
+     *
+     * @param str 原始字符串
+     * @return 转义后的字符串
+     */
+    private String escapeJsonString(String str) {
+        if (str == null) {
+            return "";
+        }
+        return str.replace("\\", "\\\\")
+                  .replace("\"", "\\\"")
+                  .replace("\b", "\\b")
+                  .replace("\f", "\\f")
+                  .replace("\n", "\\n")
+                  .replace("\r", "\\r")
+                  .replace("\t", "\\t");
+    }
 }
