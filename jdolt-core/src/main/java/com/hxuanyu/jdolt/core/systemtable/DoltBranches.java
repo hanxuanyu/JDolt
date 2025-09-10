@@ -1,14 +1,6 @@
 package com.hxuanyu.jdolt.core.systemtable;
 
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
-import com.hxuanyu.jdolt.model.WhereCondition;
-import com.hxuanyu.jdolt.repository.DoltRepository;
-import com.hxuanyu.jdolt.util.builder.AbstractParamBuilder;
-import com.hxuanyu.jdolt.util.builder.AbstractSystemTableParamBuilder;
-import com.hxuanyu.jdolt.util.builder.SqlBuilder;
-
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DoltBranches extends DoltSystemTable {

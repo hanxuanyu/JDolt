@@ -28,6 +28,13 @@ public class DoltSystemTableTest extends DoltClientTest {
     }
 
     @Test
+    public void testDoltCommits() {
+
+        versionControl.systemTable().commits().prepare().execute().printJson();
+
+    }
+
+    @Test
     public void testWhereConditionCreation() {
         // 测试WhereCondition的各种创建方法
         WhereCondition equals = WhereCondition.equals("name", "test");

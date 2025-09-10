@@ -4,6 +4,7 @@ import com.hxuanyu.jdolt.core.function.info.*;
 import com.hxuanyu.jdolt.core.function.table.*;
 import com.hxuanyu.jdolt.core.procedure.*;
 import com.hxuanyu.jdolt.core.systemtable.DoltBranches;
+import com.hxuanyu.jdolt.core.systemtable.DoltCommits;
 import com.hxuanyu.jdolt.core.systemtable.DoltSystemTable;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;
@@ -231,6 +232,10 @@ public class VersionControl {
 
         public DoltBranches branches(){
             return DoltBranches.getInstance(connectionManager);
+        }
+
+        public DoltCommits commits(){
+            return DoltCommits.getInstance(connectionManager);
         }
     }
 }
