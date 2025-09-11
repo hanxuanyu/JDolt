@@ -3,9 +3,7 @@ package com.hxuanyu.jdolt.core.api;
 import com.hxuanyu.jdolt.core.function.info.*;
 import com.hxuanyu.jdolt.core.function.table.*;
 import com.hxuanyu.jdolt.core.procedure.*;
-import com.hxuanyu.jdolt.core.systemtable.DoltBranches;
-import com.hxuanyu.jdolt.core.systemtable.DoltCommits;
-import com.hxuanyu.jdolt.core.systemtable.DoltSystemTable;
+import com.hxuanyu.jdolt.core.systemtable.*;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -236,6 +234,18 @@ public class VersionControl {
 
         public DoltCommits commits(){
             return DoltCommits.getInstance(connectionManager);
+        }
+
+        public DoltDocs docs(){
+            return DoltDocs.getInstance(connectionManager);
+        }
+
+        public DoltProcedures procedures(){
+            return DoltProcedures.getInstance(connectionManager);
+        }
+
+        public DoltRemoteBranches remoteBranches(){
+            return DoltRemoteBranches.getInstance(connectionManager);
         }
     }
 }
