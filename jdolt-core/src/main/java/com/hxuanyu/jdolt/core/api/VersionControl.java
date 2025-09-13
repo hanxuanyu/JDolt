@@ -255,5 +255,9 @@ public class VersionControl {
         public DoltRemotes remotes(){
             return DoltRemotes.getInstance(connectionManager);
         }
+
+        public DoltBackups backups(){
+            return DoltBackups.getInstance(connectionManager);
+        }
     }
 }
