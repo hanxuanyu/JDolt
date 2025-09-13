@@ -275,5 +275,9 @@ public class VersionControl {
         public DoltBlame blame(){
             return DoltBlame.getInstance(connectionManager);
         }
+
+        public DoltCommitAncestors commitAncestors(){
+            return DoltCommitAncestors.getInstance(connectionManager);
+        }
     }
 }
