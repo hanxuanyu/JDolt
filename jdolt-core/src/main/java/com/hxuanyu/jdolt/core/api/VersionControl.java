@@ -263,5 +263,9 @@ public class VersionControl {
         public DoltSchemas schemas(){
             return DoltSchemas.getInstance(connectionManager);
         }
+
+        public DoltTags tags(){
+            return DoltTags.getInstance(connectionManager);
+        }
     }
 }
