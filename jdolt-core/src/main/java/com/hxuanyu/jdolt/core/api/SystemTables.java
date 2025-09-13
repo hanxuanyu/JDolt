@@ -73,4 +73,8 @@ public class SystemTables {
     public DoltHistory history(){
         return DoltHistory.getInstance(connectionManager);
     }
+
+    public DoltLog log(){
+        return DoltLog.getInstance(connectionManager);
+    }
 }

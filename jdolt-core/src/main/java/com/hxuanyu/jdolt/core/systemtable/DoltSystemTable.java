@@ -3,6 +3,7 @@ package com.hxuanyu.jdolt.core.systemtable;
 import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.builder.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.builder.AbstractSystemTableParamBuilder;
@@ -100,6 +101,9 @@ public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt
         return new Params(this);
     }
 
+    public SqlExecuteResult query(){
+        return this.prepare().execute();
+    }
 
     @Override
     public SqlBuilder.SqlTemplate buildSqlTemplate(Map<AbstractParamBuilder.ParamType, List<Object>> params) {

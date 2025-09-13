@@ -19,6 +19,12 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltLog() {
+        versionControl.systemTable().log().prepare().execute().print();
+        versionControl.systemTable().log().query().print();
+    }
+
+    @Test
     public void testDoltHistory() {
         versionControl.systemTable().history().prepare().withTableNameSuffix("orders").execute().print();
     }
