@@ -279,5 +279,9 @@ public class VersionControl {
         public DoltCommitAncestors commitAncestors(){
             return DoltCommitAncestors.getInstance(connectionManager);
         }
+
+        public DoltHistory history(){
+            return DoltHistory.getInstance(connectionManager);
+        }
     }
 }
