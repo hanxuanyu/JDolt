@@ -247,5 +247,9 @@ public class VersionControl {
         public DoltRemoteBranches remoteBranches(){
             return DoltRemoteBranches.getInstance(connectionManager);
         }
+
+        public DoltQueryCatalog queryCatalog(){
+            return DoltQueryCatalog.getInstance(connectionManager);
+        }
     }
 }

@@ -19,6 +19,12 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltQueryCatalog() {
+        versionControl.systemTable().queryCatalog().prepare().execute().printJson();
+
+    }
+
+    @Test
     public void testDoltBranches() {
         versionControl.systemTable().branches().prepare()
                 .orderBy("name")
