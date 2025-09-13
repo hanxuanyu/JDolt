@@ -251,5 +251,9 @@ public class VersionControl {
         public DoltQueryCatalog queryCatalog(){
             return DoltQueryCatalog.getInstance(connectionManager);
         }
+
+        public DoltRemotes remotes(){
+            return DoltRemotes.getInstance(connectionManager);
+        }
     }
 }

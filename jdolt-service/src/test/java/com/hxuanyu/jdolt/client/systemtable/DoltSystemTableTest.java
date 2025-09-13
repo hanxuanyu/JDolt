@@ -19,6 +19,11 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltRemotes() {
+        versionControl.systemTable().remotes().prepare().execute().print();
+    }
+
+    @Test
     public void testDoltQueryCatalog() {
         versionControl.systemTable().queryCatalog().prepare().execute().printJson();
 
