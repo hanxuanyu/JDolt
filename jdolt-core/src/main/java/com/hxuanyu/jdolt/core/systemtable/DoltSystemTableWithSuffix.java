@@ -3,33 +3,43 @@ package com.hxuanyu.jdolt.core.systemtable;
 import com.hxuanyu.jdolt.annotation.MethodInvokeRequired;
 import com.hxuanyu.jdolt.annotation.MethodMutexGroup;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.model.WhereCondition;
 import com.hxuanyu.jdolt.repository.DoltRepository;
 import com.hxuanyu.jdolt.util.builder.AbstractParamBuilder;
 import com.hxuanyu.jdolt.util.builder.AbstractSystemTableParamBuilder;
 import com.hxuanyu.jdolt.util.builder.SqlBuilder;
-import com.hxuanyu.jdolt.model.WhereCondition;
-
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt.interfaces.DoltSystemTable<DoltSystemTable.Params> {
+public class DoltSystemTableWithSuffix extends DoltRepository implements com.hxuanyu.jdolt.interfaces.DoltSystemTable<DoltSystemTableWithSuffix.Params> {
     // 单例管理
-    private static final ConcurrentHashMap<DoltConnectionManager, DoltSystemTable> INSTANCES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<DoltConnectionManager, DoltSystemTableWithSuffix> INSTANCES = new ConcurrentHashMap<>();
 
-    protected DoltSystemTable(DoltConnectionManager connectionManager) {
+    protected DoltSystemTableWithSuffix(DoltConnectionManager connectionManager) {
         super(connectionManager);
     }
 
-    public static DoltSystemTable getInstance(DoltConnectionManager connectionManager) {
-        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltSystemTable(connectionManager));
+    public static DoltSystemTableWithSuffix getInstance(DoltConnectionManager connectionManager) {
+        return INSTANCES.computeIfAbsent(connectionManager, k -> new DoltSystemTableWithSuffix(connectionManager));
     }
 
     public static class Params extends AbstractSystemTableParamBuilder<Params> {
 
+
+
+
         protected Params(com.hxuanyu.jdolt.interfaces.DoltSystemTable<Params> doltTableFunction) {
             super(Params.class, doltTableFunction);
+        }
+
+        @MethodInvokeRequired
+        @MethodMutexGroup({"withTableNameSuffix"})
+        public Params withTableNameSuffix(String tableName){
+            validator.checkAndMark("withTableNameSuffix");
+            addParam(ParamType.TABLE_NAME_SUFFIX, tableName);
+            return this;
         }
 
         @MethodInvokeRequired
@@ -93,6 +103,8 @@ public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt
             return this;
         }
 
+
+
     }
 
     @Override
@@ -107,8 +119,9 @@ public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt
 
         // 处理FROM子句
         List<Object> tableNames = params.get(AbstractParamBuilder.ParamType.TABLE_NAME);
-        if (tableNames != null && !tableNames.isEmpty()) {
-            builder.from(tableNames.get(0).toString());
+        List<Object> tableNameSuffix = params.get(AbstractParamBuilder.ParamType.TABLE_NAME_SUFFIX);
+        if (tableNames != null && !tableNames.isEmpty() && tableNameSuffix != null && !tableNameSuffix.isEmpty()) {
+            builder.from(tableNames.get(0).toString() + "_" + tableNameSuffix.get(0).toString());
         }
 
         // 处理WHERE条件

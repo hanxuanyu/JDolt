@@ -29,6 +29,7 @@ public abstract class AbstractParamBuilder {
         SET_CLAUSE,
         INTO_CLAUSE,
         FLAGS,
+        TABLE_NAME_SUFFIX,
     }
     
     protected final MethodConstraintValidator validator;

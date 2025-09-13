@@ -19,6 +19,11 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltBlame() {
+        versionControl.systemTable().blame().prepare().withTableNameSuffix("orders").execute().print();
+    }
+
+    @Test
     public void testDoltStatistics() {
         versionControl.systemTable().statistics().prepare().execute().print();
     }

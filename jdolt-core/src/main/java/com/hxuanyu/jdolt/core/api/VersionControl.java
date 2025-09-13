@@ -271,5 +271,9 @@ public class VersionControl {
         public DoltStatistics statistics(){
             return DoltStatistics.getInstance(connectionManager);
         }
+
+        public DoltBlame blame(){
+            return DoltBlame.getInstance(connectionManager);
+        }
     }
 }
