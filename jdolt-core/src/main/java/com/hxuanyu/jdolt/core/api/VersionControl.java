@@ -267,5 +267,9 @@ public class VersionControl {
         public DoltTags tags(){
             return DoltTags.getInstance(connectionManager);
         }
+
+        public DoltStatistics statistics(){
+            return DoltStatistics.getInstance(connectionManager);
+        }
     }
 }
