@@ -259,5 +259,9 @@ public class VersionControl {
         public DoltBackups backups(){
             return DoltBackups.getInstance(connectionManager);
         }
+
+        public DoltSchemas schemas(){
+            return DoltSchemas.getInstance(connectionManager);
+        }
     }
 }

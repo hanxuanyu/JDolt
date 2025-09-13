@@ -19,6 +19,11 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltSchemas() {
+        versionControl.systemTable().schemas().prepare().execute().print();
+    }
+
+    @Test
     public void testDoltBackups() {
         versionControl.systemTable().backups().prepare().execute().print();
     }

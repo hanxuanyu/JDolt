@@ -120,7 +120,7 @@ public class SqlExecuteResult {
         }
 
         if (data == null || data.isEmpty()) {
-            System.out.println("执行成功，但没有返回数据");
+            System.out.println("执行成功，数据为空");
             return;
         }
 
