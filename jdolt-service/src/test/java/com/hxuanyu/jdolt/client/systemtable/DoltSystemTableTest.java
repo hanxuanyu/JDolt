@@ -19,6 +19,135 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltRebase() {
+        versionControl.systemTable().rebase().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltTest() {
+        versionControl.systemTable().test().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltIgnore() {
+        versionControl.systemTable().ignore().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltConstraintViolations() {
+        versionControl.systemTable().constraintViolations().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltWorkspace() {
+        versionControl.systemTable().workspace().prepare().withTableNameSuffix("orders").execute().print();
+    }
+
+    @Test
+    public void tesDoltStatus() {
+        DoltSystemTable status = versionControl.systemTable().status();
+        status.prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltStashes() {
+        versionControl.systemTable().stashes().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltMergeStatus() {
+        versionControl.systemTable().mergeStatus().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltSchemaConflicts() {
+        versionControl.systemTable().schemaConflicts().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltConflicts() {
+        versionControl.systemTable().conflicts().prepare().execute().print();
+        versionControl.systemTable().conflicts().prepare().withTableNameSuffix("orders").execute().print();
+    }
+
+    @Test
+    public void testDoltDiff() {
+        versionControl.systemTable().diff().prepare()
+                .withTableNameSuffix("orders")
+                .execute().print();
+    }
+
+    @Test
+    public void testDoltColumnDiff() {
+        versionControl.systemTable().columnDiff().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltCommitDiff() {
+
+        versionControl.systemTable().commitDiff()
+                .prepare()
+                .withTableNameSuffix("orders")
+                .where("from_commit", WhereCondition.Operator.EQUALS, "7417a7dvmksbvsvv83npa5n5cau2ovfn")
+                .where("to_commit", WhereCondition.Operator.EQUALS, "pcc9u35oj0gd6vefii2e3o5lr2e13q3i")
+                .execute().print();
+
+    }
+
+    @Test
+    public void testDoltLog() {
+        versionControl.systemTable().log().prepare().execute().print();
+        versionControl.systemTable().log().query().print();
+    }
+
+    @Test
+    public void testDoltHistory() {
+        versionControl.systemTable().history().prepare().withTableNameSuffix("orders").execute().print();
+    }
+
+    @Test
+    public void testDoltCommitAncestors() {
+        versionControl.systemTable().commitAncestors().prepare().execute().print();
+    }
+
+
+    @Test
+    public void testDoltBlame() {
+        versionControl.systemTable().blame().prepare().withTableNameSuffix("orders").execute().print();
+    }
+
+    @Test
+    public void testDoltStatistics() {
+        versionControl.systemTable().statistics().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltTags() {
+        versionControl.systemTable().tags().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltSchemas() {
+        versionControl.systemTable().schemas().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltBackups() {
+        versionControl.systemTable().backups().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltRemotes() {
+        versionControl.systemTable().remotes().prepare().execute().print();
+    }
+
+    @Test
+    public void testDoltQueryCatalog() {
+        versionControl.systemTable().queryCatalog().prepare().execute().printJson();
+
+    }
+
+    @Test
     public void testDoltBranches() {
         versionControl.systemTable().branches().prepare()
                 .orderBy("name")

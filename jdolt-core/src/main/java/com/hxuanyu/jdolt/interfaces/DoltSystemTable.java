@@ -24,7 +24,7 @@ public interface DoltSystemTable<T extends AbstractSystemTableParamBuilder<T>> {
 
     default SqlExecuteResult query(Map<AbstractParamBuilder.ParamType, List<Object>> params) {
         List<Map<String, Object>> resultMaps = executeQueryAsList(buildSqlTemplate(params));
-        if (resultMaps != null && !resultMaps.isEmpty()) {
+        if (resultMaps != null) {
             return SqlExecuteResult.success("success", resultMaps);
         } else {
             return SqlExecuteResult.failed("failed");
