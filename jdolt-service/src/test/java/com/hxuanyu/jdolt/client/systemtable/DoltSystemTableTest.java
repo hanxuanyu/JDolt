@@ -19,6 +19,11 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltMergeStatus() {
+        versionControl.systemTable().mergeStatus().prepare().execute().print();
+    }
+
+    @Test
     public void testDoltSchemaConflicts() {
         versionControl.systemTable().schemaConflicts().prepare().execute().print();
     }

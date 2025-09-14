@@ -97,4 +97,8 @@ public class SystemTables {
     public DoltSchemaConflicts schemaConflicts(){
         return DoltSchemaConflicts.getInstance(connectionManager);
     }
+
+    public DoltMergeStatus mergeStatus(){
+        return DoltMergeStatus.getInstance(connectionManager);
+    }
 }
