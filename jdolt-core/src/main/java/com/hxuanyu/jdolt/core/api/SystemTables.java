@@ -121,4 +121,8 @@ public class SystemTables {
     public DoltIgnore ignore(){
         return DoltIgnore.getInstance(connectionManager);
     }
+
+    public DoltTests test(){
+        return DoltTests.getInstance(connectionManager);
+    }
 }
