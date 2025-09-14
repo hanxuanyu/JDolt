@@ -125,4 +125,8 @@ public class SystemTables {
     public DoltTests test(){
         return DoltTests.getInstance(connectionManager);
     }
+
+    public DoltRebase rebase(){
+        return DoltRebase.getInstance(connectionManager);
+    }
 }

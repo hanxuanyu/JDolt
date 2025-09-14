@@ -17,6 +17,12 @@ import java.util.List;
 
 public class DoltSystemTableTest extends DoltClientTest {
 
+
+    @Test
+    public void testDoltRebase() {
+        versionControl.systemTable().rebase().prepare().execute().print();
+    }
+
     @Test
     public void testDoltTest() {
         versionControl.systemTable().test().prepare().execute().print();
