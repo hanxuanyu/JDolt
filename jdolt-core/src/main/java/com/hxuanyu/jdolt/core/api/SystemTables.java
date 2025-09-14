@@ -117,4 +117,8 @@ public class SystemTables {
     public DoltConstraintViolations constraintViolations(){
         return DoltConstraintViolations.getInstance(connectionManager);
     }
+
+    public DoltIgnore ignore(){
+        return DoltIgnore.getInstance(connectionManager);
+    }
 }

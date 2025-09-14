@@ -17,6 +17,12 @@ import java.util.List;
 
 public class DoltSystemTableTest extends DoltClientTest {
 
+
+    @Test
+    public void testDoltIgnore() {
+        versionControl.systemTable().ignore().prepare().execute().print();
+    }
+
     @Test
     public void testDoltConstraintViolations() {
         versionControl.systemTable().constraintViolations().prepare().execute().print();
