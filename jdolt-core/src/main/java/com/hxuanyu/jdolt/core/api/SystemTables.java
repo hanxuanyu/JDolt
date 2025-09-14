@@ -109,4 +109,8 @@ public class SystemTables {
     public DoltStatus status(){
         return DoltStatus.getInstance(connectionManager);
     }
+
+    public DoltWorkspace workspace(){
+        return DoltWorkspace.getInstance(connectionManager);
+    }
 }
