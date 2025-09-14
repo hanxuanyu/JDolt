@@ -17,6 +17,17 @@ import java.util.List;
 
 public class DoltSystemTableTest extends DoltClientTest {
 
+    @Test
+    public void testDoltCommitDiff() {
+
+        versionControl.systemTable().commitDiff()
+                .prepare()
+                .withTableNameSuffix("orders")
+                .where("from_commit", WhereCondition.Operator.EQUALS, "7417a7dvmksbvsvv83npa5n5cau2ovfn")
+                .where("to_commit", WhereCondition.Operator.EQUALS, "pcc9u35oj0gd6vefii2e3o5lr2e13q3i")
+                .execute().print();
+
+    }
 
     @Test
     public void testDoltLog() {

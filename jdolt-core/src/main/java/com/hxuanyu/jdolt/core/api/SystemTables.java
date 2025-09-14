@@ -77,4 +77,8 @@ public class SystemTables {
     public DoltLog log(){
         return DoltLog.getInstance(connectionManager);
     }
+
+    public DoltCommitDiff commitDiff(){
+        return DoltCommitDiff.getInstance(connectionManager);
+    }
 }
