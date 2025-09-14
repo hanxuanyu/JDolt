@@ -113,4 +113,8 @@ public class SystemTables {
     public DoltWorkspace workspace(){
         return DoltWorkspace.getInstance(connectionManager);
     }
+
+    public DoltConstraintViolations constraintViolations(){
+        return DoltConstraintViolations.getInstance(connectionManager);
+    }
 }
