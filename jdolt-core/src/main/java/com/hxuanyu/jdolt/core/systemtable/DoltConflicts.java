@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 表的文档。
  * </p>
  */
-public class DoltConflicts extends DoltSystemTable {
+public class DoltConflicts extends DoltSystemTableWithSuffix {
     // 单例管理
     private static final ConcurrentHashMap<DoltConnectionManager, DoltConflicts> INSTANCES = new ConcurrentHashMap<>();
 

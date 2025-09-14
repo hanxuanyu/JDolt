@@ -20,6 +20,7 @@ public class DoltSystemTableTest extends DoltClientTest {
     @Test
     public void testDoltConflicts() {
         versionControl.systemTable().conflicts().prepare().execute().print();
+        versionControl.systemTable().conflicts().prepare().withTableNameSuffix("orders").execute().print();
     }
 
     @Test
