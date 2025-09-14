@@ -89,4 +89,8 @@ public class SystemTables {
     public DoltDiff diff(){
         return DoltDiff.getInstance(connectionManager);
     }
+
+    public DoltConflicts conflicts(){
+        return DoltConflicts.getInstance(connectionManager);
+    }
 }
