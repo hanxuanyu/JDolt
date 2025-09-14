@@ -101,4 +101,8 @@ public class SystemTables {
     public DoltMergeStatus mergeStatus(){
         return DoltMergeStatus.getInstance(connectionManager);
     }
+
+    public DoltStashes stashes(){
+        return DoltStashes.getInstance(connectionManager);
+    }
 }

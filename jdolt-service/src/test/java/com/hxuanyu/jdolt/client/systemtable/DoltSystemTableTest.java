@@ -19,6 +19,11 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltStashes() {
+        versionControl.systemTable().stashes().prepare().execute().print();
+    }
+
+    @Test
     public void testDoltMergeStatus() {
         versionControl.systemTable().mergeStatus().prepare().execute().print();
     }
