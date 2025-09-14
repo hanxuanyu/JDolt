@@ -53,6 +53,20 @@ public class DoltSystemTable extends DoltRepository implements com.hxuanyu.jdolt
         }
 
         /**
+         * 添加WHERE条件
+         * @param column 列名
+         * @param operator 操作符
+         * @param value 值
+         * @return Params实例
+         */
+        public Params where(String column, WhereCondition.Operator operator, Object value) {
+            validator.checkAndMark("where");
+            WhereCondition whereCondition = new WhereCondition(column, operator, value);
+            addParam(ParamType.WHERE_CONDITION, whereCondition);
+            return this;
+        }
+
+        /**
          * 添加ORDER BY子句（重写父类方法以返回正确类型）
          * @param columns 排序列名
          * @return Params实例

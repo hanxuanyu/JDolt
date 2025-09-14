@@ -85,4 +85,8 @@ public class SystemTables {
     public DoltColumnDiff columnDiff(){
         return DoltColumnDiff.getInstance(connectionManager);
     }
+
+    public DoltDiff diff(){
+        return DoltDiff.getInstance(connectionManager);
+    }
 }

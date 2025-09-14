@@ -19,6 +19,13 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void testDoltDiff() {
+        versionControl.systemTable().diff().prepare()
+                .withTableNameSuffix("orders")
+                .execute().print();
+    }
+
+    @Test
     public void testDoltColumnDiff() {
         versionControl.systemTable().columnDiff().prepare().execute().print();
     }

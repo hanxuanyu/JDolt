@@ -34,7 +34,6 @@ public class DoltSystemTableWithSuffix extends DoltRepository implements com.hxu
             super(Params.class, doltTableFunction);
         }
 
-        @MethodInvokeRequired
         @MethodMutexGroup({"withTableNameSuffix"})
         public Params withTableNameSuffix(String tableName){
             validator.checkAndMark("withTableNameSuffix");
@@ -134,8 +133,12 @@ public class DoltSystemTableWithSuffix extends DoltRepository implements com.hxu
         // 处理FROM子句
         List<Object> tableNames = params.get(AbstractParamBuilder.ParamType.TABLE_NAME);
         List<Object> tableNameSuffix = params.get(AbstractParamBuilder.ParamType.TABLE_NAME_SUFFIX);
-        if (tableNames != null && !tableNames.isEmpty() && tableNameSuffix != null && !tableNameSuffix.isEmpty()) {
-            builder.from(tableNames.get(0).toString() + "_" + tableNameSuffix.get(0).toString());
+        if (tableNames != null && !tableNames.isEmpty()) {
+            if (tableNameSuffix == null || tableNameSuffix.isEmpty()) {
+                builder.from(tableNames.get(0).toString());
+            } else {
+                builder.from(tableNames.get(0).toString() + "_" + tableNameSuffix.get(0).toString());
+            }
         }
 
         // 处理WHERE条件
