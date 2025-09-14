@@ -17,6 +17,12 @@ import java.util.List;
 
 public class DoltSystemTableTest extends DoltClientTest {
 
+
+    @Test
+    public void testDoltColumnDiff() {
+        versionControl.systemTable().columnDiff().prepare().execute().print();
+    }
+
     @Test
     public void testDoltCommitDiff() {
 

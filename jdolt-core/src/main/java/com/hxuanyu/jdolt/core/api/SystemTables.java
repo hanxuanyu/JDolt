@@ -81,4 +81,8 @@ public class SystemTables {
     public DoltCommitDiff commitDiff(){
         return DoltCommitDiff.getInstance(connectionManager);
     }
+
+    public DoltColumnDiff columnDiff(){
+        return DoltColumnDiff.getInstance(connectionManager);
+    }
 }
