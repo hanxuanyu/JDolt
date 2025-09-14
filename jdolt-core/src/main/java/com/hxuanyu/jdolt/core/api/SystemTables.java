@@ -105,4 +105,8 @@ public class SystemTables {
     public DoltStashes stashes(){
         return DoltStashes.getInstance(connectionManager);
     }
+
+    public DoltStatus status(){
+        return DoltStatus.getInstance(connectionManager);
+    }
 }

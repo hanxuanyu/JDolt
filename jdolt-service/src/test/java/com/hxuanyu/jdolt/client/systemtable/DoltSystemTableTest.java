@@ -19,6 +19,12 @@ public class DoltSystemTableTest extends DoltClientTest {
 
 
     @Test
+    public void tesDoltStatus() {
+        DoltSystemTable status = versionControl.systemTable().status();
+        status.prepare().execute().print();
+    }
+
+    @Test
     public void testDoltStashes() {
         versionControl.systemTable().stashes().prepare().execute().print();
     }
