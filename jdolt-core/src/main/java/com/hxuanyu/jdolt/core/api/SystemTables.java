@@ -93,4 +93,8 @@ public class SystemTables {
     public DoltConflicts conflicts(){
         return DoltConflicts.getInstance(connectionManager);
     }
+
+    public DoltSchemaConflicts schemaConflicts(){
+        return DoltSchemaConflicts.getInstance(connectionManager);
+    }
 }
