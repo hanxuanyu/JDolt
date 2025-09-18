@@ -1,7 +1,10 @@
 package com.hxuanyu.jdolt.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 用户端统一返回报文实体类
@@ -30,6 +33,456 @@ public class SqlExecuteResult {
      * 调用或请求的实际结果，如果请求失败，该值应为空
      */
     private List<Map<String, Object>> data;
+
+    // ... 原有的构造器和静态方法保持不变 ...
+
+    // ================= 数据获取便利方法 =================
+
+    /**
+     * 获取指定行指定列的原始数据
+     *
+     * @param rowIndex    行索引（从0开始）
+     * @param columnName  列名
+     * @return Optional包装的数据，如果不存在或执行失败则返回empty
+     */
+    public Optional<Object> getValue(int rowIndex, String columnName) {
+        if (!isSuccess() || data == null || rowIndex < 0 || rowIndex >= data.size()) {
+            return Optional.empty();
+        }
+
+        Map<String, Object> row = data.get(rowIndex);
+        return Optional.ofNullable(row.get(columnName));
+    }
+
+    /**
+     * 获取第一行指定列的原始数据
+     *
+     * @param columnName 列名
+     * @return Optional包装的数据
+     */
+    public Optional<Object> getFirstValue(String columnName) {
+        return getValue(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的字符串数据
+     *
+     * @param rowIndex   行索引
+     * @param columnName 列名
+     * @return 字符串数据，如果不存在则返回null
+     */
+    public String getString(int rowIndex, String columnName) {
+        return getValue(rowIndex, columnName)
+                .map(Object::toString)
+                .orElse(null);
+    }
+
+    /**
+     * 获取第一行指定列的字符串数据
+     *
+     * @param columnName 列名
+     * @return 字符串数据，如果不存在则返回null
+     */
+    public String getString(String columnName) {
+        return getString(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的字符串数据，如果为null则返回默认值
+     *
+     * @param rowIndex     行索引
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 字符串数据或默认值
+     */
+    public String getString(int rowIndex, String columnName, String defaultValue) {
+        String result = getString(rowIndex, columnName);
+        return result != null ? result : defaultValue;
+    }
+
+    /**
+     * 获取第一行指定列的字符串数据，如果为null则返回默认值
+     *
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 字符串数据或默认值
+     */
+    public String getString(String columnName, String defaultValue) {
+        return getString(0, columnName, defaultValue);
+    }
+
+    /**
+     * 获取指定行指定列的整数数据
+     *
+     * @param rowIndex   行索引
+     * @param columnName 列名
+     * @return Optional包装的整数数据
+     */
+    public Optional<Integer> getInt(int rowIndex, String columnName) {
+        return getValue(rowIndex, columnName).map(obj -> {
+            if (obj instanceof Integer) {
+                return (Integer) obj;
+            } else if (obj instanceof Number) {
+                return ((Number) obj).intValue();
+            } else {
+                try {
+                    return Integer.valueOf(obj.toString());
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取第一行指定列的整数数据
+     *
+     * @param columnName 列名
+     * @return Optional包装的整数数据
+     */
+    public Optional<Integer> getInt(String columnName) {
+        return getInt(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的整数数据，如果无法获取则返回默认值
+     *
+     * @param rowIndex     行索引
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 整数数据或默认值
+     */
+    public Integer getInt(int rowIndex, String columnName, Integer defaultValue) {
+        return getInt(rowIndex, columnName).orElse(defaultValue);
+    }
+
+    /**
+     * 获取第一行指定列的整数数据，如果无法获取则返回默认值
+     *
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 整数数据或默认值
+     */
+    public Integer getInt(String columnName, Integer defaultValue) {
+        return getInt(0, columnName, defaultValue);
+    }
+
+    /**
+     * 获取指定行指定列的长整数数据
+     *
+     * @param rowIndex   行索引
+     * @param columnName 列名
+     * @return Optional包装的长整数数据
+     */
+    public Optional<Long> getLong(int rowIndex, String columnName) {
+        return getValue(rowIndex, columnName).map(obj -> {
+            if (obj instanceof Long) {
+                return (Long) obj;
+            } else if (obj instanceof Number) {
+                return ((Number) obj).longValue();
+            } else {
+                try {
+                    return Long.valueOf(obj.toString());
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取第一行指定列的长整数数据
+     *
+     * @param columnName 列名
+     * @return Optional包装的长整数数据
+     */
+    public Optional<Long> getLong(String columnName) {
+        return getLong(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的长整数数据，如果无法获取则返回默认值
+     *
+     * @param rowIndex     行索引
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 长整数数据或默认值
+     */
+    public Long getLong(int rowIndex, String columnName, Long defaultValue) {
+        return getLong(rowIndex, columnName).orElse(defaultValue);
+    }
+
+    /**
+     * 获取第一行指定列的长整数数据，如果无法获取则返回默认值
+     *
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 长整数数据或默认值
+     */
+    public Long getLong(String columnName, Long defaultValue) {
+        return getLong(0, columnName, defaultValue);
+    }
+
+    /**
+     * 获取指定行指定列的双精度浮点数据
+     *
+     * @param rowIndex   行索引
+     * @param columnName 列名
+     * @return Optional包装的双精度浮点数据
+     */
+    public Optional<Double> getDouble(int rowIndex, String columnName) {
+        return getValue(rowIndex, columnName).map(obj -> {
+            if (obj instanceof Double) {
+                return (Double) obj;
+            } else if (obj instanceof Number) {
+                return ((Number) obj).doubleValue();
+            } else {
+                try {
+                    return Double.valueOf(obj.toString());
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取第一行指定列的双精度浮点数据
+     *
+     * @param columnName 列名
+     * @return Optional包装的双精度浮点数据
+     */
+    public Optional<Double> getDouble(String columnName) {
+        return getDouble(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的双精度浮点数据，如果无法获取则返回默认值
+     *
+     * @param rowIndex     行索引
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 双精度浮点数据或默认值
+     */
+    public Double getDouble(int rowIndex, String columnName, Double defaultValue) {
+        return getDouble(rowIndex, columnName).orElse(defaultValue);
+    }
+
+    /**
+     * 获取第一行指定列的双精度浮点数据，如果无法获取则返回默认值
+     *
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 双精度浮点数据或默认值
+     */
+    public Double getDouble(String columnName, Double defaultValue) {
+        return getDouble(0, columnName, defaultValue);
+    }
+
+    /**
+     * 获取指定行指定列的BigDecimal数据
+     *
+     * @param rowIndex   行索引
+     * @param columnName 列名
+     * @return Optional包装的BigDecimal数据
+     */
+    public Optional<BigDecimal> getBigDecimal(int rowIndex, String columnName) {
+        return getValue(rowIndex, columnName).map(obj -> {
+            if (obj instanceof BigDecimal) {
+                return (BigDecimal) obj;
+            } else if (obj instanceof Number) {
+                return BigDecimal.valueOf(((Number) obj).doubleValue());
+            } else {
+                try {
+                    return new BigDecimal(obj.toString());
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取第一行指定列的BigDecimal数据
+     *
+     * @param columnName 列名
+     * @return Optional包装的BigDecimal数据
+     */
+    public Optional<BigDecimal> getBigDecimal(String columnName) {
+        return getBigDecimal(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的布尔数据
+     *
+     * @param rowIndex   行索引
+     * @param columnName 列名
+     * @return Optional包装的布尔数据
+     */
+    public Optional<Boolean> getBoolean(int rowIndex, String columnName) {
+        return getValue(rowIndex, columnName).map(obj -> {
+            if (obj instanceof Boolean) {
+                return (Boolean) obj;
+            } else if (obj instanceof Number) {
+                return ((Number) obj).intValue() != 0;
+            } else {
+                String str = obj.toString().toLowerCase();
+                return "true".equals(str) || "1".equals(str) || "yes".equals(str) || "y".equals(str);
+            }
+        });
+    }
+
+    /**
+     * 获取第一行指定列的布尔数据
+     *
+     * @param columnName 列名
+     * @return Optional包装的布尔数据
+     */
+    public Optional<Boolean> getBoolean(String columnName) {
+        return getBoolean(0, columnName);
+    }
+
+    /**
+     * 获取指定行指定列的布尔数据，如果无法获取则返回默认值
+     *
+     * @param rowIndex     行索引
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 布尔数据或默认值
+     */
+    public Boolean getBoolean(int rowIndex, String columnName, Boolean defaultValue) {
+        return getBoolean(rowIndex, columnName).orElse(defaultValue);
+    }
+
+    /**
+     * 获取第一行指定列的布尔数据，如果无法获取则返回默认值
+     *
+     * @param columnName   列名
+     * @param defaultValue 默认值
+     * @return 布尔数据或默认值
+     */
+    public Boolean getBoolean(String columnName, Boolean defaultValue) {
+        return getBoolean(0, columnName, defaultValue);
+    }
+
+    /**
+     * 获取指定行的所有数据
+     *
+     * @param rowIndex 行索引
+     * @return 该行的数据Map，如果不存在则返回null
+     */
+    public Map<String, Object> getRow(int rowIndex) {
+        if (!isSuccess() || data == null || rowIndex < 0 || rowIndex >= data.size()) {
+            return null;
+        }
+        return data.get(rowIndex);
+    }
+
+    /**
+     * 获取第一行的所有数据
+     *
+     * @return 第一行的数据Map，如果不存在则返回null
+     */
+    public Map<String, Object> getFirstRow() {
+        return getRow(0);
+    }
+
+    /**
+     * 获取指定列的所有数据
+     *
+     * @param columnName 列名
+     * @return 该列的所有数据列表
+     */
+    public List<Object> getColumn(String columnName) {
+        if (!isSuccess() || data == null) {
+            return java.util.Collections.emptyList();
+        }
+
+        return data.stream()
+                .map(row -> row.get(columnName))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取指定列的所有字符串数据
+     *
+     * @param columnName 列名
+     * @return 该列的所有字符串数据列表
+     */
+    public List<String> getColumnAsString(String columnName) {
+        return getColumn(columnName).stream()
+                .map(obj -> obj == null ? null : obj.toString())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取数据行数
+     *
+     * @return 数据行数，如果执行失败或数据为空则返回0
+     */
+    public int getRowCount() {
+        if (!isSuccess() || data == null) {
+            return 0;
+        }
+        return data.size();
+    }
+
+    /**
+     * 获取数据列数（基于第一行数据）
+     *
+     * @return 数据列数，如果执行失败或数据为空则返回0
+     */
+    public int getColumnCount() {
+        if (!isSuccess() || data == null || data.isEmpty()) {
+            return 0;
+        }
+        return data.get(0).size();
+    }
+
+    /**
+     * 获取所有列名（基于第一行数据）
+     *
+     * @return 列名列表，如果执行失败或数据为空则返回空列表
+     */
+    public List<String> getColumnNames() {
+        if (!isSuccess() || data == null || data.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+        return new java.util.ArrayList<>(data.get(0).keySet());
+    }
+
+    /**
+     * 检查是否包含指定列
+     *
+     * @param columnName 列名
+     * @return 是否包含该列
+     */
+    public boolean hasColumn(String columnName) {
+        if (!isSuccess() || data == null || data.isEmpty()) {
+            return false;
+        }
+        return data.get(0).containsKey(columnName);
+    }
+
+    /**
+     * 检查数据是否为空
+     *
+     * @return 数据是否为空
+     */
+    public boolean isEmpty() {
+        return !isSuccess() || data == null || data.isEmpty();
+    }
+
+    /**
+     * 检查数据是否不为空
+     *
+     * @return 数据是否不为空
+     */
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
+    // ... 原有的其他方法保持不变 ...
 
     /**
      * 构造器
@@ -83,7 +536,6 @@ public class SqlExecuteResult {
     public static SqlExecuteResult failed() {
         return failed("失败");
     }
-
 
     public Integer getStatus() {
         return status;

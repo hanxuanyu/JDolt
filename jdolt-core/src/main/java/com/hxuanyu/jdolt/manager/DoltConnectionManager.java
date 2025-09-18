@@ -34,4 +34,13 @@ public class DoltConnectionManager {
             throw new DoltConnectionException("无法获取数据库连接", e);
         }
     }
+
+    public boolean isInitialized() {
+        try (Connection connection = getConnection()) {
+            return connection.isValid(1);
+        } catch (SQLException e) {
+            return false;
+        }
+
+    }
 }

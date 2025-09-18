@@ -1,5 +1,6 @@
 package com.hxuanyu.jdolt.core.api;
 
+import com.hxuanyu.jdolt.exception.DoltException;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
 
 
@@ -11,9 +12,11 @@ import javax.sql.DataSource;
  */
 public class DoltClient {
     private final VersionControl versionControl;
+    private final DoltApi doltApi;
 
     private DoltClient(VersionControl versionControl) {
         this.versionControl = versionControl;
+        this.doltApi = new DoltApi(versionControl);
     }
 
     public static DoltClient initialize(DataSource dataSource) {
@@ -23,6 +26,17 @@ public class DoltClient {
 
     public VersionControl versionControl() {
         return versionControl;
+    }
+
+    public DoltApi api() {
+        if (!isInitialized()) {
+            throw new DoltException("DoltClient is not initialized");
+        }
+        return doltApi;
+    }
+
+    public boolean isInitialized() {
+        return versionControl().isInitialized();
     }
 
 }

@@ -23,6 +23,10 @@ public class VersionControl {
         this.systemTables = new SystemTables(connectionManager);
     }
 
+    public boolean isInitialized() {
+        return connectionManager.isInitialized();
+    }
+
     /**
      * 获取存储过程操作
      */
