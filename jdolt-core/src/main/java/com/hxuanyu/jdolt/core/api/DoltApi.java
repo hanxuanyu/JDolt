@@ -1,6 +1,10 @@
 package com.hxuanyu.jdolt.core.api;
 
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
+import com.hxuanyu.jdolt.model.api.BranchInfo;
+import com.hxuanyu.jdolt.model.api.CommitInfo;
+
+import java.util.List;
 
 /**
  * 封装Dolt常用的操作api
@@ -33,6 +37,21 @@ public class DoltApi {
     }
 
 
+    public List<BranchInfo> branches() {
+        SqlExecuteResult query = versionControl.systemTable().branches().query();
+        if (query.isNotEmpty() && query.hasColumn("name")) {
+            return query.toObjectList(BranchInfo.class);
+        }
+        return null;
+    }
+
+    public List<CommitInfo> commits() {
+        SqlExecuteResult query = versionControl.systemTable().commits().query();
+        if (query.isNotEmpty() && query.hasColumn("committer")) {
+            return query.toObjectList(CommitInfo.class);
+        }
+        return null;
+    }
 
 
 }
