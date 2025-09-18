@@ -38,7 +38,7 @@ public class DoltConnectionManager {
     public boolean isInitialized() {
         try (Connection connection = getConnection()) {
             return connection.isValid(1);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return false;
         }
 
