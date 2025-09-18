@@ -75,27 +75,26 @@ public class DoltRepository {
         String sql = sqlTemplate.sql();
         long start = System.currentTimeMillis();
         logger.debug("executeQueryAsList start, sql: {} params: {}", sqlTemplate, sqlTemplate.parameters());
-        try (
-                Connection connection = connectionManager.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)
-        ) {
+        try (Connection connection = connectionManager.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            sqlTemplate.setParameters(preparedStatement);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                List<Map<String, Object>> results = new ArrayList<>();
-                ResultSetMetaData metaData = resultSet.getMetaData();
-                int columnCount = metaData.getColumnCount();
+                sqlTemplate.setParameters(preparedStatement);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    List<Map<String, Object>> results = new ArrayList<>();
+                    ResultSetMetaData metaData = resultSet.getMetaData();
+                    int columnCount = metaData.getColumnCount();
 
-                while (resultSet.next()) {
-                    Map<String, Object> row = new HashMap<>();
-                    for (int i = 1; i <= columnCount; i++) {
-                        row.put(metaData.getColumnName(i), resultSet.getObject(i));
+                    while (resultSet.next()) {
+                        Map<String, Object> row = new HashMap<>();
+                        for (int i = 1; i <= columnCount; i++) {
+                            row.put(metaData.getColumnName(i), resultSet.getObject(i));
+                        }
+                        results.add(row);
                     }
-                    results.add(row);
+                    long end = System.currentTimeMillis();
+                    logger.debug("executeQueryAsList finish, sql: {} params: {}， result: {}, cost: {}ms", sql, sqlTemplate.parameters(), results, (end - start));
+                    return results;
                 }
-                long end = System.currentTimeMillis();
-                logger.debug("executeQueryAsList finish, sql: {} params: {}， result: {}, cost: {}ms", sql, sqlTemplate.parameters(), results, (end - start));
-                return results;
             }
         } catch (SQLException e) {
             DoltException doltException = new DoltException("dolt execute error, sql: " + sql + " params: " + sqlTemplate.parameters(), e);
