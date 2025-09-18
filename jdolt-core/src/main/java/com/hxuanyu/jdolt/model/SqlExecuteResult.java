@@ -1,9 +1,10 @@
 package com.hxuanyu.jdolt.model;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -480,6 +481,340 @@ public class SqlExecuteResult {
      */
     public boolean isNotEmpty() {
         return !isEmpty();
+    }
+
+    // 在 SqlExecuteResult 类中添加以下方法：
+
+    /**
+     * 将查询结果转换为指定类型的对象列表
+     *
+     * @param clazz 目标类型
+     * @param <T>   泛型类型
+     * @return 转换后的对象列表
+     */
+    public <T> List<T> toObjectList(Class<T> clazz) {
+        if (!isSuccess() || data == null || data.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<T> resultList = new ArrayList<>();
+
+        try {
+            for (Map<String, Object> row : data) {
+                T instance = mapToObject(row, clazz);
+                if (instance != null) {
+                    resultList.add(instance);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("转换对象时发生错误: " + e.getMessage());
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
+        return resultList;
+    }
+
+    /**
+     * 将第一行查询结果转换为指定类型的对象
+     *
+     * @param clazz 目标类型
+     * @param <T>   泛型类型
+     * @return 转换后的对象，如果转换失败或没有数据则返回null
+     */
+    public <T> T toObject(Class<T> clazz) {
+        List<T> list = toObjectList(clazz);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    /**
+     * 将Map数据转换为指定类型的对象
+     *
+     * @param row   数据行
+     * @param clazz 目标类型
+     * @param <T>   泛型类型
+     * @return 转换后的对象
+     * @throws Exception 转换异常
+     */
+    private <T> T mapToObject(Map<String, Object> row, Class<T> clazz) throws Exception {
+        T instance = clazz.getDeclaredConstructor().newInstance();
+
+        // 获取类的所有字段（包括父类字段）
+        List<Field> allFields = getAllFields(clazz);
+
+        for (Field field : allFields) {
+            String fieldName = field.getName();
+
+            // 跳过静态字段和final字段
+            if (java.lang.reflect.Modifier.isStatic(field.getModifiers()) ||
+                    java.lang.reflect.Modifier.isFinal(field.getModifiers())) {
+                continue;
+            }
+
+            // 尝试从row中获取对应的值
+            Object value = findValueByFieldName(row, fieldName);
+
+            if (value != null) {
+                setFieldValue(instance, field, value);
+            }
+        }
+
+        return instance;
+    }
+
+    /**
+     * 获取类的所有字段（包括父类字段）
+     *
+     * @param clazz 类
+     * @return 字段列表
+     */
+    private List<Field> getAllFields(Class<?> clazz) {
+        List<Field> fields = new ArrayList<>();
+        Class<?> currentClass = clazz;
+
+        while (currentClass != null) {
+            fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
+            currentClass = currentClass.getSuperclass();
+        }
+
+        return fields;
+    }
+
+    /**
+     * 根据字段名从row中查找对应的值
+     * 支持驼峰命名和下划线命名的转换
+     *
+     * @param row       数据行
+     * @param fieldName 字段名
+     * @return 对应的值
+     */
+    private Object findValueByFieldName(Map<String, Object> row, String fieldName) {
+        // 直接匹配
+        if (row.containsKey(fieldName)) {
+            return row.get(fieldName);
+        }
+
+        // 驼峰转下划线匹配
+        String underscoreName = camelToUnderscore(fieldName);
+        if (row.containsKey(underscoreName)) {
+            return row.get(underscoreName);
+        }
+
+        // 下划线转驼峰匹配
+        String camelName = underscoreToCamel(fieldName);
+        if (row.containsKey(camelName)) {
+            return row.get(camelName);
+        }
+
+        // 忽略大小写匹配
+        for (Map.Entry<String, Object> entry : row.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(fieldName) ||
+                    entry.getKey().equalsIgnoreCase(underscoreName) ||
+                    entry.getKey().equalsIgnoreCase(camelName)) {
+                return entry.getValue();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 驼峰命名转下划线命名
+     *
+     * @param camelCase 驼峰命名字符串
+     * @return 下划线命名字符串
+     */
+    private String camelToUnderscore(String camelCase) {
+        return camelCase.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+    }
+
+    /**
+     * 下划线命名转驼峰命名
+     *
+     * @param underscore 下划线命名字符串
+     * @return 驼峰命名字符串
+     */
+    private String underscoreToCamel(String underscore) {
+        StringBuilder result = new StringBuilder();
+        String[] parts = underscore.split("_");
+
+        for (int i = 0; i < parts.length; i++) {
+            if (i == 0) {
+                result.append(parts[i].toLowerCase());
+            } else {
+                result.append(parts[i].substring(0, 1).toUpperCase())
+                        .append(parts[i].substring(1).toLowerCase());
+            }
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * 为字段设置值，支持类型转换
+     *
+     * @param instance 对象实例
+     * @param field    字段
+     * @param value    值
+     * @throws Exception 设置异常
+     */
+    private void setFieldValue(Object instance, Field field, Object value) throws Exception {
+        field.setAccessible(true);
+        Class<?> fieldType = field.getType();
+
+        // 如果值为null，直接设置
+        if (value == null) {
+            field.set(instance, null);
+            return;
+        }
+
+        // 如果类型匹配，直接设置
+        if (fieldType.isAssignableFrom(value.getClass())) {
+            field.set(instance, value);
+            return;
+        }
+
+        // 类型转换
+        Object convertedValue = convertValue(value, fieldType);
+        field.set(instance, convertedValue);
+    }
+
+    /**
+     * 值类型转换
+     *
+     * @param value      原始值
+     * @param targetType 目标类型
+     * @return 转换后的值
+     */
+    private Object convertValue(Object value, Class<?> targetType) {
+        if (value == null) {
+            return null;
+        }
+
+        String stringValue = value.toString();
+
+        try {
+            // String类型
+            if (targetType == String.class) {
+                return stringValue;
+            }
+
+            // 基本类型和包装类型
+            if (targetType == int.class || targetType == Integer.class) {
+                if (value instanceof Number) {
+                    return ((Number) value).intValue();
+                }
+                return Integer.valueOf(stringValue);
+            }
+
+            if (targetType == long.class || targetType == Long.class) {
+                if (value instanceof Number) {
+                    return ((Number) value).longValue();
+                }
+                return Long.valueOf(stringValue);
+            }
+
+            if (targetType == double.class || targetType == Double.class) {
+                if (value instanceof Number) {
+                    return ((Number) value).doubleValue();
+                }
+                return Double.valueOf(stringValue);
+            }
+
+            if (targetType == float.class || targetType == Float.class) {
+                if (value instanceof Number) {
+                    return ((Number) value).floatValue();
+                }
+                return Float.valueOf(stringValue);
+            }
+
+            if (targetType == boolean.class || targetType == Boolean.class) {
+                if (value instanceof Boolean) {
+                    return value;
+                }
+                if (value instanceof Number) {
+                    return ((Number) value).intValue() != 0;
+                }
+                return Boolean.valueOf(stringValue) || "1".equals(stringValue) ||
+                        "yes".equalsIgnoreCase(stringValue) || "y".equalsIgnoreCase(stringValue);
+            }
+
+            if (targetType == short.class || targetType == Short.class) {
+                if (value instanceof Number) {
+                    return ((Number) value).shortValue();
+                }
+                return Short.valueOf(stringValue);
+            }
+
+            if (targetType == byte.class || targetType == Byte.class) {
+                if (value instanceof Number) {
+                    return ((Number) value).byteValue();
+                }
+                return Byte.valueOf(stringValue);
+            }
+
+            // BigDecimal类型
+            if (targetType == BigDecimal.class) {
+                if (value instanceof BigDecimal) {
+                    return value;
+                }
+                if (value instanceof Number) {
+                    return BigDecimal.valueOf(((Number) value).doubleValue());
+                }
+                return new BigDecimal(stringValue);
+            }
+
+            // LocalDateTime类型
+            if (targetType == LocalDateTime.class) {
+                if (value instanceof LocalDateTime) {
+                    return value;
+                }
+                // 尝试解析常见的日期时间格式
+                return parseDateTime(stringValue);
+            }
+
+            // 枚举类型
+            if (targetType.isEnum()) {
+                return Enum.valueOf((Class<Enum>) targetType, stringValue);
+            }
+
+            // 默认返回原值
+            return value;
+
+        } catch (Exception e) {
+            System.err.println("类型转换失败: " + value + " -> " + targetType.getSimpleName() + ", " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 解析日期时间字符串
+     *
+     * @param dateTimeStr 日期时间字符串
+     * @return LocalDateTime对象
+     */
+    private LocalDateTime parseDateTime(String dateTimeStr) {
+        // 常见的日期时间格式
+        DateTimeFormatter[] formatters = {
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"),
+                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"),
+                DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")
+        };
+
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalDateTime.parse(dateTimeStr, formatter);
+            } catch (Exception e) {
+                // 继续尝试下一个格式
+            }
+        }
+
+        throw new RuntimeException("无法解析日期时间字符串: " + dateTimeStr);
     }
 
     // ... 原有的其他方法保持不变 ...
