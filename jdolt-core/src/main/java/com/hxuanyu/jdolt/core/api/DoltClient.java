@@ -1,10 +1,15 @@
 package com.hxuanyu.jdolt.core.api;
 
+import com.hxuanyu.jdolt.core.procedure.DoltCheckout;
 import com.hxuanyu.jdolt.exception.DoltException;
 import com.hxuanyu.jdolt.manager.DoltConnectionManager;
+import com.hxuanyu.jdolt.model.SqlExecuteResult;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides a high-level client for interacting with Dolt version control operations.
@@ -33,6 +38,19 @@ public class DoltClient {
             throw new DoltException("DoltClient is not initialized");
         }
         return doltApi;
+    }
+
+
+    public DoltApi api(String branch) {
+        if (!isInitialized()) {
+            throw new DoltException("DoltClient is not initialized");
+        }
+        SqlExecuteResult executeResult = versionControl.procedure().doltCheckout().prepare().checkout(branch).execute();
+        if (executeResult.isSuccess()) {
+            return doltApi;
+        } else {
+            throw new DoltException("Dolt checkout failed, branch:" + branch);
+        }
     }
 
     public boolean isInitialized() {

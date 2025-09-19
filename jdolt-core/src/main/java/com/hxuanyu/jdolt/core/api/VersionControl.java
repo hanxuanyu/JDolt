@@ -11,7 +11,7 @@ public class VersionControl {
     private final Logger logger = LoggerFactory.getLogger(VersionControl.class);
 
     DoltConnectionManager connectionManager;
-    
+
     private final Procedures procedures;
     private final Functions functions;
     private final SystemTables systemTables;

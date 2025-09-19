@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * @version 1.0
  */
 @Slf4j
-public class DoltLogTest extends DoltClientTest {
+public class DoltLogInfoTest extends DoltClientTest {
 
     @Test
     public void testDoltLog() {

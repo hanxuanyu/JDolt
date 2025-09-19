@@ -3,8 +3,11 @@ package com.hxuanyu.jdolt.core.api;
 import com.hxuanyu.jdolt.model.SqlExecuteResult;
 import com.hxuanyu.jdolt.model.api.BranchInfo;
 import com.hxuanyu.jdolt.model.api.CommitInfo;
+import com.hxuanyu.jdolt.model.api.DoltLogInfo;
+import com.hxuanyu.jdolt.util.builder.SqlBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 封装Dolt常用的操作api
@@ -52,6 +55,34 @@ public class DoltApi {
         }
         return null;
     }
+
+    public List<DoltLogInfo> logs() {
+        SqlExecuteResult query = versionControl.function().doltLog().prepare().parents().decorate("short").execute();
+        if (query.isNotEmpty() && query.hasColumn("commit_hash")) {
+            return query.toObjectList(DoltLogInfo.class);
+        }
+        return null;
+    }
+
+    public List<DoltLogInfo> logs(String ref) {
+        SqlExecuteResult query = versionControl.function().doltLog().prepare().revision(ref).parents().decorate("short").execute();
+        if (query.isNotEmpty() && query.hasColumn("commit_hash")) {
+            return query.toObjectList(DoltLogInfo.class);
+        }
+        return null;
+    }
+
+    public SqlExecuteResult commonSql(String sql, String... params) {
+        CommonSqlExecutor sqlExecutor = CommonSqlExecutor.getInstance(versionControl.getConnectionManager());
+        SqlBuilder.SqlTemplate sqlTemplate = new SqlBuilder.SqlTemplate(sql, List.of(params));
+        List<Map<String, Object>> maps = sqlExecutor.executeQueryAsList(sqlTemplate);
+        if (maps != null && !maps.isEmpty()) {
+            return SqlExecuteResult.success("success", maps);
+        } else {
+            return SqlExecuteResult.failed("failed");
+        }
+    }
+
 
 
 }
