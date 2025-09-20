@@ -6,7 +6,7 @@
 
     <groupId>com.hxuanyu.doltmanager</groupId>
     <artifactId>jdolt-parent</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-alpha</version>
     <packaging>pom</packaging>
     <modules>
         <module>jdolt-core</module>
