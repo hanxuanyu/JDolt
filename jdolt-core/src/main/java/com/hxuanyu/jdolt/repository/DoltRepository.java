@@ -74,7 +74,7 @@ public class DoltRepository {
     public List<Map<String, Object>> executeQueryAsList(SqlBuilder.SqlTemplate sqlTemplate) {
         String sql = sqlTemplate.sql();
         long start = System.currentTimeMillis();
-        logger.debug("executeQueryAsList start, sql: {} params: {}", sqlTemplate, sqlTemplate.parameters());
+        logger.debug("executeQueryAsList start, sql: {} params: {}", sqlTemplate.sql(), sqlTemplate.parameters());
         try (Connection connection = connectionManager.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 

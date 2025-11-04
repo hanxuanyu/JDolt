@@ -72,7 +72,7 @@ public class DoltApi {
         return null;
     }
 
-    public SqlExecuteResult commonSql(String sql, String... params) {
+    public SqlExecuteResult commonSql(String sql, Object... params) {
         CommonSqlExecutor sqlExecutor = CommonSqlExecutor.getInstance(versionControl.getConnectionManager());
         SqlBuilder.SqlTemplate sqlTemplate = new SqlBuilder.SqlTemplate(sql, List.of(params));
         List<Map<String, Object>> maps = sqlExecutor.executeQueryAsList(sqlTemplate);

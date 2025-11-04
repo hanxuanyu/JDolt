@@ -57,7 +57,7 @@ public class DoltApiTest extends DoltClientTest {
 
         log.info("products:{}", products);
 
-        SqlExecuteResult main = doltClient.api("main").commonSql("SELECT * FROM products LIMIT ?, ? ", "8", "5");
+        SqlExecuteResult main = doltClient.api("main").commonSql("SELECT * FROM products LIMIT 5 OFFSET ?;",  10);
         main.print();
 
     }
