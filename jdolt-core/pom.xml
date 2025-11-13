@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hxuanyu.doltmanager</groupId>
     <artifactId>jdolt-core</artifactId>
-    <version>1.0.3-alpha</version>
+    <version>1.0.3-beta</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
